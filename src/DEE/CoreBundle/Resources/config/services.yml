@@ -1,0 +1,4 @@
+services:
+#    dee_core.example:
+#        class: DEE\CoreBundle\Example
+#        arguments: ["@service_id", "plain_value", %parameter%]

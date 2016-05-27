@@ -1,0 +1,27 @@
+<script type="text/javascript" src="{{ asset(assetsPath~'/vendor/requirejs/require.js') }}"></script>
+<script type="text/javascript">
+    // let the baseUrl be dynamic so we can use the compiled assets when needed
+    requirejs.config({
+        baseUrl: '{{ app.request.basePath }}/{{ assetsPath }}/js',
+        
+    });
+    
+    window.webUrl = '{{ path('dee_core_home') }}';
+
+    /**
+     * The heart of our require.js setup!
+     *
+     *   1) Require the common.js file to get all the paths and shim setup
+     *   2) Once that file is downloaded, download and execute app/default.js
+     *      (a global module, executed on every page) and execute whatever
+     *      page-specific app we have (e.g. app/homepage). This will do
+     *      whatever craziness we want.
+     */
+    require(['common'], function (common) {
+        {% if module %}
+            require(['default', '{{ module }}']);
+        {% else %}
+            require(['default']);
+        {% endif %}
+    });
+</script>

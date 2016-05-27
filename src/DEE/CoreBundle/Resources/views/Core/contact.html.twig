@@ -1,0 +1,51 @@
+{# src/DEE/CoreBundle/Resources/views/Core/contact.html.twig #}
+
+{% extends "DEECoreBundle::layout.frontend.html.twig" %}
+
+{% block body %}
+    <nav class="row margin-bot-sm">
+        <a href="{{ path('dee_core_home') }}" class="col-lg-12">
+            <span class="btn btn-primary"><span class="fa fa-chevron-left"></span>   Retour à l'accueil</span> 
+        </a>
+    </nav>
+    <div class="form-group row margin-bot-sm">
+        {# Display custom label #}
+        {{ form_label(form.subject, "Objet : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Display errors for this input #}
+        <p class="flashbag-notices error">{{ form_errors(form.subject) }}</p>
+
+        <div class="col-sm-10">
+          {# Génération de l'input. #}
+          {{ form_widget(form.subject, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group row margin-bot-sm">
+        {# Display custom label #}
+        {{ form_label(form.from, "Email : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Display errors for this input #}
+        <p class="flashbag-notices error">{{ form_errors(form.from) }}</p>
+
+        <div class="col-sm-10">
+          {# Génération de l'input. #}
+          {{ form_widget(form.from, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group row margin-bot-sm">
+        {# Display custom label #}
+        {{ form_label(form.body, "Votre message : ", {'label_attr': {'class': 'col-sm-2 control-label'}}) }}
+
+        {# Display errors for this input #}
+        <p class="flashbag-notices error">{{ form_errors(form.body) }}</p>
+
+        <div class="col-sm-10">
+          {# Génération de l'input. #}
+          {{ form_widget(form.body, {'attr': {'class': 'form-control'}}) }}
+        </div>
+    </div>
+    <div class="form-group row">
+        {{ form_widget(form.Envoyer, {'attr': {'class': 'btn btn-primary pull-right'}}) }}
+    </div>
+                    
+{% endblock%}    

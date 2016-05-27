@@ -1,0 +1,33 @@
+// web/assets/less/main.less
+
+// Import all common css here, so it will be uglyfied in a single css file to avoid many http requests
+@import '../vendor/bootstrap/less/bootstrap.less';
+@import '../vendor/font-awesome/css/font-awesome.min.css';
+@import 'fonts.less';
+@import 'variables.less';
+@import 'mixins.less';
+/*  Example to import css file and "cast" it to less so it can also be uglyfied and all
+    @import (less) '../file.min.css';*/
+
+
+article {
+    margin-top: @vertical-margin-md;
+}
+
+em {
+    font-weight:    bold;
+}
+
+.error-notice {
+    color: #red;
+}
+
+.flasgbag-notices {
+    color:      green;
+    font-size:  0.85em;
+    text-align: center;
+}
+
+.margin-bot-sm {
+    margin-bottom: @vertical-margin-sm;
+}

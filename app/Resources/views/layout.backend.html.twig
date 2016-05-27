@@ -1,0 +1,48 @@
+{# app/Resources/views/layout.backend.html.twig #}
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>{% block title %}Educ'auto{% endblock %}</title>
+
+        {% block stylesheets %}
+            {# Common CSS #}
+            <link rel="stylesheet" href="{{ asset(assetsPath~'/css/main.css') }}"/>
+            
+            <!-- BootStrap HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+            <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+            <!--[if lt IE 9]>
+              <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+              <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+            <![endif]-->
+        {% endblock %}
+    </head>
+
+    <body>
+        <div class="container-fluid">
+             <nav>
+            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                Connecté en tant que {{ app.user.username }}
+                -
+                <a href="{{ path('fos_user_profile_edit') }}">Mon compte</a>
+                <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+            {% endif %}
+            </nav>
+
+            
+            {% block body %}
+
+            {% endblock %}
+            <footer>Site créé par Docker Engine Enterprise. Copyright DEE 2016.</footer>
+        </div>
+       
+    </body>
+    {% block scripts %}
+        <script src="https://code.jquery.com/jquery-1.11.2.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+    {% endblock%}
+</html>
+    

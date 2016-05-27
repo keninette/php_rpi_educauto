@@ -1,0 +1,20 @@
+{# src/DEE/UserBundle/Resources/views/layout.html.twig #}
+
+{% extends "DEECoreBundle::layout.html.twig" %}
+
+{% block body %}
+
+  {# Error messages #}
+  {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div>
+        {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+
+  {# Block used by fos_user vendor #}
+  {% block fos_user_content %}
+  {% endblock fos_user_content %}
+
+{% endblock %}

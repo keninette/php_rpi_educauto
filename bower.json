@@ -1,0 +1,11 @@
+{
+  "name": "merity",
+  "version": "1.0.0",
+  "dependencies": {
+    "bootstrap": "3.3.*",
+    "font-awesome": "4.5.*",
+    "jquery": "2.*",
+    "requirejs": "~2.1.9",
+    "requirejs-domready": "~2.0.1"
+  }
+}

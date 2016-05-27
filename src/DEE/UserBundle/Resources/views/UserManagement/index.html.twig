@@ -1,0 +1,18 @@
+{#/src/DEE/UserBundle/Resources/views/UserManagement/index.html.twig#}
+
+{% extends "DEECoreBundle::layout.html.twig" %}
+
+{% block body %}
+    <table class="table">
+    {%for user in users %}
+        <tr>
+            <td>{{ user.id }}</td>
+            <td>{{ user.username }}</td>
+            <td>{{ user.email }}</td>
+            <td>{{ user.enabled }}</td>
+            <td>{#{ user.roles }#}</td>
+            <td><a href="" class="fa fa-minus-circle">&nbsp;</a></td>
+        </tr>
+    {% endfor %}
+    </table>
+{% endblock %}

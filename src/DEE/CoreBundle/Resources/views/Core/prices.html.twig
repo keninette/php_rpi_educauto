@@ -1,0 +1,116 @@
+{# src/DEE/CoreBundle/Resources/views/Core/prices.html.twig #}
+
+{% extends "DEECoreBundle::layout.frontend.html.twig" %}
+
+{# Override parent body #}
+{% block body %}
+    <!-- Back to homepage -->
+    <nav class="row margin-bot-sm">
+        <a href="{{ path('dee_core_home') }}" class="col-lg-4">
+            <span class="btn btn-primary"><span class="fa fa-chevron-left"></span>   Retour à l'accueil</span>
+        </a>
+    </nav>
+    
+    <!-- Content -->
+    <section>
+        <div id="container-prices" class="row">
+            <!-- all sub-containers contain formula name & formula description (help-div)
+
+            <!-- sub-container #1-->
+            <div id="sub-container-prices-1" class="col-lg-3 col-md-6 col-sm-12 sub-container-prices">
+                <div class="sub-container-prices-background" id="sub-container-prices-background-1"></div>
+                <h2>Formule Flash</h2>
+                <div id="sub-container-prices-help-1" class="display-none triangle-border-top">
+                    <h3>Je passe mon permis en 4 semaines chrono* ! </h3>
+                    La formule express, c'est une exclusivité Educ'Auto en région Lyonnaise !
+                    Nos moniteurs se plient en 4 pour vous permettre dans passer votre permis de conduire en un temps record.
+                    <br /> Détail de la formule :
+                    <ul>
+                        <li>prise en charge des démarches administratives</li>
+                        <li>cours de conduite de 6h à 22h 7j/7, même pendant les vacances et les jours fériés</li>
+                        <li>cours et tests du code de la route disponibles sur internet, immédiatement après inscription</li>
+                        <li>passage prioritaire des examens*</li>
+                    </ul>
+                    <h4>Tarif recommandé : 1500€ TTC**.</h4>
+                    <br />
+                    <h6>* hors délais préfectoraux</h6>
+                    <h6>** frais d'inscription aux examens non comprise</h6>
+                </div>
+            </div>
+
+            <!-- sub-container #2-->
+            <div id="sub-container-prices-2" class="col-lg-3 col-md-6 col-sm-12 sub-container-prices">
+                <div class="sub-container-prices-background" id="sub-container-prices-background-2"></div>
+                <h2>Formule Éco</h2>
+                <div id="sub-container-prices-help-2" class="display-none triangle-border-top">
+                    <h3>Mon permis à tout petit prix ! </h3>
+                    La formule économique, c'est la garantie de passer son permis au plus petit prix ! 
+                    Etudiants, personne sans activité, cette formule est faite pour vous ! A raison de une à quatre heures de cours* par semaine, vous n'aurez pas besoin de vous ruiner !
+                    <br />Détails de la formule :
+                    <ul>
+                        <li>accompagnement aux démarches administratives</li>
+                        <li>cours de conduite de 6h à 22h, du lundi au vendredi **</li>
+                        <li>cours et tests du code de la route disponibles sur internet, immédiatement après inscription</li>
+                        <li>possibilité de prise en charge partielle par la Caisse d'Allocations Familiales ou le Pôle Emploi</li>
+                        <li>inscriptions aux examens incluse dans le prix de la formule ***</li>
+                    </ul>
+                    <h4>Tarif recommandé : 750€ TTC</h4>
+                    <br />
+                    <h6>* deux cours de 6h à 22h et 2 cours en période creuse (10h-12h et 14h-16h) </h6>
+                    <h6>** hors vacances et jours fériés</h6>
+                    <h6>*** à raison d'une session pour chaque examen</h6>
+                </div>
+            </div>
+
+            <!-- sub-container #3 -->
+            <div id="sub-container-prices-3" class="col-lg-3 col-md-6 col-sm-12 sub-container-prices">
+                <div class="sub-container-prices-background" id="sub-container-prices-background-3"></div>
+                <h2>Formule Réglo</h2>
+                <div id="sub-container-prices-help-3" class="display-none triangle-border-top">
+                    <h3>Je suis un conducteur responsable et je me fais rembourser la moitié du prix de mon permis</h3>
+                    Chez Educ'Auto, nous croyons en vous ! 
+                    Si un an après l'obtention de votre permis vous n'avez eu aucun accident responsable* et que vous n'avez perdu aucun point*, nous nous engageons à vous rembourser la moitié du prix de votre permis !
+                    <br />Détails de la formule :
+                    <ul>
+                        <li>prise en charge des démarches administratives</li>
+                        <li>cours de conduite de 6h à 22h, 7j/7 **</li>
+                        <li>cours et tests du code de la route disponibles sur internet, immédiatement après inscription</li>
+                        <li>inscriptions aux examens incluse dans le prix de la formule ***</li>
+                    </ul>
+                    <h4>Tarif recommandé : 1250€ TTC</h4>
+                    <br />
+                    <h6>* sur réserve de présentation des attestations respectives </h6>
+                    <h6>** hors vacances et jours fériés</h6>
+                    <h6>*** à raison d'une session pour chaque examen</h6>
+                </div>
+            </div>
+
+            <!-- sub-container #4 -->
+            <div id="sub-container-prices-4" class="col-lg-3 col-md-6 col-sm-12 sub-container-prices">
+                <div class="sub-container-prices-background" id="sub-container-prices-background-4"></div>
+                <h2>Permis à 1 €</h2>
+                <div id="sub-container-prices-help-4" class="display-none triangle-border-top">
+                <h3>Je bénéficie du permis à 1€ !</h3>
+                Avec le permis à 1€, je paie mon permis de conduire à mon rythme ! 
+                Réservé aux jeunes de 15 à 25 ans, et sous réserve d'acceptation de l'organisme de crédit.
+                Le choix de la formule est libre, est n'exclut pas le remboursement de la formule Réglo.
+            </div>
+            </div>
+        </div>
+    </section>   
+    <script> $(".display-none").hide();</script>
+    <script>$(".sub-container-prices").click(function() {
+       var helpDivPrefix    = 'sub-container-prices-help-';
+       var id               = $(this).attr('id');
+       var numDiv           = id.substr(id.length -1);
+       
+       $('#' +helpDivPrefix +numDiv).fadeToggle('slow');
+       
+   }) ;</script>
+{% endblock%}    
+
+{% block requirejs %} 
+    {{ include('DEECoreBundle::_requirejs.html.twig', {
+            module: false
+        }) }}
+{%endblock%}
