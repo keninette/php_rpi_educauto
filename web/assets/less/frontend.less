@@ -102,10 +102,10 @@ footer {
     
     .triangle-border-top {
         border-top: 1px solid #999;
-        background: #f3f3f3;
+        background: @light-grey;
     }
     
-    /* Required for Down Triangle 
+    //Required for Down Triangle 
     .triangle-border-top:before{
         content: "";
         position: absolute;
@@ -115,7 +115,7 @@ footer {
         border-style: solid;
         border-color: transparent;
         border-bottom: 0;
-    }*/
+    }
 
     /* Stroke */
     .triangle-border-top:before {
@@ -126,7 +126,7 @@ footer {
         top:-7px;
         width: 15px;
         height: 15px; 
-        background: #f3f3f3;
+        background: @light-grey;
         border-right:1px solid #999;
         border-bottom:1px solid #999;
         -moz-transform:rotate(-135deg);
