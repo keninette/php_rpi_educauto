@@ -20,6 +20,7 @@
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
+/web/assets/vendor/
 
 # Build data
 /web/assets-built/
