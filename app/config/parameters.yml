@@ -10,7 +10,3 @@ parameters:
     mailer_user: null
     mailer_password: null
     secret: 5347db7e61ee3c98c6348304412ae5f3dee6d416
-    
-    # Custom parameters
-    assets_directory:   'assets-built'
- 

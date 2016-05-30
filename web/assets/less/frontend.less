@@ -103,34 +103,24 @@ footer {
     .triangle-border-top {
         border-top: 1px solid #999;
         background: @light-grey;
+        padding:    10px;
     }
     
-    //Required for Down Triangle 
-    .triangle-border-top:before{
-        content: "";
-        position: absolute;
-        margin-top: 365px;
-        width: 0;
-        height: 0;
-        border-style: solid;
-        border-color: transparent;
-        border-bottom: 0;
-    }
-
     /* Stroke */
     .triangle-border-top:before {
-        content: '';
-        display: block;
-        position: absolute;
-        left: 50%;
-        top:-7px;
-        width: 15px;
-        height: 15px; 
-        background: @light-grey;
-        border-right:1px solid #999;
-        border-bottom:1px solid #999;
-        -moz-transform:rotate(-135deg);
-        -webkit-transform:rotate(-135deg);
+        background:         @light-grey;
+        border-bottom:      1px solid #999;
+        border-right:       1px solid #999;
+        content:            '';
+        display:            block;
+        height:             15px;
+         left:              50%;
+        margin-top:         365px;
+        position:           absolute;      
+        top:                -9px;
+        width:              15px;
+        -moz-transform:     rotate(-135deg);
+        -webkit-transform:  rotate(-135deg);
     }
 }
 

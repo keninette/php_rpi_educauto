@@ -49,20 +49,25 @@
                 <!-- error messages -->
                 <div class="row error-notice">
                     <div class="col_lg_12">
-                        {% for errorNotice in app.session.flashbag.get('error') %}
-                            <p>Erreur : {{ errorNotice }}</p>
-                        {% endfor %}
+                        {% block errors %}
+                            {% for errorNotice in app.session.flashbag.get('error') %}
+                                <p>Erreur : {{ errorNotice }}</p>
+                            {% endfor %}
+                        {% endblock %}  
                     </div>
                 </div>
                 <!-- other messages -->
                 <div class="row">
                     <div class="col_lg_12">
-                        {% for notice in app.session.flashbag.get('notice') %}
-                            <p>{{ notice }}</p>
-                        {% endfor %}
+                        {% block notices %}
+                            {% for notice in app.session.flashbag.get('notice') %}
+                                <p>{{ notice }}</p>
+                            {% endfor %}
+                        {% endblock %}
                     </div>
                 </div>
             </section>
+                  
             
              <!-- body with custom content -->   
             {% block body %}             

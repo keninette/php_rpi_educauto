@@ -1,9 +1,9 @@
 {# src/DEE/UserBundle/Resources/views/layout.html.twig #}
 
-{% extends "DEECoreBundle::layout.html.twig" %}
+{% extends "::layout.frontend.html.twig" %}
 
-{% block body %}
 
+{% block messages %}
   {# Error messages #}
   {% for key, messages in app.session.flashbag.all() %}
     {% for message in messages %}
@@ -12,7 +12,9 @@
       </div>
     {% endfor %}
   {% endfor %}
+ {% endblock %} 
 
+ {% block body %}
   {# Block used by fos_user vendor #}
   {% block fos_user_content %}
   {% endblock fos_user_content %}
