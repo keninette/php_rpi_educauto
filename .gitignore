@@ -17,8 +17,6 @@
 #Nodejs
 /node_modules/
 
-/web/assets/css/*
-
 # Assets and user uploads
 /web/bundles/
 /web/uploads/
