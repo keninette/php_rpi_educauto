@@ -11,6 +11,7 @@
         {% block stylesheets %}
             {# Common CSS #}
             <link rel="stylesheet" href="{{ asset(assetsPath~'/css/main.css') }}"/>
+            <link rel="stylesheet" href="{{ asset(assetsPath~'/css/backend.css') }}"/>
             
             <!-- BootStrap HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -22,21 +23,41 @@
     </head>
 
     <body>
-        <div class="container-fluid">
-             <nav>
-            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                Connecté en tant que {{ app.user.username }}
-                -
-                <a href="{{ path('fos_user_profile_edit') }}">Mon compte</a>
-                <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-            {% endif %}
-            </nav>
+        <div class="container-fluid fill">
+            <div class="row fill">
+                <nav class="navbar col-lg-2 col-md-3 col-sm-3 fill">
+                     <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="fa fa-bars"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">Educ'Auto</a>
+                    </div>
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse navbar-ex1-collapse">
+                        <ul class="nav navbar-nav">
+                            <li class="active"><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                            <li><a href="#">Link</a></li>
+                        </li>
+                      </ul>
+                    </div>
+                </nav>
+                    {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                        Connecté en tant que {{ app.user.username }}
+                        -
+                        <a href="{{ path('fos_user_profile_edit') }}">Mon compte</a>
+                        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
+                    {% endif %}#}
 
-            
-            {% block body %}
+                <div id="main" class="col-lg-10 col-md-9 col-sm-9 fill">
+                    {% block body %}
 
-            {% endblock %}
-            <footer>Site créé par Docker Engine Enterprise. Copyright DEE 2016.</footer>
+                    {% endblock %}
+                </div>
+            </div>
         </div>
        
     </body>

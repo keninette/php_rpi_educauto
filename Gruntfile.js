@@ -136,7 +136,8 @@ module.exports = function (grunt) {
                 files: {
                     //   Destination file       :      Source file
                     "<%= appDir %>/css/main.css": "<%= appDir %>/less/main.less", 
-                    "<%= appDir %>/css/frontend.css": "<%= appDir %>/less/frontend.less"
+                    "<%= appDir %>/css/frontend.css": "<%= appDir %>/less/frontend.less",
+                    "<%= appDir %>/css/backend.css": "<%= appDir %>/less/backend.less"
                 }
             }
         },
