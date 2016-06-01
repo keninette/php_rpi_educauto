@@ -22,4 +22,12 @@ class UserManagementController extends Controller {
         
         return $this->render('DEEUserBundle:UserManagement:users.html.twig', array('users' => $users));
     }
+    
+    public function deactivateAction($id) {
+        var_dump($id);
+        $userManager = $this->get('fos_user.user_manager') ;
+        $users = $userManager->findUsers();
+        
+        return $this->render('DEEUserBundle:UserManagement:users.html.twig', array('users' => $users));
+    }
 }

@@ -3,16 +3,31 @@
 {% extends "::layout.backend.html.twig" %}
 
 {% block body %}
-    <table class="table">
-    {%for user in users %}
-        <tr>
-            <td>{{ user.id }}</td>
-            <td>{{ user.username }}</td>
-            <td>{{ user.email }}</td>
-            <td>{{ user.enabled }}</td>
-            <td>{#{ user.roles }#}</td>
-            <td><a href="" class="fa fa-minus-circle">&nbsp;</a></td>
-        </tr>
-    {% endfor %}
-    </table>
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Liste des utilisateurs</h1>
+    </div>
+    <div class="row margin-top-sm">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Actif</th>
+                <th>Droits</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            </tr>
+        {%for user in users %}
+            <tr>
+                <td>{{ user.id }}</td>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.enabled }}</td>
+                <td>{#{ user.roles }#}</td>
+                <td><a href="" class="fa fa-minus-circle" title="Désactiver le compte">&nbsp;</a></td>
+                <td><a href="{{ path('dee_user_deactivate', {'id': user.id}) }}" class="fa fa-times-circle" title="Supprimer le compte">&nbsp;</a></td>
+            </tr>
+        {% endfor %}
+        </table>
+    </div>
 {% endblock %}

@@ -32,7 +32,7 @@ dee_user_management:
 dee_user_deactivate:
     path: /admin/deactivate/{id}
     defaults:
-        _controller!:   DEEUserBundle:UserManagement:delete
+        _controller!:   DEEUserBundle:UserManagement:deactivate
     requirements:
         id: \d+
                
