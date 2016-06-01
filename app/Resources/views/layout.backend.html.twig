@@ -23,40 +23,49 @@
     </head>
 
     <body>
-        <div class="container-fluid fill">
-            <div class="row fill">
-                <nav class="navbar col-lg-2 col-md-3 col-sm-3 fill">
-                     <div class="navbar-header">
-                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
-                            <span class="sr-only">Toggle navigation</span>
-                            <span class="fa fa-bars"></span>
-                        </button>
-                        <a class="navbar-brand" href="#">Educ'Auto</a>
-                    </div>
-                    <!-- Collect the nav links, forms, and other content for toggling -->
-                    <div class="collapse navbar-collapse navbar-ex1-collapse">
-                        <ul class="nav navbar-nav">
-                            <li class="active"><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                            <li><a href="#">Link</a></li>
-                        </li>
-                      </ul>
+        <div class="container-fluid">
+                <nav class="navbar  navbar-fixed-top no-margin-bottom no-border-radius" role="navigation">
+                    <div class="container-fluid">
+                        <div class="navbar-header">
+                            <a class="navbar-brand" href="#">
+                                <button type="button" class="navbar-toggle no-margin-top no-padding" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="sr-only">Toggle navigation</span>
+                                    <span class="fa fa-bars"></span>
+                                </button>
+                                <a class="navbar-brand" href="{{ path('dee_core_home') }}">Educ'Auto</a>
+                            </a>
+                        </div>
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">
+                                    <li class="active"><a href="{{ path('dee_user_index') }}">Accueil</a></li>
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" href="#">Documents <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">Consulter des documents</a></li>
+                                            <li><a href="">Uploader des documents vers le serveur</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a data-toggle="dropdown" href="#">Candidats <span class="fa fa-chevron-down"></span></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="">Gérer les candidats</a></li>
+                                            <li><a href="">Consulter les parcours candidat</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="#">Leçons & examens</a></li>
+                                    {% if is_granted('ROLE_SUPER_ADMIN') %}
+                                        <li><a href="{{ path('dee_user_management') }}">Utilisateurs</a></li> <!-- todo gerer visible sur cette page et index -->
+                                    {% endif %}
+                                    <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                                </ul>
+                            </div>    
                     </div>
                 </nav>
-                    {#{% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-                        Connecté en tant que {{ app.user.username }}
-                        -
-                        <a href="{{ path('fos_user_profile_edit') }}">Mon compte</a>
-                        <a href="{{ path('fos_user_security_logout') }}">Déconnexion</a>
-                    {% endif %}#}
+                
+                <!-- page content -->    
+                {% block body %}
 
-                <div id="main" class="col-lg-10 col-md-9 col-sm-9 fill">
-                    {% block body %}
-
-                    {% endblock %}
-                </div>
+                {% endblock %}
             </div>
         </div>
        

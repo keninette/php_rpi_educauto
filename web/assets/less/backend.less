@@ -5,8 +5,20 @@
     background-color: @blue;
 }
 
+.blue-text {
+    color:  @blue;
+}
+
+body {
+    margin-top: 45px; // Hauteur de base de la navbar
+}
+
 .green {
     background-color: @green-bo;
+}
+
+.green-text {
+    color: @green-bo;
 }
 
 .lightgrey {
@@ -15,58 +27,52 @@
 
 nav {
     background-color:   @darkgrey;
-    bottom:             0px;
     color:              #fff;
-}
-
-.tile {
-    border-color:       #fff;
-    border-left-width:  15px;
-    border-style:       solid;
-    height:             300px;
-}
-
-@media (min-width: 768px) {
-    .navbar-collapse {
-        height:         auto;
-        border-top:     0;
-        box-shadow:     none;
-        max-height:     none;
-        padding-left:   0;
-        padding-right:  0;
-    }
-    .navbar-collapse.collapse {
-        display:        block !important;
-        width:          auto !important;
-        padding-bottom: 0;
-        overflow:       visible !important;
-    }
-    .navbar-collapse.in {
-        overflow-x: visible;
-    }
-
-    .navbar
-    {
-        margin-right:   0;
-        margin-left:    0;
-    }	
-
-    .navbar-nav,
-    .navbar-nav > li,
-    .navbar-left,
-    .navbar-right,
-    .navbar-header
-        {float:none !important;}
-
-    .navbar-right .dropdown-menu {left:0;right:auto;}
-    .navbar-collapse .navbar-nav.navbar-right:last-child {
-        margin-right: 0;
+    
+    a {
+        color:          #fff;
     }
 }
 
-@media (max-width: 767px) {
-    nav {
-        height: 50px !important;
+.tile {  
+    font-size:          12em;
+    height:             225px;
+    padding-top:        0.18em;
+    text-align:         center;
+}
+
+.tile-main-row {
+    a {
+        color: @darkgrey;
+    }
+    
+    .row {
+       &:first-child {
+            .sub-tile, .tile {
+                border-color:       #fff;
+                border-left-width:  13px;
+                border-style:       solid;
+            }
+        } 
+    
+        h2 {
+            font-size:      1em;
+            font-weight:    bold;
+            line-height:    inherit;
+            margin-top:     0px;
+        }
     }
 }
 
+.sub-tile {
+    height:             auto;
+    text-align:         center;
+}
+
+.yellow {
+    background-color: @yellow;
+}
+
+.yellow-text {
+    color: @yellow;
+}

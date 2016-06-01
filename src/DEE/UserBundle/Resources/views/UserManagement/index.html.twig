@@ -4,68 +4,62 @@
 
 {% block body %}
     <!-- files -->
-    <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12">
-            <div class="row">
-                <div class="col-xs-12 lightgrey tile"></div>
-                <div class="col-xs-12 yellow">Consulter les documents</div>
+    <div class="row margin-top-sm tile-main-row">
+        <a href="">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom yellow-text fa fa-file-o"></div>
+                    <h2 class="col-xs-12 yellow sub-tile no-border-top">Consulter des documents</h2>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 yellow"></div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 yellow"></div>
-            </div>
-        </div>
+        </a>
+        <a href="">
+           <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom yellow-text fa fa-cloud-upload"></div>
+                    <h2 class="col-xs-12 yellow sub-tile no-border-top">Télécharger des documents sur le serveur</h2>
+                </div>
+            </div> 
+        </a>
     </div>
     
     <!-- students & lessons -->
-    <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 green"></div>
+    <div class="row tile-main-row">
+        <a href="">
+            <div class="col-md-4 col-sm-6 col-xs-12  sub-tile no-border-top">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom no-border-bottom green-text fa fa-user"></div>
+                    <h2 class="col-xs-12 green sub-tile no-border-top">Gérer les candidats</h2>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 green"></div>
+        </a>
+        <a href="">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom green-text fa fa-graduation-cap"></div>
+                    <h2 class="col-xs-12 green sub-tile no-border-top">Consulter les parcours candidat</h2>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 green"></div>
+        </a>  
+        <a href="">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom no-border-bottom green-text fa fa-book "></div>
+                    <h2 class="col-xs-12 green sub-tile no-border-top">Gérer les leçons & examens</h2>
+                </div>
             </div>
-        </div>
+        </a>    
     </div>
     
     <!-- users -->
-    <div class="row">
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 blue"></div>
+    <div class="row tile-main-row">
+        <a href="{{ path('dee_user_management') }}">
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                <div class="row">
+                    <div class="col-xs-12 lightgrey tile no-border-bottom blue-text fa fa-user"></div>
+                    <h2 class="col-xs-12 blue sub-tile no-border-top">Gestion des utilisateurs</h2>
+                </div>
             </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 blue"></div>
-            </div>
-        </div>
-        <div class="col-md-4 col-sm-6 col-xs-12 lightgrey tile">
-            <div class="row">
-                <div class="col-xs-12"></div>
-                <div class="col-xs-12 blue"></div>
-            </div>
-        </div>
+        </a>
     </div>
 {% endblock %}
