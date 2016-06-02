@@ -18,16 +18,40 @@
                 <th>&nbsp;</th>
             </tr>
         {%for user in users %}
-            <tr>
-                <td>{{ user.id }}</td>
-                <td>{{ user.username }}</td>
-                <td>{{ user.email }}</td>
-                <td>{{ user.enabled }}</td>
+            <tr id="{{ user.id }}">
+                <td class="id">{{ user.id }}</td>
+                <td class="username">{{ user.username }}</td>
+                <td class="email">{{ user.email }}</td>
+                <td class="enabled">{{ user.enabled }}</td>
                 <td>{#{ user.roles }#}</td>
-                <td><a href="" class="fa fa-minus-circle" title="Désactiver le compte">&nbsp;</a></td>
-                <td><a href="{{ path('dee_user_deactivate', {'id': user.id}) }}" class="fa fa-times-circle" title="Supprimer le compte">&nbsp;</a></td>
+                <td class="fa {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
+                <td class="fa fa-times-circle" title="Supprimer le compte">&nbsp;</td>
             </tr>
         {% endfor %}
         </table>
     </div>
+        
+    <script type="text/javascript">
+        $(function(){
+            
+            /**
+             * 
+             */
+            $('.fa-circle, fa-circle-thin').click(function(){
+                
+                // Call controller
+                $.ajax({
+                    url: $(this).data('url'),
+                    method: "get"
+                }).success(function(data){
+                    console.log(data);
+                   // refreshList(id, 'activate');
+                });
+                
+                
+            });
+  
+        });
+    </script>
 {% endblock %}
+

@@ -29,7 +29,7 @@ dee_user_management:
       defaults:
           _controller:  DEEUserBundle:UserManagement:users
           
-dee_user_deactivate:
+dee_user_activate:
     path: /admin/deactivate/{id}
     defaults:
         _controller!:   DEEUserBundle:UserManagement:deactivate

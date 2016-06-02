@@ -52,14 +52,16 @@
     </div>
     
     <!-- users -->
-    <div class="row tile-main-row">
-        <a href="{{ path('dee_user_management') }}">
-            <div class="col-md-4 col-sm-6 col-xs-12">
-                <div class="row">
-                    <div class="col-xs-12 lightgrey tile no-border-bottom blue-text fa fa-user"></div>
-                    <h2 class="col-xs-12 blue sub-tile no-border-top">Gestion des utilisateurs</h2>
+    {% if is_granted('ROLE_SUPER_ADMIN') %}
+        <div class="row tile-main-row">
+            <a href="{{ path('dee_user_management') }}">
+                <div class="col-md-4 col-sm-6 col-xs-12">
+                    <div class="row">
+                        <div class="col-xs-12 lightgrey tile no-border-bottom blue-text fa fa-user"></div>
+                        <h2 class="col-xs-12 blue sub-tile no-border-top">Gestion des utilisateurs</h2>
+                    </div>
                 </div>
-            </div>
-        </a>
-    </div>
+            </a>
+        </div>
+    {% endif %}
 {% endblock %}
