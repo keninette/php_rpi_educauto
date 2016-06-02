@@ -1,6 +1,12 @@
 // web/assets/less/backend.less
 @import 'variables.less';
 
+#toggle-user-form {
+    .fa {
+        color: @green-bo;
+    }
+}
+
 .blue {
     background-color: @blue;
 }
@@ -10,7 +16,7 @@
 }
 
 body {
-    margin-top: 45px; // Hauteur de base de la navbar
+    margin-top: 55px; // Hauteur de base de la navbar
 }
 
 .green {
@@ -39,6 +45,16 @@ nav {
     height:             225px;
     padding-top:        0.18em;
     text-align:         center;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+table {
+    .fa-times-circle {
+        color: red;
+    }
 }
 
 .tile-main-row {

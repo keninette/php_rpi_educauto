@@ -6,6 +6,9 @@ namespace DEE\UserBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Description of UserManagementController
@@ -21,33 +24,49 @@ class UserManagementController extends Controller {
     /**
    * @Security("has_role('ROLE_SUPER_ADMIN')")
    */
-    public function usersAction() {
+    public function usersAction(Request $request) {
+        // Get all users
         $userManager = $this->get('fos_user.user_manager') ;
         $users = $userManager->findUsers();
         
-        return $this->render('DEEUserBundle:UserManagement:users.html.twig', array('users' => $users));
+        // Get form to add a new user
+        $response = $this->forward('FOSUserBundle:Registration:register', array('request' => $request));
+        
+        return $this->render('DEEUserBundle:UserManagement:users.html.twig', array('users' => $users,'response'=>$response->getContent()));
     }
     
     /**
-   * @Security("has_role('ROLE_SUPER_ADMIN')")
-   */
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+    */
     public function activateAction($id) {
-        var_dump($id);
         
         // Get user
         $userManager = $this->get('fos_user.user_manager') ;
         $user = $userManager->findUserBy(array('id' => $id));
         
-        // Deactivate user & add flashbag
-        if ($user->getEnabled()) {
+        // Deactivate user
+        if ($user->isEnabled()) {
              $user->setEnabled(false);
-             $this->getSession()->getFlashBag()->add('notice','L\'utilisateur a bien été désactivé');
         } else {
             $user->setEnabled(true);
-            $this->getSession()->getFlashBag()->add('notice','L\'utilisateur a bien été activé');
         }  
-        $userManager->update($user);
+        $userManager->updateUser($user);
         
-        return new JsonResponse(array('success' => true));
+       return new JsonResponse(array('success' => true, 'active' => $user->isEnabled()));
+    }
+    
+    /**
+     * @Security("has_role('ROLE_SUPER_ADMIN')")
+    */
+    public function deleteAction($id) {
+        
+        // Get user
+        $userManager = $this->get('fos_user.user_manager') ;
+        $user = $userManager->findUserBy(array('id' => $id));
+        
+        // Deactivate user
+        $userManager->deleteUser($user);
+        
+       return new JsonResponse(array('success' => true));
     }
 }

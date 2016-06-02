@@ -62,6 +62,30 @@
                             </div>    
                     </div>
                 </nav>
+                                
+                 <!-- FlashBag messages -->
+                <section class="flashbag-notices">
+                    <!-- error messages -->
+                    <div class="row">
+                        <div class="col_lg_12 error-notice">
+                            {% block errors %}
+                                {% for errorNotice in app.session.flashbag.get('error') %}
+                                    <p>Erreur : {{ errorNotice }}</p>
+                                {% endfor %}
+                            {% endblock %}  
+                        </div>
+                    </div>
+                    <!-- other messages -->
+                    <div class="row">
+                        <div class="col_lg_12 other-notice">
+                            {% block notices %}
+                                {% for notice in app.session.flashbag.get('notice') %}
+                                    <p>{{ notice }}</p>
+                                {% endfor %}
+                            {% endblock %}
+                        </div>
+                    </div>
+                </section>                
                 
                 <!-- page content -->    
                 {% block body %}

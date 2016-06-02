@@ -30,9 +30,16 @@ dee_user_management:
           _controller:  DEEUserBundle:UserManagement:users
           
 dee_user_activate:
-    path: /admin/deactivate/{id}
+    path: /admin/users/activate/{id}
     defaults:
-        _controller!:   DEEUserBundle:UserManagement:deactivate
+        _controller:   DEEUserBundle:UserManagement:activate
+    requirements:
+        id: \d+
+        
+dee_user_delete:
+    path: /admin/users/delete/{id}
+    defaults:
+        _controller:   DEEUserBundle:UserManagement:delete
     requirements:
         id: \d+
                

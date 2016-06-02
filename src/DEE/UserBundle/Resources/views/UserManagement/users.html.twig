@@ -4,6 +4,12 @@
 
 {% block body %}
     <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-user-form"><span class="fa fa-plus-circle"></span>    Ajouter un utilisateur</h1>
+    </div>
+    <div class="row margin-top-sm" id="hidden-user-form">
+        {{ response }}
+    </div>
+    <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text">Liste des utilisateurs</h1>
     </div>
     <div class="row margin-top-sm">
@@ -12,45 +18,96 @@
                 <th>#</th>
                 <th>Nom d'utilisateur</th>
                 <th>Email</th>
-                <th>Actif</th>
                 <th>Droits</th>
-                <th>&nbsp;</th>
+                <th>Actif</th>
                 <th>&nbsp;</th>
             </tr>
-        {%for user in users %}
-            <tr id="{{ user.id }}">
-                <td class="id">{{ user.id }}</td>
-                <td class="username">{{ user.username }}</td>
-                <td class="email">{{ user.email }}</td>
-                <td class="enabled">{{ user.enabled }}</td>
-                <td>{#{ user.roles }#}</td>
-                <td class="fa {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
-                <td class="fa fa-times-circle" title="Supprimer le compte">&nbsp;</td>
-            </tr>
-        {% endfor %}
+            {% for user in users %}
+                <tr id="{{ user.id }}" {% if user.id == app.user.id %} class="inactive" {% endif %} >
+                    <td class="id">{{ user.id }}</td>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="email">{{ user.email }}</td>
+                    <td>{#{ user.roles }#}</td>
+                    <td class="fa fa-1-5x pointer {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
+                    {% if user.id != app.user.id %}<td class="fa fa-1-5x pointer fa-times-circle" data-url="{{ path('dee_user_delete',{'id': user.id}) }}" title="Supprimer le compte">&nbsp;</td>{% endif %}
+                </tr>
+            {% endfor %}
         </table>
     </div>
-        
+
     <script type="text/javascript">
-        $(function(){
-            
+        $(function () {
+
+            $("#hidden-user-form").hide();
+
             /**
-             * 
+             * Display user form to be able to add one
              */
-            $('.fa-circle, fa-circle-thin').click(function(){
-                
+            $("#toggle-user-form").click(function () {
+                $("#hidden-user-form").fadeToggle();
+            });
+
+
+            /**
+             *  Add on click action to activate or deactive user
+             *  Ajax call to activateAction() from UserManagementController.php
+             */
+            $(".fa-circle, .fa-circle-thin").click(function () {
+                var element = $(this);
+
+                if (element.parent().hasClass('inactive')) {
+                    displayInactiveWarning();
+                } else {
+                    // Call controller
+                    $.ajax({
+                        url: element.data("url")
+                        , type: 'POST'
+                        , dataType: 'json'
+                        , success: function (data) {
+
+                            // Set active or inactive icon depending on user enabled status
+                            if (data.active) {
+                                element.removeClass("fa-circle-thin").addClass("fa-circle");
+                            } else {
+                                element.removeClass("fa-circle").addClass("fa-circle-thin");
+                            }
+                        }
+                        , error: function (xhr, status, error) {
+                            console.log(xhr.responseText);
+                            console.log(status);
+                        }
+                    });
+                }
+            });
+
+            /**
+             *  Add on click action to delete user
+             *  Ajax call to deleteAction() from UserManagementController.php
+             */
+            $(".fa-times-circle").click(function () {
+                var element = $(this);
+
                 // Call controller
                 $.ajax({
-                    url: $(this).data('url'),
-                    method: "get"
-                }).success(function(data){
-                    console.log(data);
-                   // refreshList(id, 'activate');
+                    url: element.data("url")
+                    , type: 'POST'
+                    , dataType: 'json'
+                    , success: function (data) {
+                        element.parent().remove();
+                    }
+                    , error: function (xhr, status, error) {
+                        console.log(xhr.responseText);
+                        console.log(status);
+                    }
                 });
-                
-                
             });
-  
+
+            function displayInactiveWarning() {
+                if (!$("#jqueryError").length) {
+                    $(".other-notice").empty();
+                    $(".error-notice").empty().append("<p id=\"jqueryError\">Vous ne pouvez pas désactiver ou supprimer l'utilisateur avec lequel vous êtes connecté.</p>");
+                }
+            }
         });
     </script>
 {% endblock %}
