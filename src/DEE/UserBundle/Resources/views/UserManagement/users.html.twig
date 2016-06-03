@@ -77,12 +77,6 @@
                 return false;
             });
 
-            /*$("input[type=submit]").click() {
-             $("input:not[type=submit]").each(
-             console.log($(this));
-             );
-             }*/
-
             /**
              * Display user form to be able to add one
              */
@@ -179,6 +173,10 @@
                                 );
             }
             
+            /**
+             *  Empty all form input (textarea, text, checkbox, etc...)
+             * @returns {undefined}
+             */
             function emptyFormInputs() {
                 $(':input')
                     .not(':button, :submit, :reset, :hidden')
