@@ -1,0 +1,3 @@
+dee_student_management_homepage:
+    path:     /
+    defaults: { _controller: DEEStudentManagementBundle:Default:index }
