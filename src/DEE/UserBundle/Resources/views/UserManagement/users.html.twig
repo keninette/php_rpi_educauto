@@ -6,8 +6,8 @@
     <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text pointer" id="toggle-user-form"><span class="fa fa-plus-circle"></span>    Ajouter un utilisateur</h1>
     </div>
-    <div class="row margin-top-sm" id="hidden-user-form">
-        {{ response }}
+    <div class="row margin-top-sm" id="hidden-user-form" data-url="{{ path('dee_user_management') }}">
+        {{ include("FOSUserBundle:Registration:register_content.html.twig") }}
     </div>
     <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text">Liste des utilisateurs</h1>
@@ -21,24 +21,67 @@
                 <th>Droits</th>
                 <th>Actif</th>
                 <th>&nbsp;</th>
-            </tr>
             {% for user in users %}
                 <tr id="{{ user.id }}" {% if user.id == app.user.id %} class="inactive" {% endif %} >
                     <td class="id">{{ user.id }}</td>
                     <td class="username">{{ user.username }}</td>
                     <td class="email">{{ user.email }}</td>
-                    <td>{#{ user.roles }#}</td>
-                    <td class="fa fa-1-5x pointer {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
-                    {% if user.id != app.user.id %}<td class="fa fa-1-5x pointer fa-times-circle" data-url="{{ path('dee_user_delete',{'id': user.id}) }}" title="Supprimer le compte">&nbsp;</td>{% endif %}
+                    <td>{% if user.hasrole("ROLE_SUPER_ADMIN") %} {{ "Super-administrateur" }} {% elseif user.hasrole("ROLE_ADMIN") %} {{ "Administrateur" }} {% endif %}</td>
+                    <td class="fa fa-1-5x pointer activate-link {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
+                    {% if user.id != app.user.id %}<td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_user_delete',{'id': user.id}) }}" title="Supprimer le compte">&nbsp;</td>{% endif %}
                 </tr>
             {% endfor %}
         </table>
     </div>
 
+
+
+
+
+
     <script type="text/javascript">
         $(function () {
 
+            // Hide user form so it can be displayed by clicking to h1 tag
             $("#hidden-user-form").hide();
+        
+            /**
+             * Send form data to DEEUserBundle:UserMagangement:users controller
+             * Add new user to table
+             * @returns {boolean} : false (so it doesn't trigger the form action or event)
+             */
+            $("#hidden-user-form form").submit(function () {
+                var postUrl = $("#hidden-user-form").data("url");
+                
+                // Add user by calling controller and sending form info
+                $.ajax({
+                    url: postUrl,
+                    type: 'post',
+                    dataType: 'json',
+                    data: $('#hidden-user-form form').serialize(),
+                    success: function (data) {
+                        // hide form
+                        $("#hidden-user-form").fadeToggle();
+                        
+                        // Add user to table
+                        addUserToTable(data.user);
+                        
+                        // Empty form
+                        emptyFormInputs();
+                    },
+                    error: function (xhr, status) {
+                           console.log(xhr.responseText);
+                           console.log(status);
+                       }
+                });
+                return false;
+            });
+
+            /*$("input[type=submit]").click() {
+             $("input:not[type=submit]").each(
+             console.log($(this));
+             );
+             }*/
 
             /**
              * Display user form to be able to add one
@@ -72,7 +115,7 @@
                                 element.removeClass("fa-circle").addClass("fa-circle-thin");
                             }
                         }
-                        , error: function (xhr, status, error) {
+                        , error: function (xhr, status) {
                             console.log(xhr.responseText);
                             console.log(status);
                         }
@@ -93,7 +136,7 @@
                     , type: 'POST'
                     , dataType: 'json'
                     , success: function (data) {
-                        element.parent().remove();
+                        element.parent().fadeOut().remove();
                     }
                     , error: function (xhr, status, error) {
                         console.log(xhr.responseText);
@@ -101,12 +144,47 @@
                     }
                 });
             });
-
+            
+            /**
+             *  Display warning in flashbag container if user is trying to deactivate or delete his own account
+             */
             function displayInactiveWarning() {
                 if (!$("#jqueryError").length) {
                     $(".other-notice").empty();
                     $(".error-notice").empty().append("<p id=\"jqueryError\">Vous ne pouvez pas désactiver ou supprimer l'utilisateur avec lequel vous êtes connecté.</p>");
                 }
+            }
+            
+            /**
+             * Add a line to table to display user
+             * @param {DEEUSerBundle User} user
+             * @returns {undefined}
+             */
+            function addUserToTable(user) {
+                // Set new data-url to deactivate/activate & delete user
+                var activateLink    = $(".activate-link").first().data('url');
+                var newActivateLink = activateLink.substring(0,(activateLink.length -1)) +user.id;                
+                var deleteLink    = $(".delete-link").first().data('url');
+                var newDeleteLink = deleteLink.substring(0,(deleteLink.length -1)) +user.id;                
+                
+                // Add new user to table
+                $("table").append("<tr>"
+                                        +"<td  class=\"id\">" +user.id +"</td>"
+                                        +"<td  class=\"username\">" +user.username +"</td>"
+                                        +"<td  class=\"email\">" +user.email +"</td>"
+                                        +"<td>" +($.inArray("ROLE_SUPER_ADMIN", user.role) ? "Super-administrateur" : ($.inArray("ROLE_ADMIN") ? "Administrateur" : "")) +"</td>"
+                                        +"<td class=\"fa fa-1-5x pointer " +(user.enabled ? "fa-circle" : "fa-circle-thin")  +"\" title=\"Désactiver le compte\" data-url=\"" +newActivateLink +"\">&nbsp;</td>"
+                                        +"<td class=\"fa fa-1-5x pointer fa-times-circle\" title=\"Supprimer le compte\"  data-url=\"" +newDeleteLink +"\">&nbsp;</td>"
+                                    +"</tr>"
+                                );
+            }
+            
+            function emptyFormInputs() {
+                $(':input')
+                    .not(':button, :submit, :reset, :hidden')
+                    .val('')
+                    .removeAttr('checked')
+                    .removeAttr('selected');
             }
         });
     </script>
