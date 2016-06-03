@@ -1,0 +1,4 @@
+dee_student_homepage:
+      path: /
+      defaults:
+          _controller:  DEECoursesBundle:Student:index

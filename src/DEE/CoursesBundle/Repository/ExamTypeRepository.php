@@ -1,6 +1,6 @@
 <?php
 
-namespace DEE\StudentManagementBundle\Repository;
+namespace DEE\CoursesBundle\Repository;
 
 /**
  * ExamTypeRepository

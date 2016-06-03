@@ -1,6 +1,6 @@
 <?php
 
-namespace DEE\StudentManagementBundle\Entity;
+namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Exam
  *
  * @ORM\Table(name="exam")
- * @ORM\Entity(repositoryClass="DEE\StudentManagementBundle\Repository\ExamRepository")
+ * @ORM\Entity(repositoryClass="DEE\CoursesBundle\Repository\ExamRepository")
  */
 class Exam
 {
@@ -43,7 +43,7 @@ class Exam
     private $success;
     
     /**
-     * @ORM\ManyToOne(targetEntity="DEE\StudentManagementBundle\Entity\ExamType", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamType", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * @ORM\Column(name="exam_type")
      */
@@ -53,7 +53,7 @@ class Exam
      *
      * @var Student 
      * 
-     * @ORM\ManyToOne(targetEntity="DEE\StudentManagementBundle\Entity\Student", cascade={"persist"})
+     * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      */
     private $student;

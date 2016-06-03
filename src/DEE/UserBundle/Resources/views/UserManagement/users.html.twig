@@ -4,7 +4,7 @@
 
 {% block body %}
     <div class="row margin-top-sm">
-        <h1 class="col-xs-12 center-text pointer" id="toggle-user-form"><span class="fa fa-plus-circle"></span>    Ajouter un utilisateur</h1>
+        <h1 class="col-xs-12 center-text pointer" id="toggle-user-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un utilisateur</h1>
     </div>
     <div class="row margin-top-sm" id="hidden-user-form" data-url="{{ path('dee_user_management') }}">
         {{ include("FOSUserBundle:Registration:register_content.html.twig") }}

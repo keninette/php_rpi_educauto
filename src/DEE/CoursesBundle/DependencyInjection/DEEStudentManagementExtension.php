@@ -1,6 +1,6 @@
 <?php
 
-namespace DEE\StudentManagementBundle\DependencyInjection;
+namespace DEE\CoursesBundle\DependencyInjection;
 
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\Config\FileLocator;

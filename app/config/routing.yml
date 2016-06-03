@@ -1,6 +1,6 @@
-dee_student_management:
-    resource: "@DEEStudentManagementBundle/Resources/config/routing.yml"
-    prefix:   /
+dee_courses_bundle:
+    resource: "@DEECoursesBundle/Resources/config/routing.yml"
+    prefix:   /courses
 
 dee_user_bundle:
     resource:  "@DEEUserBundle/Resources/config/routing.yml"

@@ -1,6 +1,6 @@
 <?php
 
-namespace DEE\StudentManagementBundle\Entity;
+namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Student
  *
  * @ORM\Table(name="student")
- * @ORM\Entity(repositoryClass="DEE\StudentManagementBundle\Repository\StudentRepository")
+ * @ORM\Entity(repositoryClass="DEE\CoursesBundle\Repository\StudentRepository")
  */
 class Student
 {
@@ -63,7 +63,13 @@ class Student
      */
     private $phoneOther;
 
-
+    /**
+     * @var string
+     * 
+     * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     */
+    private $email;   
+    
     /**
      * Get id
      *
@@ -217,5 +223,27 @@ class Student
     {
         return $this->phoneOther;
     }
+    
+    /**
+     * Get email
+     * 
+     * @return string
+     */
+    function getEmail() {
+        return $this->email;
+    }
+    
+    /**
+     * Set email
+     *
+     * @param string $email
+     *
+     * @return Student
+     */
+    function setEmail($email) {
+        $this->email = $email;
+    }
+
+
 }
 

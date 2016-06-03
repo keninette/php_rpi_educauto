@@ -1,0 +1,36 @@
+{# DEE/CoursesBundle/Resources/views/Student #}
+
+{% extends "::layout.backend.html.twig" %}
+
+{% block body %}
+   <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un candidat</h1>
+    </div>
+    <div class="row margin-top-sm" id="hidden-student-form" data-url="{{ path('dee_student_homepage') }}">
+        {{ form(form) }}
+    </div>
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Liste des candidats</h1>
+    </div>
+    <div class="row margin-top-sm">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Nom </th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>&nbsp;</th>
+            {% for student in students %}
+                <tr id="{{ student.id }}">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.name ~" " ~student.firstname }}</td>
+                    <td>{{ student.phone ~ " | " ~ student.phoneOther }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.address }} <br /> {{ student.addressOther }}</td>
+                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_student_delete',{'id': student.id}) }}" title="Supprimer le candidat">&nbsp;</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}    

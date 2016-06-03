@@ -1,6 +1,6 @@
 <?php
 
-namespace DEE\StudentManagementBundle\Entity;
+namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -8,7 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
  * ExamType
  *
  * @ORM\Table(name="exam_type")
- * @ORM\Entity(repositoryClass="DEE\StudentManagementBundle\Repository\ExamTypeRepository")
+ * @ORM\Entity(repositoryClass="DEE\CoursesBundle\Repository\ExamTypeRepository")
  */
 class ExamType
 {
