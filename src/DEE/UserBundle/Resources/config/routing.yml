@@ -19,15 +19,27 @@ fos_user_change_password:
     prefix: /profile
 
 # DEEUserBundle routing
-dee_user_manage:
+dee_user_index:
       path: /admin
       defaults:
           _controller:  DEEUserBundle:UserManagement:index
+
+dee_user_management:
+      path: /admin/users
+      defaults:
+          _controller:  DEEUserBundle:UserManagement:users
           
-dee_user_deactivate:
-    path: /admin/deactivate/{id}
+dee_user_activate:
+    path: /admin/users/activate/{id}
     defaults:
-        _controller!:   DEEUserBundle:UserManagement:delete
+        _controller:   DEEUserBundle:UserManagement:activate
+    requirements:
+        id: \d+
+        
+dee_user_delete:
+    path: /admin/users/delete/{id}
+    defaults:
+        _controller:   DEEUserBundle:UserManagement:delete
     requirements:
         id: \d+
                

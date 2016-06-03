@@ -11,7 +11,7 @@
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset(assetsPath~'/css/main.css') }}"/>
             <link rel="stylesheet" href="{{ asset(assetsPath~'/css/frontend.css') }}"/>
-                 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script> 
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>  <!-- todo remove -->
             
             <!-- BootStrap HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
             <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -49,34 +49,40 @@
                 <!-- error messages -->
                 <div class="row error-notice">
                     <div class="col_lg_12">
-                        {% for errorNotice in app.session.flashbag.get('error') %}
-                            <p>Erreur : {{ errorNotice }}</p>
-                        {% endfor %}
+                        {% block errors %}
+                            {% for errorNotice in app.session.flashbag.get('error') %}
+                                <p>Erreur : {{ errorNotice }}</p>
+                            {% endfor %}
+                        {% endblock %}  
                     </div>
                 </div>
                 <!-- other messages -->
                 <div class="row">
                     <div class="col_lg_12">
-                        {% for notice in app.session.flashbag.get('notice') %}
-                            <p>{{ notice }}</p>
-                        {% endfor %}
+                        {% block notices %}
+                            {% for notice in app.session.flashbag.get('notice') %}
+                                <p>{{ notice }}</p>
+                            {% endfor %}
+                        {% endblock %}
                     </div>
                 </div>
             </section>
+                  
             
-             <!-- body with custom content -->   
-            {% block body %}             
-            {% endblock %}
-            
-            <!-- footer -->
-            <footer class="row">
-                <div class="col-lg-12 text-center">
-                    Site créé par Docker Engine Enterprise. Copyright DEE 2016.
-                </div>
-            </footer>   
-        
-            <!-- end of .container-fluid div -->
+             <!-- body with custom content -->
+             <div class="fill">
+                {% block body %}             
+                {% endblock %}
+             </div> 
+
+        <!-- end of .container-fluid div -->
         </div>
+        <!-- footer -->
+        <footer class="footer">
+            <div class="text-center container-fluid">
+                <p class="text-muted">Site créé par Docker Engine Enterprise. Copyright DEE 2016.</p>
+            </div>
+        </footer>       
     </body>
     
     {# Include JS #}

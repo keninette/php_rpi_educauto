@@ -24,11 +24,18 @@ security:
         form_login: 
             login_path: fos_user_security_login
             check_path: fos_user_security_check
+            # login success redirecting options 
+            # found on symfony documentation : http://symfony.com/doc/current/reference/configuration/security.html#redirecting-after-login (line 150 to 154)
+            always_use_default_target_path: true
+            default_target_path:            /users/admin
+        
         logout:
             path:       fos_user_security_logout
-            target:     /platform
+            target:     /users/login
         remember_me:
             secret:     %secret%
+            
+          
 
   access_control:
     - { path: ^/admin, roles: ROLE_ADMIN }

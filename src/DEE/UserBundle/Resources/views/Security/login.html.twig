@@ -1,0 +1,44 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% trans_default_domain 'FOSUserBundle' %}
+
+{# Error messages #}
+{% block errors %}
+    {% if error %}
+        <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+{% endblock %}
+
+{% block fos_user_content %}
+    <div class="row">
+        <div class="col-xs-6 col-xs-offset-3">
+           <form action="{{ path("fos_user_security_check") }}" method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                
+                <fieldset class="col-xs-lg-12 margin-bot-sm">
+                    <label class="col-xs-12 col-lg-3 col-lg-offset-2 no-padding-left" for="username">{{ 'security.login.username'|trans }}</label>
+                    <input class="col-xs-12 col-lg-5"type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                </fieldset>
+                
+                <fieldset class="col-xs-lg-12 margin-bot-sm">
+                    <label class="col-xs-12 col-lg-3 col-lg-offset-2 no-padding-left" for="password">{{ 'security.login.password'|trans }}</label>
+                    <input class="col-xs-12 col-lg-5" type="password" id="password" name="_password" required="required" />
+                </fieldset>
+                    
+                <fieldset class="col-xs-lg-12 margin-bot-sm">
+                    <div class="col-xs-12 col-lg-5 col-lg-offset-5 no-padding-left">
+                        <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                        <label for="remember_me">{{ 'security.login.remember_me'|trans }}</label>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="col-xs-lg-12 margin-bot-sm">
+                    <div class="col-xs-12 col-lg-5 col-lg-offset-5 no-padding-right">
+                        <input type="submit" id="_submit" name="_submit" value="{{ 'security.login.submit'|trans }}" class="btn btn-primary pull-right" />
+                    </div>
+                </fieldset>
+               
+            </form>  
+        </div>
+    </div>
+{% endblock fos_user_content %}
