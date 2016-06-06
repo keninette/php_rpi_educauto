@@ -2,6 +2,8 @@
 
 namespace DEE\CoursesBundle\Repository;
 
+use Doctrine\ORM\EntityRepository;
+
 /**
  * ExamRepository
  *
@@ -10,4 +12,9 @@ namespace DEE\CoursesBundle\Repository;
  */
 class ExamRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getWhereStudentQueryBuilder($studentId) {
+        return $this->createQueryBuilder('e')
+                    ->where('e.student = :student')
+                    ->setParameter('student', $studentId);
+    }
 }

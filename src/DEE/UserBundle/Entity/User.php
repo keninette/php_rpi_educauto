@@ -25,15 +25,28 @@ class User extends BaseUser
      */
     protected $id;
 
-    
     /**
+     * Custom array cast
+     * @return array
+     */
+    public function toArray() {
+        $array = array();
+        
+        $array['id']        =  $this->getId();
+        $array['enabled']   =  $this->isEnabled();
+        $array['username']  =  $this->getUsername();
+        $array['email']     =  $this->getEmail();
+        $array['role']      =  $this->getRoles();
+        
+        return $array;
+    }
+    
+    /*/**
      * Creates a random password composed with alphanumeric and special characters
      * Set this password to the current user's password
      * @return none
-     * 
-     * ORM\PrePersist
      */
-    public function createRandomPassword() {
+    /*public function createRandomPassword() {
         // Creating an array with alphanumeric and special chars
         $chars          = explode(',','a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z'
                                         .',A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
@@ -48,5 +61,5 @@ class User extends BaseUser
         
         // Set the generated password as user's password
         $this->setPassword($password);
-    }
+    }*/
 }

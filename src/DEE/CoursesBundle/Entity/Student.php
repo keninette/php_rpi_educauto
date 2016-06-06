@@ -243,7 +243,25 @@ class Student
     function setEmail($email) {
         $this->email = $email;
     }
-
+    
+    /**
+     * Custom return object to array
+     * @return array
+     */
+    public function toArray() {
+        $array = array();
+        
+        $array['id']            = $this->getId();
+        $array['name']          = $this->getName();
+        $array['firstname']     = $this->getFirstname();
+        $array['address']       = $this->getAddress();
+        $array['addressOther']  = $this->getAddressOther();
+        $array['phone']         = $this->getPhone();
+        $array['phoneOther']    = $this->getPhoneOther();
+        $array['email']         = $this->getEmail();
+        
+        return $array;
+    }
 
 }
 

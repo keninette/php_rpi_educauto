@@ -21,7 +21,7 @@ class StudentType extends AbstractType
             ->add('firstname',      TextType::Class,    array('label' => 'Prénom'))
             ->add('address',        TextType::Class,    array('label' => 'Adresse'))
             ->add('addressOther',   TextType::Class,    array('required' => false, 'label'  => 'Adresse (suite)'))
-            ->add('phone',          TextType::Class,   array('label' => 'Téléphone'))
+            ->add('phone',          TextType::Class,    array('label' => 'Téléphone'))
             ->add('phoneOther',     TextType::Class,    array('required' => false, 'label'  => 'Téléphone (autre)'))
             ->add('email',          TextType::Class,    array('required' => false,  'label' => 'Email'))
             ->add('save',           SubmitType::class,  array('label' => 'Créer un candidat'))

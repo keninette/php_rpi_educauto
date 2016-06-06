@@ -10,19 +10,29 @@ namespace DEE\CoursesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DEE\CoursesBundle\Form\StudentType;
+use DEE\CoursesBundle\Form\ExamType;
+use DEE\CoursesBundle\Form\LessonType;
 use DEE\CoursesBundle\Entity\Student;
+use DEE\CoursesBundle\Entity\Exam;
+use DEE\CoursesBundle\Entity\Lesson;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use DEE\CoreBundle\Utils\ArrayFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
- * Description of StudentController
+ * Controller regarding all student actions available
  *
- * @author kbj
+ * @author Delphine Gauthier [at]DEE
  */
 class StudentController extends Controller {
     
+    /**
+     * Send all students and add form to view
+     * Persists student in database on ajax call
+     * 
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function indexAction(Request $request){
         
         // Get all students
@@ -41,7 +51,7 @@ class StudentController extends Controller {
 
             return new JsonResponse(array(
                                         'success'   => true
-                                        ,'student'  => (array) $student
+                                        ,'student'  => $student->toArray()
             ));
         }
         
@@ -49,7 +59,10 @@ class StudentController extends Controller {
     }
     
     /**
-     * @Security("has_role('ROLE_SUPER_ADMIN')")
+     * Delete a student in database
+     * @return JSONResponse success tag
+     * 
+     * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id) {
 
@@ -62,5 +75,78 @@ class StudentController extends Controller {
         $studentManager->flush();
 
         return new JsonResponse(array('success' => true));
+    }
+    
+    /**
+     * Display a student's course
+     * @param type $id : studentID
+     * @param Request $request httpRequest
+     * @return view or JSONResponse
+     * 
+     * @Security("has_role('ROLE_ADMIN')")
+     */
+    public function showCourseAction($id, Request $request) {
+        
+        // Prepare all managers & repositories
+        $studentManager = $this->getDoctrine()->getManager();
+        $examManager    = $this->getDoctrine()->getManager();
+        $lessonManager  = $this->getDoctrine()->getManager();
+        $examRepo       = $examManager->getRepository('DEECoursesBundle:Exam');
+        $lessonRepo     = $lessonManager->getRepository('DEECoursesBundle:Lesson'); 
+        
+        // Find user in database
+        $student = $studentManager->find(Student::class, $id);
+        
+        // Find all exams he has suscribed to
+        $exams  = $examRepo->findBy(array('student' => $student));
+        
+        // Find all lessons for each exam student has suscribed to
+        // Add them to an array in which key is exam id
+        $lessons = array(); 
+        foreach ($exams as $exam) {
+            $theseLessons = $lessonRepo->findBy(array('exam' => $exam));
+            $lessons[$exam->getId()] = $theseLessons;
+        }
+        
+        // Get new exam form
+        $exam       = new Exam();
+        $examForm   = $this->createForm(ExamType::class, $exam);
+        
+        // Get new lesson form
+        $lesson       = new Lesson();
+        $lessonForm   = $this->createForm(LessonType::class, $lesson, array('student' => $student));
+
+        // If one of the forms has been filled
+        if ($request->getMethod() == 'POST') {
+            // Exam form
+            if ($request->request->has('exam') && $examForm->handleRequest($request)->isValid()) {
+                $exam->setStudent($student);
+                $examManager->persist($exam);
+                $examManager->flush();
+                
+                return new JsonResponse(array('SUCCESS' => true
+                                                ,'exam' => $exam->toArray()
+                                        ));
+                
+            // Lesson form    
+            } else if ($request->request->has('lesson') && $lessonForm->handleRequest($request)->isValid()) {
+                $lessonManager->persist($lesson);
+                $lessonManager->flush();
+                
+                return new JsonResponse(array('SUCCESS' => true
+                                                ,'lesson' => $lesson->toArray()
+                                        ));
+            }
+        }
+        
+        // Return view
+        return $this->render('DEECoursesBundle:Student:showCourse.html.twig'
+                                , array(
+                                    'student'       => $student
+                                    , 'exams'       => $exams
+                                    , 'lessons'     => $lessons
+                                    ,'examForm'     => $examForm->createView()
+                                    , 'lessonForm'  => $lessonForm->createView()
+                            ));
     }
 }

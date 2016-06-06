@@ -1,12 +1,32 @@
+# Student routes
+dee_student_showcourse:
+    path: /students/showcourse/{id}
+    defaults:
+        _controller: DEECoursesBundle:Student:showCourse
+    requirements:
+        id: \d+
+
 dee_student_delete:
-    path: /delete/{id}
+    path: /students/delete/{id}
     defaults:
         _controller:   DEECoursesBundle:Student:delete
     requirements:
         id: \d+
      
-          
 dee_student_homepage:
-      path: /
+      path: /students/
       defaults:
           _controller:  DEECoursesBundle:Student:index
+  
+# ExamType routes          
+dee_examtype_delete:
+    path: /examtypes/delete/{id}
+    defaults:
+        _controller:   DEECoursesBundle:ExamType:delete
+    requirements:
+        id: \d+
+     
+dee_examtype_homepage:
+      path: /examtypes/
+      defaults:
+          _controller:  DEECoursesBundle:ExamType:index

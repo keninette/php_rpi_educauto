@@ -25,6 +25,7 @@ class Exam
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $date;
 
@@ -32,6 +33,7 @@ class Exam
      * @var bool
      *
      * @ORM\Column(name="training", type="boolean")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $training;
     
@@ -39,6 +41,7 @@ class Exam
      * @var bool
      *
      * @ORM\Column(name="success", type="boolean")
+     * @ORM\JoinColumn(nullable=true)
      */
     private $success;
     
@@ -58,6 +61,42 @@ class Exam
      */
     private $student;
     
+    
+
+    /**
+     * Constructor to set default values for Exam object
+     */
+    public function __construct() {
+        $this->training = true;
+        $this->success = false;
+    }
+    
+    /**
+     * Convert the object into an array
+     * @param DEE/CoursesBundle/Entity/Exam $exam
+     * @return array containing object info
+     */
+    public function toArray() {
+        $array = array();
+        
+        $array['id']        = $this->getId();
+        $array['date']      = $this->getDate();
+        $array['training']  = $this->getTraining();
+        $array['success']   = $this->getSuccess();
+        $array['examType']  = $this->getExamType()->getExamLabel();
+        
+        return $array;
+    }
+    
+    /**
+     * Function to set what is to be displayed in form under exam input
+     * @return string
+     */
+    public function getExamFormDisplay() {
+        var_dump($this->getExamType());
+        return $this->getExamType()->getExamLabel();
+    }
+    
     /**
      * Get id
      *
@@ -66,14 +105,6 @@ class Exam
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Constructor to set default values for Exam object
-     */
-    public function __construct() {
-        $this->training = true;
-        $this->success = false;
     }
     
     /**
@@ -106,18 +137,18 @@ class Exam
      * @return boolean
      */
     function getTraining() {
-        return $this->in_training;
+        return $this->training;
     }
     
     /**
-     * Set in_training
+     * Set training
      *
-     * @param boolean $in_training
+     * @param boolean $training
      *
      * @return Exam
      */
-    function setIn_training($in_training) {
-        $this->in_training = $in_training;
+    function setIn_training($training) {
+        $this->training = $training;
     }
 
         

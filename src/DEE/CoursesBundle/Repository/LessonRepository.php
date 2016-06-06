@@ -10,4 +10,5 @@ namespace DEE\CoursesBundle\Repository;
  */
 class LessonRepository extends \Doctrine\ORM\EntityRepository
 {
+    
 }

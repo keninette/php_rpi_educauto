@@ -17,9 +17,12 @@ use DEE\CoreBundle\Utils\ArrayFormatter;
  * @author kbj
  */
 class UserManagementController extends Controller {
-
+    
+    /**
+     * @Security("has_role('ROLE_ADMIN')")
+     */
     public function indexAction() {
-        return $this->render('DEEUserBundle:UserManagement:index.html.twig');
+        return $this->render(':backend:index.html.twig');
     }
 
     /**
@@ -56,15 +59,8 @@ class UserManagementController extends Controller {
             $userManager->updateUser($user);
             return new JsonResponse(array(
                                         'success' => true
-                                        ,'user' => ArrayFormatter::setCorrectKeysAfterArrayCast((array) $user)
+                                        ,'user' => $user->toArray()
             ));
-            /*return new JsonResponse(array(
-                                        'id' => $user.getId()
-                                        ,'username' => $user.getUsername()
-                                        ,'email' => $user.getEmail()
-                                        ,'enabled' => $user.isEnabled()
-                                        ,'roles' => $user->getRoles
-                                    ));*/
         }
         
         return $this->render('DEEUserBundle:UserManagement:users.html.twig', array('users' => $users, 'form' => $form->createView()));

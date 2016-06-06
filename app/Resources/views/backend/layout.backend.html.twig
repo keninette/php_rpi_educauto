@@ -46,14 +46,8 @@
                                             <li><a href="">Uploader des documents vers le serveur</a></li>
                                         </ul>
                                     </li>
-                                    <li class="dropdown">
-                                        <a data-toggle="dropdown" href="#">Candidats <span class="fa fa-chevron-down"></span></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="{{ path('dee_student_homepage') }}">Gérer les candidats</a></li>
-                                            <li><a href="">Consulter les parcours candidat</a></li>
-                                        </ul>
-                                    </li>
-                                    <li><a href="#">Leçons & examens</a></li>
+                                    <li><a href="{{ path('dee_student_homepage') }}">Candidats</a></li>
+                                    <li><a href="{{ path('dee_examtype_homepage') }}">Types d'examens</a></li>
                                     {% if is_granted('ROLE_SUPER_ADMIN') %}
                                         <li><a href="{{ path('dee_user_management') }}">Utilisateurs</a></li> <!-- todo gerer visible sur cette page et index -->
                                     {% endif %}

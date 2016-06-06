@@ -155,5 +155,31 @@ class ExamType
     {
         return $this->validityPeriod;
     }
+    
+    /**
+     * Return ID cast as a string
+     * I have to do this so the flush() action works in Exam
+     * @return string
+     */
+    /*public function __toString() 
+    {
+        return (string) $this->getId();
+    }*/
+    
+    /**
+     * Custom cast to array
+     * @return array
+     */
+    public function toArray() {
+        $array = array();
+        
+        $array['id']                = $this->getId();
+        $array['code']              = $this->getCode();
+        $array['examLabel']         = $this->getExamLabel();
+        $array['requiredAge']       = $this->getRequiredAge();
+        $array['validityPeriod']    = $this->getValidityPeriod();
+            
+        return $array;
+    }
 }
 

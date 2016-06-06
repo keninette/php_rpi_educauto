@@ -56,7 +56,8 @@ class Lesson
      */
     public function __construct() {
         // Default lesson duration = 3600s (1 hour)
-        $this->duration = 3600;
+        // Convert it to hours, so user doesn't have to convert
+        $this->duration = 60;
     }
     
     
@@ -106,30 +107,6 @@ class Lesson
         $this->duration = $duration;
     
         return $this;
-    }
-    
-    /**
-     * Set duration in jour (not seconds)
-     *
-     * @param int $hourDuration 
-     *
-     * @return Lesson
-     */
-    public function setHourDuration($hourDuration)
-    {
-        $this->duration = $hourDuration*3600;
-    
-        return $this;
-    }
-
-    /**
-     * Get duration in hours (not seconds)
-     *
-     * @return int
-     */
-    public function getHourDuration()
-    {
-        return $this->duration/3600;
     }
     
     /**
@@ -184,6 +161,30 @@ class Lesson
      */
     function setExam(Exam $exam) {
         $this->exam = $exam;
+    }
+    
+    /**
+     * Function to set what is to be displayed in form under exam input
+     * @return string
+     */
+    /*public function getExamFormDisplay() {
+        return $this->getExam()->getExamType()->getExamLabel();
+    }*/
+    
+    /**
+     * Custom cast to array
+     * @return array
+     */
+    public function toArray() {
+        $array = array();
+        
+        $array['id']        = $this->getId();
+        $array['date']      = $this->getDate();
+        $array['duration']  = $this->getDuration();
+        $array['comment']   = $this->getComment();
+        $array['exam']      = $this->getExamFormDisplay();
+        
+        return $array;
     }
 }
 
