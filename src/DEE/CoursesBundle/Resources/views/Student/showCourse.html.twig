@@ -91,7 +91,7 @@
                         $("#hidden-exam-form").fadeToggle();
                         
                         // Add exams to table
-                        //addStudentToTable(data.student);
+                        addExamToView(data.student);
                         
                         // Empty form
                         emptyFormInputs();
@@ -145,7 +145,7 @@
              * @param {DEECoursesBundle Student} user
              * @returns {undefined}
              */
-            /*function addStudentToTable(student) {
+            function addExamToView(exam) {
                 // Set new data-url to deactivate/activate & delete user        
                 var deleteLink      = $(".delete-link").first().data('url');
                 var newDeleteLink   = deleteLink.substring(0,(deleteLink.length -1)) +student.id;                
@@ -164,7 +164,7 @@
                                         +"<td class=\"fa fa-1-5x pointer fa-times-circle\" title=\"Supprimer le candidat\"  data-url=\"" +newDeleteLink +"\">&nbsp;</td>"
                                     +"</tr>"
                                 );
-            }*/
+            }
             
             /**
              *  Empty all form input (textarea, text, checkbox, etc...)
