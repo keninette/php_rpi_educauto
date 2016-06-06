@@ -85,7 +85,7 @@
              *  Add on click action to delete user
              *  Ajax call to deleteAction() from UserManagementController.php
              */
-            $(".fa-times-circle").click(function () {
+            $('table').on('click', 'td.fa-times-circle', function() {
                 var element = $(this);
                 console.log(element);
                 // Call controller

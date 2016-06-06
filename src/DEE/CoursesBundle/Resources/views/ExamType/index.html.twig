@@ -13,7 +13,7 @@
         <h1 class="col-xs-12 center-text">Liste des types d'examen</h1>
     </div>
     <div class="row margin-top-sm">
-        <table class="table">
+        <table class="table" data-url="{{ path('dee_examtype_delete',{'id': 0}) }}">
             <tr>
                 <th>#</th>
                 <th>Code </th>
@@ -28,7 +28,7 @@
                     <td>{{ examtype.examLabel }}</td>
                     <td>{{ examtype.requiredAge~" ans" }}</td>
                     <td>{{ examtype.validityPeriod == null ? "Aucune" : examtype.validityPeriod~" ans" }}</td>
-                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_examtype_delete',{'id': examtype.id}) }}" title="Supprimer le type d'examen">&nbsp;</td>
+                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_examtype_delete',{'id': examtype.id}) }}"  title="Supprimer le type d'examen">&nbsp;</td>
                 </tr>
             {% endfor %}
         </table>
@@ -84,8 +84,11 @@
             /**
              *  Add on click action to delete user
              *  Ajax call to deleteAction() from UserManagementController.php
+             *  Action used on table so it works on every child
+             *  Even those added later with jQuery
              */
-            $(".fa-times-circle").click(function () {
+            $('table').on('click', 'td.fa-times-circle', function() {
+                console.log('plop');
                 var element = $(this);
 
                 // Call controller
@@ -102,17 +105,17 @@
                     }
                 });
             });
-            
+    
             /**
              * Add a line to table to display examtype
              * @param {DEECoursesBundle ExamType} examtype
              * @returns {undefined}
              */
             function addExamTypeToTable(examtype) {
-                // Set new data-url to deactivate/activate & delete examtype        
-                var deleteLink    = $(".delete-link").first().data('url');
+                // Set new data-url to deactivate/activate & delete examtype 
+                var deleteLink    = $("table").data('url');
                 var newDeleteLink = deleteLink.substring(0,(deleteLink.length -1)) +examtype.id;                
-                
+                console.log(newDeleteLink);
                 // Add new user to table
                 $("table").append("<tr id=\""+examtype.id  +"\">"
                                         +"<td>" +examtype.id +"</td>"
@@ -120,7 +123,7 @@
                                         +"<td>" +examtype.examLabel +"</td>"
                                         +"<td>" +examtype.requiredAge +"</td>"
                                         +"<td>" +examtype.validityPeriod +"</td>"
-                                        +"<td class=\"fa fa-1-5x pointer fa-times-circle\" title=\"Supprimer le type d'examen\"  data-url=\"" +newDeleteLink +"\">&nbsp;</td>"
+                                        +"<td class=\"fa fa-1-5x pointer fa-times-circle delete-link\" data-url=\"" +newDeleteLink +"\"  title=\"Supprimer le type d'examen\">&nbsp;</td>"
                                     +"</tr>"
                                 );
             }

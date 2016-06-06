@@ -48,7 +48,7 @@ class ExamTypeController extends Controller {
 
             return new JsonResponse(array(
                                         'success'   => true
-                                        ,'examtype'  => (array) $examType
+                                        ,'examtype'  => $examType->toArray()
             ));
         }
         
