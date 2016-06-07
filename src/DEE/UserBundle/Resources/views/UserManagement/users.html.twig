@@ -89,7 +89,7 @@
              *  Add on click action to activate or deactive user
              *  Ajax call to activateAction() from UserManagementController.php
              */
-            $(".fa-circle, .fa-circle-thin").click(function () {
+            $('table').on('click', 'td.fa-circle, td.fa-circle-thin', function() {
                 var element = $(this);
 
                 if (element.parent().hasClass('inactive')) {
@@ -121,7 +121,7 @@
              *  Add on click action to delete user
              *  Ajax call to deleteAction() from UserManagementController.php
              */
-            $(".fa-times-circle").click(function () {
+            $('table').on('click', 'td.fa-times-circle', function() {
                 var element = $(this);
 
                 // Call controller

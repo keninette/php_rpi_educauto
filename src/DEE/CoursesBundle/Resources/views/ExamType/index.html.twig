@@ -55,8 +55,6 @@
                     dataType: 'json',
                     data: $('#hidden-examtype-form form').serialize(),
                     success: function (data) {
-                        console.log(data);
-                        console.log(data.examtype);
                         // hide form
                         $("#hidden-examtype-form").fadeToggle();
                         
@@ -88,7 +86,6 @@
              *  Even those added later with jQuery
              */
             $('table').on('click', 'td.fa-times-circle', function() {
-                console.log('plop');
                 var element = $(this);
 
                 // Call controller
@@ -115,14 +112,16 @@
                 // Set new data-url to deactivate/activate & delete examtype 
                 var deleteLink    = $("table").data('url');
                 var newDeleteLink = deleteLink.substring(0,(deleteLink.length -1)) +examtype.id;                
-                console.log(newDeleteLink);
+               console.log(examtype.validityPeriod);
+               console.log(examtype.validityPeriod === null);
+               
                 // Add new user to table
                 $("table").append("<tr id=\""+examtype.id  +"\">"
                                         +"<td>" +examtype.id +"</td>"
                                         +"<td>" +examtype.code +"</td>"
                                         +"<td>" +examtype.examLabel +"</td>"
-                                        +"<td>" +examtype.requiredAge +"</td>"
-                                        +"<td>" +examtype.validityPeriod +"</td>"
+                                        +"<td>" +examtype.requiredAge +" ans</td>"
+                                        +"<td>" +(examtype.validityPeriod === null ? "Aucune" : examtype.validityPeriod +" ans") +"</td>"
                                         +"<td class=\"fa fa-1-5x pointer fa-times-circle delete-link\" data-url=\"" +newDeleteLink +"\"  title=\"Supprimer le type d'examen\">&nbsp;</td>"
                                     +"</tr>"
                                 );

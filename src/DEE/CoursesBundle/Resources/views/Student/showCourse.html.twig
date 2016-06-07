@@ -122,7 +122,7 @@
              *  Add on click action to delete user
              *  Ajax call to deleteAction() from UserManagementController.php
              */
-            /*$(".fa-times-circle").click(function () {
+            $('table').on('click', 'td span.fa-times-circle', function() {
                 var element = $(this);
 
                 // Call controller
@@ -138,7 +138,7 @@
                         console.log(status);
                     }
                 });
-            });*/
+            });
             
             /**
              * Add a line to table to display student

@@ -26,11 +26,11 @@
                 <tr id="{{ student.id }}">
                     <td>{{ student.id }}</td>
                     <td>{{ student.name ~" " ~student.firstname }}</td>
-                    <td>{{ student.phone }} <bt /> {{ student.phoneOther }}</td>
+                    <td>{{ student.phone }}<br /> {{ student.phoneOther }}</td>
                     <td>{{ student.email }}</td>
                     <td>{{ student.address }} <br /> {{ student.addressOther }}</td>
                     <td><a href="{{ path('dee_student_showcourse',{'id': student.id}) }}"><span class="fa fa-1-5x pointer fa-map-signs" title="Parcours du candidat"></span>&nbsp;</a></td>
-                    <td><span class="fa fa-1-5x pointer fa-times-circle" data-url="{{ path('dee_student_delete',{'id': student.id}) }}" title="Supprimer le candidat">&nbsp;</td>
+                    <td class="fa fa-1-5x pointer fa-times-circle" data-url="{{ path('dee_student_delete',{'id': student.id}) }}" title="Supprimer le candidat">&nbsp;</td>
                 </tr>
             {% endfor %}
         </table>
@@ -87,14 +87,13 @@
              */
             $('table').on('click', 'td.fa-times-circle', function() {
                 var element = $(this);
-                console.log(element);
                 // Call controller
                 $.ajax({
                     url: element.data("url")
                     , type: 'POST'
                     , dataType: 'json'
                     , success: function (data) {
-                        element.parent().parent().fadeOut().remove();
+                        element.parent().fadeOut().remove();
                     }
                     , error: function (xhr, status) {
                         console.log(xhr.responseText);
@@ -114,16 +113,14 @@
                 var newDeleteLink   = deleteLink.substring(0,(deleteLink.length -1)) +student.id;                
                 var courseLink      = $("table").data('showcourseurl');
                 var newCourseLink   = courseLink.substring(0, (courseLink.length -1)) +student.id;
-                console.log(newDeleteLink);
-                console.log(newCourseLink);
                 
                 // Add new user to table
                 $("table").append("<tr id=\"" +student.id +"\">"
                                         +"<td>" +student.id +"</td>"
                                         +"<td>" +student.name +" " +student.firstname +"</td>"
-                                        +"<td>" +student.phone +"<br />" +student.phoneOther +"</td>"
+                                        +"<td>" +student.phone +(student.phoneOther === null ? "" : "<br />" +student.phoneOther) +"</td>"
                                         +"<td>" +student.email +"</td>"
-                                        +"<td>" +student.address +"<br />" +student.addressOther +"</td>"
+                                        +"<td>" +student.address +(student.addressOther === null ? "" : "<br />" +student.addressOther ) +"</td>"
                                         +"<td><a href=\"" +newCourseLink +"\"><span class=\"fa fa-1-5x pointer fa-map-signs\" title=\"Parcours du candidat\"></span>&nbsp;</a></td>"
                                         +"<td><span class=\"fa fa-1-5x pointer fa-times-circle\" data-url=\"" +newDeleteLink +"\" title=\"Supprimer le candidat\">&nbsp;</td>"
                                     +"</tr>"
