@@ -12,7 +12,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use DEE\CoursesBundle\Entity\ExamType;
 use DEE\CoursesBundle\Form\ExamTypeType;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use DEE\CoreBundle\Utils\ArrayFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
@@ -26,16 +25,12 @@ class ExamTypeController extends Controller {
     
     /**
      * Send all examTypes and add form to view
-     * Persists examType in database on ajax call
+     * Persists new examType 
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request) {
-        
-        // Get all exam types
-        $etRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:ExamType');
-        $examTypes = $etRepository->findAll();
-        
+
         // Create student form
         $examType = new ExamType();
         $form = $this->createForm(ExamTypeType::class, $examType);
@@ -45,12 +40,11 @@ class ExamTypeController extends Controller {
             $etManager = $this->getDoctrine()->getManager();
             $etManager->persist($examType);
             $etManager->flush();
-
-            return new JsonResponse(array(
-                                        'success'   => true
-                                        ,'examtype'  => $examType->toArray()
-            ));
         }
+        
+        // Get all exam types
+        $etRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:ExamType');
+        $examTypes = $etRepository->findAll();
         
         return $this->render('DEECoursesBundle:ExamType:index.html.twig', array('examtypes' => $examTypes, 'form' =>$form->createView()));
     }

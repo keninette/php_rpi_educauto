@@ -41,38 +41,6 @@
 
             // Hide user form so it can be displayed by clicking to h1 tag
             $("#hidden-student-form").hide();
-        
-            /**
-             * Send form data to DEECoursesBundle:Student:index controller
-             * Add new student to table
-             * @returns {boolean} : false (so it doesn't trigger the form action or event)
-             */
-            $("#hidden-student-form form").submit(function () {
-                var postUrl = $("#hidden-student-form").data("url");
-                
-                // Add user by calling controller and sending form info
-                $.ajax({
-                    url: postUrl,
-                    type: 'post',
-                    dataType: 'json',
-                    data: $('#hidden-student-form form').serialize(),
-                    success: function (data) {
-                        // hide form
-                        $("#hidden-student-form").fadeToggle();
-                        
-                        // Add user to table
-                        addStudentToTable(data.student);
-                        
-                        // Empty form
-                        emptyFormInputs();
-                    },
-                    error: function (xhr, status) {
-                           console.log(xhr.responseText);
-                           console.log(status);
-                       }
-                });
-                return false;
-            });
 
             /**
              * Display student form to be able to add one
@@ -87,6 +55,7 @@
              */
             $('table').on('click', 'td.fa-times-circle', function() {
                 var element = $(this);
+                
                 // Call controller
                 $.ajax({
                     url: element.data("url")
@@ -101,43 +70,6 @@
                     }
                 });
             });
-            
-            /**
-             * Add a line to table to display student
-             * @param {DEECoursesBundle Student} student
-             * @returns {undefined}
-             */
-            function addStudentToTable(student) {
-                // Set new data-url to deactivate/activate & delete user     
-                var deleteLink      = $("table").data('deleteurl');
-                var newDeleteLink   = deleteLink.substring(0,(deleteLink.length -1)) +student.id;                
-                var courseLink      = $("table").data('showcourseurl');
-                var newCourseLink   = courseLink.substring(0, (courseLink.length -1)) +student.id;
-                
-                // Add new user to table
-                $("table").append("<tr id=\"" +student.id +"\">"
-                                        +"<td>" +student.id +"</td>"
-                                        +"<td>" +student.name +" " +student.firstname +"</td>"
-                                        +"<td>" +student.phone +(student.phoneOther === null ? "" : "<br />" +student.phoneOther) +"</td>"
-                                        +"<td>" +student.email +"</td>"
-                                        +"<td>" +student.address +(student.addressOther === null ? "" : "<br />" +student.addressOther ) +"</td>"
-                                        +"<td><a href=\"" +newCourseLink +"\"><span class=\"fa fa-1-5x pointer fa-map-signs\" title=\"Parcours du candidat\"></span>&nbsp;</a></td>"
-                                        +"<td><span class=\"fa fa-1-5x pointer fa-times-circle\" data-url=\"" +newDeleteLink +"\" title=\"Supprimer le candidat\">&nbsp;</td>"
-                                    +"</tr>"
-                                );
-            }
-            
-            /**
-             *  Empty all form input (textarea, text, checkbox, etc...)
-             * @returns {undefined}
-             */
-            function emptyFormInputs() {
-                $(':input')
-                    .not(':button, :submit, :reset, :hidden')
-                    .val('')
-                    .removeAttr('checked')
-                    .removeAttr('selected');
-            }
         });
     </script>
 {% endblock %}    

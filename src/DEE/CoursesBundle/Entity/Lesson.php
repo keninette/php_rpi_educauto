@@ -94,6 +94,14 @@ class Lesson
     {
         return $this->date;
     }
+    
+    /**
+     * Format date to d/m/Y
+     * @return string : formatted date 
+     */
+    public function getDateToString() {
+        return date_format($this->date, 'd/m/Y');
+    }
 
     /**
      * Set duration

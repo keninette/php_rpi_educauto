@@ -24,31 +24,27 @@ class Exam
     /**
      * @var \DateTime
      *
-     * @ORM\Column(name="date", type="datetime")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="date", type="datetime",nullable=true)
      */
     private $date;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="training", type="boolean")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="training", type="boolean", nullable=true)
      */
     private $training;
     
     /**
      * @var bool
      *
-     * @ORM\Column(name="success", type="boolean")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\Column(name="success", type="boolean", nullable=true)
      */
     private $success;
     
     /**
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamType", cascade={"persist"})
-     * @ORM\JoinColumn(nullable=false)
-     * @ORM\Column(name="exam_type")
+     * @ORM\JoinColumn(name="exam_type", referencedColumnName="id", nullable=false)
      */
     private $examType;
 
@@ -93,7 +89,6 @@ class Exam
      * @return string
      */
     public function getExamFormDisplay() {
-        var_dump($this->getExamType());
         return $this->getExamType()->getExamLabel();
     }
     
@@ -130,6 +125,14 @@ class Exam
     {
         return $this->date;
     }
+    
+    /**
+     * Format date to d/m/Y
+     * @return string : formatted date 
+     */
+    public function getDateToString() {
+        return date_format($this->date, 'd/m/Y');
+    }
 
     /**
      * Get training
@@ -147,7 +150,7 @@ class Exam
      *
      * @return Exam
      */
-    function setIn_training($training) {
+    function setTraining($training) {
         $this->training = $training;
     }
 

@@ -3,17 +3,18 @@
 {% extends ":backend:layout.backend.html.twig" %}
 
 {% block body %}
-    
-    {{ dump(exams) }}
-    {{ dump(lessons) }}
-    
+
     <!-- student info and link to add exam & lesson -->
     <div class="row margin-top-sm">
         <div class="col-sm-3 col-xs-12">Photo</div> <!-- todo : photo -->
         <div class="col-sm-6 col-xs-12">
             <p>{{ student.name ~" " ~student.firstname }}</p>
             <p>{{ student.address }} <br /> {{ student.addressOther }} <br /> <!-- todo ville et cp --></p>
-            <p><span class="fa fa-phone green-text"></span>     {{ student.phone }} <br /><span class="fa fa-phone green-text"></span>     {{  student.phoneOther }}</p>
+            <p><span class="fa fa-phone green-text"></span>     {{ student.phone }} 
+                {% if student.phoneOther is not null %} 
+                    <br /><span class="fa fa-phone green-text"></span>     {{  student.phoneOther }}
+                {% endif %}
+            </p>
             <p><span class="fa fa-envelope green-text"></span>     {{ student.email }}</p>
         </div>
         <div class="col-sm-3 col-xs-12">
@@ -45,21 +46,30 @@
         <h1 class="col-xs-12 center-text">Parcours du candidat</h1>
         {# Display all exams #}
         {% for exam in exams %}
-            <h3 class="col-xs-12">exam.examType</h3>
-            <p class="col-xs-12">
-                <h4>
-                {% if exam.training %}
-                    Enseignement en cours
-                {% elseif exam.success %}
-                    Accepté à l'examen le {{ exam.date }}
-                {% elseif not exam.success %}
-                    Rejeté à l'examen le {{ exam.date }}
-                {% endif%}
-                </h4>
-            </p>
-            {% for lesson in lessons[exam.id] %}
-                lesson.id
-            {% endfor %}    
+            <div class="col-md-6 col-xs-12">
+                <span class="col-xs-9"><h3>{{ exam.examType.examLabel }}</h3></span>
+                <span class="col-xs-3 margin-top-sm delete-link fa fa-times-circle pointer" data-url="{{path('dee_exam_delete', {'id' : exam.id}) }}"></span>
+                <div class="col-xs-12">
+                    <h4>
+                    {% if exam.training %}
+                        Enseignement en cours
+                    {% elseif exam.success %}
+                        Accepté à l'examen le {{ exam.dateToString }}
+                    {% elseif not exam.success %}
+                        Rejeté à l'examen le {{ exam.date }}
+                    {% endif%}
+                    </h4>
+                </div>
+                <div class="col-xs-12">
+                {% for lesson in lessons[exam.id] %}
+                    <p>
+                        <span class="col-xs-9"><h5>{{ lesson.dateToString ~" : " ~ lesson.duration ~" minutes" }}</h5></span> 
+                        <span class="col-xs-3 margin-top-sm delete-link fa fa-times-circle pointer" data-url="{{path('dee_lesson_delete', {'id' : lesson.id}) }}"></span>
+                            {{ lesson.comment }}
+                    </p>
+                {% endfor %}  
+                </div>
+            </div>
         {% endfor %}
     </div>
         
@@ -70,40 +80,6 @@
             $("#hidden-exam-form").hide();
             $("#hidden-lesson-form").hide();
         
-            /**
-             * Send form data to DEECoursesBundle:Student:showcourse controller
-             * Add new exam to table
-             * @returns {boolean} : false (so it doesn't trigger the form action or event)
-             */
-            $("#hidden-exam-form form").submit(function () {
-               var postUrl = $("#hidden-exam-form").data("url");
-                
-                // Add user by calling controller and sending form info
-                $.ajax({
-                    url: postUrl,
-                    type: 'post',
-                    dataType: 'json',
-                    data: $('#hidden-exam-form form').serialize(),
-                    success: function (data) {
-                        console.log(data);
-                        console.log(data.exam);
-                        // hide form
-                        $("#hidden-exam-form").fadeToggle();
-                        
-                        // Add exams to table
-                        addExamToView(data.student);
-                        
-                        // Empty form
-                        emptyFormInputs();
-                    },
-                    error: function (xhr, status) {
-                           console.log(xhr.responseText);
-                           console.log(status);
-                       }
-                });
-                return false;
-            });
-
             /**
              * Display exam form to be able to add one
              */
@@ -117,12 +93,12 @@
             $("#toggle-lesson-form").click(function () {
                 $("#hidden-lesson-form").fadeToggle();
             });
-
+            
             /**
              *  Add on click action to delete user
              *  Ajax call to deleteAction() from UserManagementController.php
              */
-            $('table').on('click', 'td span.fa-times-circle', function() {
+           $('.delete-link').on('click',function() {
                 var element = $(this);
 
                 // Call controller
@@ -139,44 +115,6 @@
                     }
                 });
             });
-            
-            /**
-             * Add a line to table to display student
-             * @param {DEECoursesBundle Student} user
-             * @returns {undefined}
-             */
-            function addExamToView(exam) {
-                // Set new data-url to deactivate/activate & delete user        
-                var deleteLink      = $(".delete-link").first().data('url');
-                var newDeleteLink   = deleteLink.substring(0,(deleteLink.length -1)) +student.id;                
-                var courseLink      = $(".course-link");first().data('url');
-                var newCourseLink   = courseLink.substring(0, (courseLink.length -1)) +student.id;
-                
-                
-                // Add new user to table
-                $("table").append("<tr id=\"" +student.id +"\">"
-                                        +"<td>" +student.id +"</td>"
-                                        +"<td>" +student.name +" " +student.firstname +"</td>"
-                                        +"<td>" +student.phone +"<br />" +student.phoneOther +"</td>"
-                                        +"<td>" +student.email +"</td>"
-                                        +"<td>" +student.address +"<br />" +student.addressOther +"</td>"
-                                        +"<td><a href=\"" +newCourseLink +"\"><span class=\"fa fa-1-5x pointer fa-map-signs course-link\" data-url=\"" +newCourseLink +"\" title=\"Parcours du candidat\"></span>&nbsp;</a></td>"
-                                        +"<td class=\"fa fa-1-5x pointer fa-times-circle\" title=\"Supprimer le candidat\"  data-url=\"" +newDeleteLink +"\">&nbsp;</td>"
-                                    +"</tr>"
-                                );
-            }
-            
-            /**
-             *  Empty all form input (textarea, text, checkbox, etc...)
-             * @returns {undefined}
-             */
-            function emptyFormInputs(form) {
-                $(form +':input')
-                    .not(':button, :submit, :reset, :hidden')
-                    .val('')
-                    .removeAttr('checked')
-                    .removeAttr('selected');
-            }
         });
     </script>
 {% endblock %}    

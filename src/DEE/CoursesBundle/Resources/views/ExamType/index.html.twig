@@ -41,38 +41,6 @@
             $("#hidden-examtype-form").hide();
         
             /**
-             * Send form data to DEECoursesBundle:Student:index controller
-             * Add new student to table
-             * @returns {boolean} : false (so it doesn't trigger the form action or event)
-             */
-            $("#hidden-examtype-form form").submit(function () {
-                var postUrl = $("#hidden-examtype-form").data("url");
-                
-                // Add user by calling controller and sending form info
-                $.ajax({
-                    url: postUrl,
-                    type: 'post',
-                    dataType: 'json',
-                    data: $('#hidden-examtype-form form').serialize(),
-                    success: function (data) {
-                        // hide form
-                        $("#hidden-examtype-form").fadeToggle();
-                        
-                        // Add user to table
-                        addExamTypeToTable(data.examtype);
-                        
-                        // Empty form
-                        emptyFormInputs();
-                    },
-                    error: function (xhr, status) {
-                           console.log(xhr.responseText);
-                           console.log(status);
-                       }
-                });
-                return false;
-            });
-
-            /**
              * Display student form to be able to add one
              */
             $("#toggle-examtype-form").click(function () {
@@ -102,42 +70,6 @@
                     }
                 });
             });
-    
-            /**
-             * Add a line to table to display examtype
-             * @param {DEECoursesBundle ExamType} examtype
-             * @returns {undefined}
-             */
-            function addExamTypeToTable(examtype) {
-                // Set new data-url to deactivate/activate & delete examtype 
-                var deleteLink    = $("table").data('url');
-                var newDeleteLink = deleteLink.substring(0,(deleteLink.length -1)) +examtype.id;                
-               console.log(examtype.validityPeriod);
-               console.log(examtype.validityPeriod === null);
-               
-                // Add new user to table
-                $("table").append("<tr id=\""+examtype.id  +"\">"
-                                        +"<td>" +examtype.id +"</td>"
-                                        +"<td>" +examtype.code +"</td>"
-                                        +"<td>" +examtype.examLabel +"</td>"
-                                        +"<td>" +examtype.requiredAge +" ans</td>"
-                                        +"<td>" +(examtype.validityPeriod === null ? "Aucune" : examtype.validityPeriod +" ans") +"</td>"
-                                        +"<td class=\"fa fa-1-5x pointer fa-times-circle delete-link\" data-url=\"" +newDeleteLink +"\"  title=\"Supprimer le type d'examen\">&nbsp;</td>"
-                                    +"</tr>"
-                                );
-            }
-            
-            /**
-             *  Empty all form input (textarea, text, checkbox, etc...)
-             * @returns {undefined}
-             */
-            function emptyFormInputs() {
-                $(':input')
-                    .not(':button, :submit, :reset, :hidden')
-                    .val('')
-                    .removeAttr('checked')
-                    .removeAttr('selected');
-            }
         });
     </script>
 {% endblock %}    

@@ -14,10 +14,9 @@ use DEE\CoursesBundle\Form\ExamType;
 use DEE\CoursesBundle\Form\LessonType;
 use DEE\CoursesBundle\Entity\Student;
 use DEE\CoursesBundle\Entity\Exam;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use DEE\CoursesBundle\Entity\Lesson;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\JsonResponse;
-use DEE\CoreBundle\Utils\ArrayFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 /**
@@ -29,16 +28,12 @@ class StudentController extends Controller {
     
     /**
      * Send all students and add form to view
-     * Persists student in database on ajax call
+     * Persists student in database 
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request){
-        
-        // Get all students
-        $studentRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:Student');
-        $students = $studentRepository->findAll();
-        
+
         // Create student form
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
@@ -48,12 +43,11 @@ class StudentController extends Controller {
             $studentManager = $this->getDoctrine()->getManager();
             $studentManager->persist($student);
             $studentManager->flush();
-
-            return new JsonResponse(array(
-                                        'success'   => true
-                                        ,'student'  => $student->toArray()
-            ));
         }
+        
+        // Get all students
+        $studentRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:Student');
+        $students = $studentRepository->findAll();
         
         return $this->render('DEECoursesBundle:Student:index.html.twig', array('students' => $students, 'form' =>$form->createView()));
     }
@@ -97,17 +91,6 @@ class StudentController extends Controller {
         // Find user in database
         $student = $studentManager->find(Student::class, $id);
         
-        // Find all exams he has suscribed to
-        $exams  = $examRepo->findBy(array('student' => $student));
-        
-        // Find all lessons for each exam student has suscribed to
-        // Add them to an array in which key is exam id
-        $lessons = array(); 
-        foreach ($exams as $exam) {
-            $theseLessons = $lessonRepo->findBy(array('exam' => $exam));
-            $lessons[$exam->getId()] = $theseLessons;
-        }
-        
         // Get new exam form
         $exam       = new Exam();
         $examForm   = $this->createForm(ExamType::class, $exam);
@@ -124,19 +107,22 @@ class StudentController extends Controller {
                 $examManager->persist($exam);
                 $examManager->flush();
                 
-                return new JsonResponse(array('SUCCESS' => true
-                                                ,'exam' => $exam->toArray()
-                                        ));
-                
             // Lesson form    
             } else if ($request->request->has('lesson') && $lessonForm->handleRequest($request)->isValid()) {
                 $lessonManager->persist($lesson);
                 $lessonManager->flush();
-                
-                return new JsonResponse(array('SUCCESS' => true
-                                                ,'lesson' => $lesson->toArray()
-                                        ));
             }
+        }
+        
+        // Find all exams this student has suscribed to
+        $exams  = $examRepo->findBy(array('student' => $student));
+        
+        // Find all lessons for each exam student has suscribed to
+        // Add them to an array in which key is exam id
+        $lessons = array(); 
+        foreach ($exams as $exam) {
+            $theseLessons = $lessonRepo->findBy(array('exam' => $exam));
+            $lessons[$exam->getId()] = $theseLessons;
         }
         
         // Return view
@@ -145,7 +131,7 @@ class StudentController extends Controller {
                                     'student'       => $student
                                     , 'exams'       => $exams
                                     , 'lessons'     => $lessons
-                                    ,'examForm'     => $examForm->createView()
+                                    , 'examForm'    => $examForm->createView()
                                     , 'lessonForm'  => $lessonForm->createView()
                             ));
     }

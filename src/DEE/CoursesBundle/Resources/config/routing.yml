@@ -1,3 +1,19 @@
+# Lesson routes
+dee_lesson_delete:
+    path: /lessons/delete/{id}
+    defaults:
+        _controller: DEECoursesBundle:Lesson:delete
+    requirements:
+        id: \d+
+
+# Exam routes
+dee_exam_delete:
+    path: /exams/delete/{id}
+    defaults:
+        _controller: DEECoursesBundle:Exam:delete
+    requirements:
+        id: \d+
+
 # Student routes
 dee_student_showcourse:
     path: /students/showcourse/{id}

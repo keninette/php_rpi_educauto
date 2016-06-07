@@ -26,6 +26,11 @@ class UserManagementController extends Controller {
     }
 
     /**
+     * Display all users & add user form
+     * Handle form
+     * @param Request $request
+     * @return view to render
+     * 
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function usersAction(Request $request) {
@@ -67,6 +72,10 @@ class UserManagementController extends Controller {
     }
 
     /**
+     * Activate or deactivate user controller
+     * @param type $id
+     * @return JsonResponse
+     * 
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function activateAction($id) {
@@ -87,6 +96,10 @@ class UserManagementController extends Controller {
     }
 
     /**
+     * Delete user controller
+     * @param integer $id : user id
+     * @return JsonResponse
+     * 
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function deleteAction($id) {
@@ -100,7 +113,11 @@ class UserManagementController extends Controller {
 
         return new JsonResponse(array('success' => true));
     }
-
+    
+    /**
+     * Get all existing roles in app
+     * @return array[rolename formatted] = rolename raw
+     */
     public function getExistingRoles() {
         $roleHierarchy = $this->container->getParameter('security.role_hierarchy.roles');
         $existingRoles = array_keys($roleHierarchy);
