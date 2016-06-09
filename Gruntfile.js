@@ -74,11 +74,22 @@ module.exports = function (grunt) {
                         // require in the page*.js files.
                         {
                             // module names are relative to baseUrl/paths config
-                            name: 'app/core',
+                            name: 'app/prices',
                             exclude: ['common']
                         }
                     ]
                 }
+            }
+        },
+        
+        copy: {
+            main: {
+                files: [{
+                    expand: true,
+                    cwd: '<%= appDir %>/vendor/font-awesome/fonts/',
+                    src: ['**'],
+                    dest: '<%= appDir %>/fonts/'
+                }]
             }
         },
 
@@ -109,10 +120,22 @@ module.exports = function (grunt) {
                             dest: '<%= builtDir %>'
                         });
                     });
-
+                    
                     return files;
                 })()
             }
+        },
+        
+        cssmin: {
+            dist: {
+                options: {
+                    banner: '/*! MyLib.js 1.0.0 | Aurelio De Rosa (@AurelioDeRosa) | MIT Licensed */'
+                },
+                files: {
+                    '<%= builtDir %>/css/frontend.css': '<%= builtDir %>/css/frontend.css',
+                    '<%= builtDir %>/css/backend.css': '<%= builtDir %>/css/backend.css'
+                }
+           }
         },
 
         // Make sure code styles are up to par and there are no obvious mistakes
@@ -129,13 +152,12 @@ module.exports = function (grunt) {
         less: {
             development: {
                 options: {
-                    compress: true,
-                    yuicompress: true,
+                    compress: false,
+                    yuicompress: false,
                     optimization: 2
                 },
                 files: {
                     //   Destination file       :      Source file
-                    "<%= appDir %>/css/main.css": "<%= appDir %>/less/main.less", 
                     "<%= appDir %>/css/frontend.css": "<%= appDir %>/less/frontend.less",
                     "<%= appDir %>/css/backend.css": "<%= appDir %>/less/backend.less"
                 }
@@ -163,7 +185,7 @@ module.exports = function (grunt) {
             // watch all .less files and run less
             styles: {
                 files: ['<%= appDir %>/less/*.less'],
-                tasks: ['less'],
+                tasks: ['copy', 'less'],
                 options: {
                     spawn: false
                 }
@@ -178,13 +200,15 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-requirejs');
     grunt.loadNpmTasks('grunt-contrib-less');
-    //grunt.loadNpmTasks('grunt-contrib-copy');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-contrib-cssmin');
+
 
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['jshint', 'less']);
+    grunt.registerTask('default', ['jshint', 'copy', 'less']);
     //grunt.registerTask('default', ['sass', 'jshint', 'less']);
 
     // register a "production" task that sets everything up before deployment
-    grunt.registerTask('production', ['jshint', 'requirejs', 'uglify', 'less']);
+    grunt.registerTask('production', ['jshint', 'requirejs', 'copy', 'uglify', 'less', 'cssmin']);
 };

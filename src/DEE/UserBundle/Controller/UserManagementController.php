@@ -34,6 +34,9 @@ class UserManagementController extends Controller {
      * @Security("has_role('ROLE_SUPER_ADMIN')")
      */
     public function usersAction(Request $request) {
+        
+        //if ($request->isXmlHttpRequest())
+        
         // Get all users
         $userManager = $this->get('fos_user.user_manager');
         $users = $userManager->findUsers();

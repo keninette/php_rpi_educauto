@@ -98,19 +98,10 @@
             </div>
         </div>
     </section>   
-    <script> $(".display-none").hide();</script>
-    <script>$(".sub-container-prices").click(function() {
-       var helpDivPrefix    = 'sub-container-prices-help-';
-       var id               = $(this).attr('id');
-       var numDiv           = id.substr(id.length -1);
-       
-       $('#' +helpDivPrefix +numDiv).fadeToggle('slow');
-       
-   }) ;</script>
 {% endblock%}    
 
 {% block requirejs %} 
     {{ include('DEECoreBundle::_requirejs.html.twig', {
-            module: false
+            module: 'app/prices'
         }) }}
 {%endblock%}
