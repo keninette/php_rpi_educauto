@@ -20,15 +20,19 @@ class LoadUser implements FixtureInterface{
      * @param ObjectManager $manager
      */
     public function load(ObjectManager $manager) {
-        $names = array ('Jean-Gilles'
+        $names = array ('jeangilles'
                         ,'kbj'
-                        ,'Jean-Neige'
-                        ,'Harry Seldon'
+                        ,'jeanneige'
+                        ,'harryseldon'
                         );
         
         foreach ($names as $name) {
             $user = new User();
-            $user->setUsername($name);
+            $user   ->setUsername($name)
+                    ->setPassword($name)
+                    ->setEmail($name.'@' .$name .'.plop')
+                    ->setEnabled(true);
+            
             $manager->persist($user);
         }
         
