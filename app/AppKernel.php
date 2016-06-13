@@ -20,6 +20,7 @@ class AppKernel extends Kernel
             new DEE\UserBundle\DEEUserBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new DEE\CoursesBundle\DEECoursesBundle(),
+            new DEE\FtpBundle\DEEFtpBundle(),
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {

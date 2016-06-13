@@ -1,3 +1,7 @@
+dee_ftp:
+    resource: "@DEEFtpBundle/Resources/config/routing.yml"
+    prefix:   /
+
 dee_courses_bundle:
     resource: "@DEECoursesBundle/Resources/config/routing.yml"
     prefix:   /courses

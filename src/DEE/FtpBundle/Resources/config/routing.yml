@@ -1,0 +1,3 @@
+dee_ftp_homepage:
+    path:     /
+    defaults: { _controller: DEEFtpBundle:Default:index }
