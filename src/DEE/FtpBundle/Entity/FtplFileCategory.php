@@ -7,10 +7,10 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * UploadedFileCategory
  *
- * @ORM\Table(name="upl_file_category")
- * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\UploadedFileCategoryRepository")
+ * @ORM\Table(name="ftp_file_category")
+ * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\FtpFileCategoryRepository")
  */
-class UplFileCategory
+class FtpFileCategory
 {
     /**
      * @var int

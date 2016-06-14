@@ -81,6 +81,7 @@ class StudentController extends Controller {
      */
     public function showCourseAction($id, Request $request) {
         
+        // TODO virer les managers en double
         // Prepare all managers & repositories
         $studentManager = $this->getDoctrine()->getManager();
         $examManager    = $this->getDoctrine()->getManager();
