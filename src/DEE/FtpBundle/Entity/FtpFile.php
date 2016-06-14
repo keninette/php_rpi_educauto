@@ -12,7 +12,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\FtpFileRepository")
  */
 class FtpFile {
-    private static $CST_NAME_LENGTH = 15;
+    const CST_NAME_LENGTH = 15;
     /**
      * @var int
      *
@@ -57,7 +57,7 @@ class FtpFile {
         $name = $this->file->getClientOriginalName();
 
         // Save file name
-        $this->name = $name;
+        $this->name = createRandomName(); // TODO gérer extension
         
         // Move file to FTP
         $ftp->put($this->getFtpFileName(), $this->file, FTP_BINARY);
@@ -65,11 +65,6 @@ class FtpFile {
 
     public function getFtpFileName() {
         return $this->category->getFtpDirectory() .$this->name;
-    }
-
-    protected function getUploadRootDir() {
-        // On retourne le chemin relatif vers l'image pour notre code PHP
-        return __DIR__ . '/../../../../web/' . $this->getUploadDir();
     }
 
     /**
