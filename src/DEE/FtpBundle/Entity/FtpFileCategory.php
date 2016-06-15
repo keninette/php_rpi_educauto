@@ -5,13 +5,15 @@ namespace DEE\FtpBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * UploadedFileCategory
+ * FtpFileCategory
  *
- * @ORM\Table(name="upl_file_category")
- * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\UploadedFileCategoryRepository")
+ * @ORM\Table(name="ftp_file_category")
+ * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\FtpFileCategoryRepository")
  */
-class UplFileCategory
+class FtpFileCategory
 {
+    const MAX_FILE_SIZE = 300;
+  
     /**
      * @var int
      *
@@ -36,13 +38,6 @@ class UplFileCategory
     private $nbOfCopies;
 
     /**
-     * @var \DateTime
-     *
-     * @ORM\Column(name="deliveryDate", type="datetime")
-     */
-    private $deliveryDate;
-
-    /**
      * @var int
      *
      * @ORM\Column(name="validityPeriod", type="integer", nullable=true)
@@ -52,10 +47,20 @@ class UplFileCategory
     /**
      * @var string
      *
-     * @ORM\Column(name="ftpDirectory", type="string", length=255)
+     * @ORM\Column(name="ftpDirectory", type="string", length=255, nullable=false)
      */
     private $ftpDirectory;
-
+    
+    /**
+     * @var string array
+     * 
+     * @ORM\Column(name="authorized_extensions", type="array", nullable=false)
+     */
+    private $authorizedExtensions;
+    
+    public function __construct() {
+        $this->authorizedExtensions = array();
+    }
 
     /**
      * Get id
@@ -72,7 +77,7 @@ class UplFileCategory
      *
      * @param string $label
      *
-     * @return UploadedFileCategory
+     * @return FtpFileCategory
      */
     public function setLabel($label)
     {
@@ -92,35 +97,11 @@ class UplFileCategory
     }
 
     /**
-     * Set deliveryDate
-     *
-     * @param \DateTime $deliveryDate
-     *
-     * @return UploadedFileCategory
-     */
-    public function setDeliveryDate($deliveryDate)
-    {
-        $this->deliveryDate = $deliveryDate;
-
-        return $this;
-    }
-
-    /**
-     * Get deliveryDate
-     *
-     * @return \DateTime
-     */
-    public function getDeliveryDate()
-    {
-        return $this->deliveryDate;
-    }
-
-    /**
      * Set validityPeriod
      *
      * @param integer $validityPeriod
      *
-     * @return UploadedFileCategory
+     * @return FtpFileCategory
      */
     public function setValidityPeriod($validityPeriod)
     {
@@ -144,7 +125,7 @@ class UplFileCategory
      *
      * @param string $ftpDirectory
      *
-     * @return UploadedFileCategory
+     * @return FtpileCategory
      */
     public function setFtpDirectory($ftpDirectory)
     {
@@ -179,6 +160,28 @@ class UplFileCategory
      */
     function setNbOfCopies($nbOfCopies) {
         $this->nbOfCopies = $nbOfCopies;
+    }
+    
+    /**
+     * Get authorized extensions
+     * 
+     * @return string array
+     */
+    function getAuthorizedExtensions() {
+        return $this->authorizedExtensions;
+    }
+
+    /**
+     * Set authorized extensions
+     * 
+     * @param type $authorizedExtensions
+     */
+    function setAuthorizedExtensions($authorizedExtensions) {
+        if (!in_array($authorizedExtensions, $this->authorizedExtensions, true)) {
+            $this->authorizedExtensions[] = $authorizedExtensions;
+        }
+
+        return $this;
     }
 }
 

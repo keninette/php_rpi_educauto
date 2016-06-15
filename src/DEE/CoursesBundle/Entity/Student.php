@@ -262,6 +262,14 @@ class Student
         
         return $array;
     }
+    
+    /**
+     * Return a string used to identify user in forms
+     * @return string
+     */
+    public function getFormDisplay() { // tODo ajouter ville
+        return $this->name .' ' .$this->firstname ;
+    }
 
 }
 
