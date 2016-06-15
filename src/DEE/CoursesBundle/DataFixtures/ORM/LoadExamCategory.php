@@ -1,20 +1,20 @@
 <?php
 
-// src/DEE/CoursesBundle/DataFixtures/ORM/LoadExamType.php
+// src/DEE/CoursesBundle/DataFixtures/ORM/LoadExamCategory.php
 
 namespace DEE\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\FixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use DEE\CoursesBundle\Entity\ExamType;
+use DEE\CoursesBundle\Entity\ExamCategory;
 
 
 /**
- * Description of LoadExamType
+ * Description of LoadExamCategory
  *
  * @author kbj
  */
-class LoadExamType {
+class LoadExamCategory {
     
      /**
      * Function used to create ftp file categories into database
@@ -41,13 +41,13 @@ class LoadExamType {
         
         $i = 0;
         foreach ($codes as $code) {
-            $examType = new ExamType();
-            $examType   ->setCode($code)
+            $ExamCategory = new ExamCategory();
+            $ExamCategory   ->setCode($code)
                         ->setExamLabel($labels[$i])
                         ->setRequiredAge($requiredAge[$i]);
-            if ($validityPeriod[$i] > 0) { $examType->setValidityPeriod($validityPeriod[$i]); }
+            if ($validityPeriod[$i] > 0) { $ExamCategory->setValidityPeriod($validityPeriod[$i]); }
             
-            $manager->persist($examType);
+            $manager->persist($ExamCategory);
             $i++;
         }
         

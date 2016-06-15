@@ -3,14 +3,16 @@
 namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+
 
 /**
- * ExamType
+ * ExamCategory
  *
- * @ORM\Table(name="exam_type")
- * @ORM\Entity(repositoryClass="DEE\CoursesBundle\Repository\ExamTypeRepository")
+ * @ORM\Table(name="exam_category")
+ * @ORM\Entity(repositoryClass="DEE\CoursesBundle\Repository\ExamCategoryRepository")
  */
-class ExamType
+class ExamCategory
 {
     /**
      * @var int
@@ -25,15 +27,20 @@ class ExamType
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=10, unique=true)
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=10)
      */
     private $code;
 
     /**
      * @var string
      *
-     * @ORM\Column(name="exam_label", type="string", length=50)
+     * @ORM\Column(name="label", type="string", length=50)
+     * 
+     * Assert\Type(type="string")
+     * @Assert\Length(max=50)
      */
-    private $examLabel;
+    private $label;
 
     /**
      * @var int
@@ -65,7 +72,7 @@ class ExamType
      *
      * @param string $code
      *
-     * @return ExamType
+     * @return ExamCategory
      */
     public function setCode($code)
     {
@@ -89,11 +96,11 @@ class ExamType
      *
      * @param string $examLabel
      *
-     * @return ExamType
+     * @return ExamCategory
      */
-    public function setExamLabel($examLabel)
+    public function setLabel($label)
     {
-        $this->examLabel = $examLabel;
+        $this->label = $label;
     
         return $this;
     }
@@ -103,9 +110,9 @@ class ExamType
      *
      * @return string
      */
-    public function getExamLabel()
+    public function getLabel()
     {
-        return $this->examLabel;
+        return $this->label;
     }
 
     /**
@@ -113,7 +120,7 @@ class ExamType
      *
      * @param integer $requiredAge
      *
-     * @return ExamType
+     * @return ExamCategory
      */
     public function setRequiredAge($requiredAge)
     {
@@ -137,7 +144,7 @@ class ExamType
      *
      * @param integer $validityPeriod
      *
-     * @return ExamType
+     * @return ExamCategory
      */
     public function setValidityPeriod($validityPeriod)
     {
@@ -157,16 +164,6 @@ class ExamType
     }
     
     /**
-     * Return ID cast as a string
-     * I have to do this so the flush() action works in Exam
-     * @return string
-     */
-    /*public function __toString() 
-    {
-        return (string) $this->getId();
-    }*/
-    
-    /**
      * Custom cast to array
      * @return array
      */
@@ -175,7 +172,7 @@ class ExamType
         
         $array['id']                = $this->getId();
         $array['code']              = $this->getCode();
-        $array['examLabel']         = $this->getExamLabel();
+        $array['label']             = $this->getLabel();
         $array['requiredAge']       = $this->getRequiredAge();
         $array['validityPeriod']    = $this->getValidityPeriod();
             

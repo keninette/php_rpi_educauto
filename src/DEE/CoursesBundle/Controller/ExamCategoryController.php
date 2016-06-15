@@ -9,60 +9,59 @@
 namespace DEE\CoursesBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use DEE\CoursesBundle\Entity\ExamType;
-use DEE\CoursesBundle\Form\ExamTypeType;
+use DEE\CoursesBundle\Entity\ExamCategory;
+use DEE\CoursesBundle\Form\ExamCategoryType;
 use Symfony\Component\HttpFoundation\Request;
-use DEE\CoreBundle\Utils\ArrayFormatter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 
 
 /**
- * Controller regarding all examtype actions available
+ * Controller regarding all ExamCategory actions available
  *
  * @author Delphine Gauthier [at]DEE
  */
-class ExamTypeController extends Controller {
+class ExamCategoryController extends Controller {
     
     /**
-     * Send all examTypes and add form to view
-     * Persists new examType 
+     * Send all ExamCategorys and add form to view
+     * Persists new ExamCategory 
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request) {
 
         // Create student form
-        $examType = new ExamType();
-        $form = $this->createForm(ExamTypeType::class, $examType);
+        $ExamCategory = new ExamCategory();
+        $form = $this->createForm(ExamCategoryType::class, $ExamCategory);
         
         // Manage form if it has been filled and return ajax response
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $etManager = $this->getDoctrine()->getManager();
-            $etManager->persist($examType);
-            $etManager->flush();
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($ExamCategory);
+            $entityManager->flush();
         }
         
         // Get all exam types
-        $etRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:ExamType');
-        $examTypes = $etRepository->findAll();
+        $etRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:ExamCategory');
+        $ExamCategories = $etRepository->findAll();
         
-        return $this->render('DEECoursesBundle:ExamType:index.html.twig', array('examtypes' => $examTypes, 'form' =>$form->createView()));
+        return $this->render('DEECoursesBundle:ExamCategory:index.html.twig', array('ExamCategories' => $ExamCategories, 'form' =>$form->createView()));
     }
     
     /**
-     * Delete an examType in database
+     * Delete an ExamCategory in database
      * @return JSONResponse success tag
      * 
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function deleteAction($id) {
 
-        // Get examType
+        // Get ExamCategory
         $etManager = $this->getDoctrine()->getManager();
-        $examType = $etManager->find(ExamType::class, $id);
+        $ExamCategory = $etManager->find(ExamCategory::class, $id);
 
         // Deactivate user
-        $etManager->remove($examType);
+        $etManager->remove($ExamCategory);
         $etManager->flush();
 
         return new JsonResponse(array('success' => true));

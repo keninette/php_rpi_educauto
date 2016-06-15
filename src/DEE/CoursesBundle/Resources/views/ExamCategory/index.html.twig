@@ -4,16 +4,16 @@
 
 {% block body %}
    <div class="row margin-top-sm">
-        <h1 class="col-xs-12 center-text pointer" id="toggle-examtype-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un type d'examen</h1>
+        <h1 class="col-xs-12 center-text pointer" id="toggle-ExamCategory-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un type d'examen</h1>
     </div>
-    <div class="row margin-top-sm" id="hidden-examtype-form" data-url="{{ path('dee_examtype_homepage') }}">
+    <div class="row margin-top-sm" id="hidden-ExamCategory-form" data-url="{{ path('dee_examcategory_homepage') }}">
         {{ form(form) }}
     </div>
     <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text">Liste des types d'examen</h1>
     </div>
     <div class="row margin-top-sm">
-        <table class="table" data-url="{{ path('dee_examtype_delete',{'id': 0}) }}">
+        <table class="table" data-url="{{ path('dee_examcategory_delete',{'id': 0}) }}">
             <tr>
                 <th>#</th>
                 <th>Code </th>
@@ -21,14 +21,14 @@
                 <th>Age requis</th>
                 <th>Période de validité</th>
                 <th>&nbsp;</th>
-            {% for examtype in examtypes %}
-                <tr id="{{ examtype.id }}">
-                    <td>{{ examtype.id }}</td>
-                    <td>{{ examtype.code }}</td>
-                    <td>{{ examtype.examLabel }}</td>
-                    <td>{{ examtype.requiredAge~" ans" }}</td>
-                    <td>{{ examtype.validityPeriod == null ? "Aucune" : examtype.validityPeriod~" ans" }}</td>
-                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_examtype_delete',{'id': examtype.id}) }}"  title="Supprimer le type d'examen">&nbsp;</td>
+            {% for ExamCategory in ExamCategories %}
+                <tr id="{{ ExamCategory.id }}">
+                    <td>{{ ExamCategory.id }}</td>
+                    <td>{{ ExamCategory.code }}</td>
+                    <td>{{ ExamCategory.label }}</td>
+                    <td>{{ ExamCategory.requiredAge~" ans" }}</td>
+                    <td>{{ ExamCategory.validityPeriod == null ? "Aucune" : ExamCategory.validityPeriod~" ans" }}</td>
+                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_examcategory_delete',{'id': ExamCategory.id}) }}"  title="Supprimer le type d'examen">&nbsp;</td>
                 </tr>
             {% endfor %}
         </table>
@@ -38,13 +38,13 @@
         $(function () {
 
             // Hide user form so it can be displayed by clicking to h1 tag
-            $("#hidden-examtype-form").hide();
+            $("#hidden-ExamCategory-form").hide();
         
             /**
              * Display student form to be able to add one
              */
-            $("#toggle-examtype-form").click(function () {
-                $("#hidden-examtype-form").fadeToggle();
+            $("#toggle-ExamCategory-form").click(function () {
+                $("#hidden-ExamCategory-form").fadeToggle();
             });
 
             /**

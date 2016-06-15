@@ -48,7 +48,7 @@
         {% for exam in exams %}
             <div class="col-md-6 col-xs-12">
                 <h1 class="col-xs-1 margin-top-sm delete-link fa fa-times-circle pointer" data-url="{{path('dee_exam_delete', {'id' : exam.id}) }}"></h1>
-                <span class="col-xs-11"><h3>{{ exam.examType.examLabel }}</h3></span>
+                <span class="col-xs-11"><h3>{{ exam.category.label }}</h3></span>
                 <div class="col-xs-12">
                     <h4>
                     {% if exam.training %}

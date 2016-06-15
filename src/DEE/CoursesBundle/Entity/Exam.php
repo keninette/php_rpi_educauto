@@ -3,6 +3,7 @@
 namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Exam
@@ -25,6 +26,8 @@ class Exam
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime",nullable=true)
+     * 
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -32,6 +35,7 @@ class Exam
      * @var bool
      *
      * @ORM\Column(name="training", type="boolean", nullable=true)
+     * 
      */
     private $training;
     
@@ -43,10 +47,11 @@ class Exam
     private $success;
     
     /**
-     * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamType", cascade={"persist"})
-     * @ORM\JoinColumn(name="exam_type", referencedColumnName="id", nullable=false)
+     * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamCategory", cascade={"persist"})
+     * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
+     * @Assert\Valid()
      */
-    private $examType;
+    private $category;
 
     /**
      *
@@ -54,6 +59,8 @@ class Exam
      * 
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Assert\Valid()
      */
     private $student;
     
@@ -79,7 +86,7 @@ class Exam
         $array['date']      = $this->getDate();
         $array['training']  = $this->getTraining();
         $array['success']   = $this->getSuccess();
-        $array['examType']  = $this->getExamType()->getExamLabel();
+        $array['ExamCategory']  = $this->getExamCategory()->getExamLabel();
         
         return $array;
     }
@@ -89,7 +96,7 @@ class Exam
      * @return string
      */
     public function getExamFormDisplay() {
-        return $this->getExamType()->getExamLabel();
+        return $this->getCategory()->getLabel();
     }
     
     /**
@@ -180,23 +187,23 @@ class Exam
     }
     
     /**
-     * Get examType
+     * Get category
      *
-     * @return ExamType
+     * @return category
      */
-    function getExamType() {
-        return $this->examType;
+    function getCategory() {
+        return $this->category;
     }
     
     /**
-     * Set examType
+     * Set ExamCategory
      *
-     * @param ExamType $examType
+     * @param ExamCategory $ExamCategory
      *
      * @return Exam
      */
-    function setExamType(ExamType $examType) {
-        $this->examType = $examType;
+    function setCategory(ExamCategory $category) {
+        $this->category = $category;
     }
     
     /**
@@ -211,7 +218,7 @@ class Exam
     /**
      * Set student
      *
-     * @param ExamType $student
+     * @param ExamCategory $student
      *
      * @return Student
      */

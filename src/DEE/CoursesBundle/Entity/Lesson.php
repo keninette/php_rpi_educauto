@@ -3,6 +3,7 @@
 namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Lesson
@@ -25,6 +26,8 @@ class Lesson
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime")
+     * 
+     * @Assert\DateTime()
      */
     private $date;
 
@@ -32,6 +35,8 @@ class Lesson
      * @var int
      * Duration must be saved in seconds
      * @ORM\Column(name="duration", type="integer")
+     * 
+     * @Assert\Type(type="integer")
      */
     private $duration;
 
@@ -39,6 +44,9 @@ class Lesson
      * @var string
      *
      * @ORM\Column(name="comment", type="string", length=1500, nullable=true)
+     * 
+     * @Assert\Type(type="string")
+     * @Assert\Length(min=0, max=1500)
      */
     private $comment;
     
@@ -48,6 +56,8 @@ class Lesson
      * 
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Exam", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
+     * 
+     * @Assert\Valid()
      */
     private $exam;
 
@@ -176,7 +186,7 @@ class Lesson
      * @return string
      */
     /*public function getExamFormDisplay() {
-        return $this->getExam()->getExamType()->getExamLabel();
+        return $this->getExam()->getExamCategory()->getExamLabel();
     }*/
     
     /**

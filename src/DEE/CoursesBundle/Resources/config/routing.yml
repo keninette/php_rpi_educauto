@@ -34,15 +34,15 @@ dee_student_homepage:
       defaults:
           _controller:  DEECoursesBundle:Student:index
   
-# ExamType routes          
-dee_examtype_delete:
-    path: /examtypes/delete/{id}
+# ExamCategory routes          
+dee_examcategory_delete:
+    path: /examcategory/delete/{id}
     defaults:
-        _controller:   DEECoursesBundle:ExamType:delete
+        _controller:   DEECoursesBundle:ExamCategory:delete
     requirements:
         id: \d+
      
-dee_examtype_homepage:
-      path: /examtypes/
+dee_examcategory_homepage:
+      path: /examcategory/
       defaults:
-          _controller:  DEECoursesBundle:ExamType:index
+          _controller:  DEECoursesBundle:ExamCategory:index

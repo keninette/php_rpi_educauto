@@ -25,8 +25,8 @@ class ExamType extends AbstractType
                                                             , 'required'    => false))
             ->add('success',    CheckboxType::class,    array('label'       => 'Obtenu'
                                                             , 'required'    => false))
-            ->add('examType',   EntityType::class,      array('class'           => 'DEECoursesBundle:ExamType'
-                                                            , 'choice_label'    => 'examLabel'
+            ->add('category',   EntityType::class,      array('class'           => 'DEECoursesBundle:ExamCategory'
+                                                            , 'choice_label'    => 'label'
                                                             , 'label'           => 'Type d\'examen'
                                                             , 'expanded'        => false
                                                             , 'multiple'        => false))
