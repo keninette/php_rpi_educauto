@@ -3,6 +3,7 @@
 namespace DEE\FtpBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Ijanki\Bundle\FtpBundle\Exception\FtpException;
 
@@ -14,7 +15,6 @@ use Ijanki\Bundle\FtpBundle\Exception\FtpException;
  */
 class FtpFile
 {
-    const CST_NAME_LENGTH = 15;
     /**
      * @var int
      *
@@ -54,6 +54,7 @@ class FtpFile
     
     /**
      * Actual uploaded file
+     * @Assert\File(maxSize="6000000")
      * @var type 
      */
     private $file;
@@ -63,6 +64,8 @@ class FtpFile
      * @return string name generated
      */
     public function createRandomName() {
+        $filenameLength = 15;
+        
         // Creating an array with alphanumeric
         $chars          = explode(',','a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z'
                                         .',A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
@@ -71,7 +74,7 @@ class FtpFile
         $name       = '';
         
         // Add a random char to password
-        for($charCounter = 0; $charCounter < self::CST_NAME_LENGTH; $charCounter++) {
+        for($charCounter = 0; $charCounter < $filenameLength ; $charCounter++) {
             $name .= $chars[rand(0,$maxRange)];
         } 
         
@@ -88,34 +91,25 @@ class FtpFile
         return substr($fileName, strripos($fileName,'.')+1);
     }
     
-    public function uploadFileToFtp($ftp, $ftpDirectory) {
+    public function uploadFileToFtp($ftp, $ftpRoot) {
+        $uploadDirectory    = __DIR__.'/../../../../web/uploads/';
+        $ftpDirectory       = $ftpRoot .  $this->getCategory()->getFtpDirectory();
         
+        // Create random name         
         $this->name = $this->createRandomName() .'.' .$this->getExtension();
-        $uploadDirectory = __DIR__.'/../../../../web/uploads/';
-        var_dump($this->name);
-        var_dump($this->file);
-        var_dump($uploadDirectory .$this->name);
+        
+        // Upload file to FTP
         try {
+            // 1. Upload to temp file in uploads directory
             $this->file->move($uploadDirectory,$this->name);
+            // 2. Upload this file to FTP
             ftp_put($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name,FTP_ASCII);
-            $this->file->remove();
+            // 3. Delete temp file
+            unlink($uploadDirectory .$this->name);
         } catch (FtpException $e) {
-            var_dump($e->getMessage());
             return false;
         }
         return true;
-    }
-    
-    public function isFileValid() {
-        $errors = array();
-        
-        if (!filesize($this->file) || filesize($this->file) > FtpFileCategory::MAX_FILE_SIZE) {
-            $errors[] = 'La taille du fichier ne doit pas dépasser 3Mo.';      
-        }
-        
-        if (!$this->category->isExtensionValid($this->file->getExtension())) {
-            $errors[] = 'L\'extention du fichier n\'est pas valide.';
-        }
     }
     
     /**
@@ -211,7 +205,6 @@ class FtpFile
     function setStudent($student) {
         $this->student = $student;
     }
-
 
 }
 

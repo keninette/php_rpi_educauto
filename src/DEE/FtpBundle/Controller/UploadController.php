@@ -36,37 +36,36 @@ class UploadController extends Controller {
         
         // Manage form if it has been filled and return ajax response
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            
-            // Check if file is valid
-            $errors = $file->isFileValid();
-            if (! empty($errors)) {
-                // todo error messages
-            
-            // If it is, connect to FTP & upload file    
+
+            if (! $file->getCategory()->isExtensionValid($file->getExtension())) {
+                // todo flashbags
             } else {
-                $ftpServer  = 'ftp.kkbj.info';
-                $ftpUser    = 'kkbjinfoif';
-                $ftpPsw     = 'zt6U8EQz6u5v';
-                $ftpPort    = 21;
-                $ftpRoot    = 'www/educauto/';
-                
+                $entityManager = $this->getDoctrine()->getManager();
+            
+                // Get FTP connection parameters
+                $ftpServer  = $this->getParameter('ftpServer');
+                $ftpUser    = $this->getParameter('ftpUser');
+                $ftpPsw     = $this->getParameter('ftpPsw');
+                $ftpPort    = $this->getParameter('ftpPort');
+                $ftpRoot    = $this->getParameter('ftpRoot');
+
                 // Connect to FTP
                 $ftp = ftp_connect($ftpServer, $ftpPort);
-                $connected = ftp_login($ftp, $ftpUser, $ftpPsw);
-                
-                // Check if directory exists
-                $ftpDirectory = $ftpRoot .$file->getCategory()->getFtpDirectory();
-                var_dump($ftpDirectory);
-                /*if (empty(ftp_nlist($ftp, $ftpDirectory))) {
-                    ftp_mkdir($ftp,$ftpDirectory);
-                }*/
-                                var_dump('plop');
-                $file->uploadFileToFtp($ftp, $ftpDirectory)  ;
+
+                if (! ftp_login($ftp, $ftpUser, $ftpPsw)) {
+                    // todo flashbags
+                } else {
+                    // Upload file
+                    $file->uploadFileToFtp($ftp, $ftpRoot);
+
+                    // Close FTP connection
+                    ftp_close($ftp);
+
+                    // Persist file in database
+                    $entityManager->persist($file);
+                    $entityManager->flush();
+                }
             }
-            ftp_close($ftp);
-            $entityManager->persist($file);
-            $entityManager->flush();
         }
         
         return $this->render('DEEFtpBundle:Upload:index.html.twig', array('form' => $form->createView()));

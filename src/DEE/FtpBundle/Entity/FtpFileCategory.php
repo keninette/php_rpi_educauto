@@ -11,9 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\FtpFileCategoryRepository")
  */
 class FtpFileCategory
-{
-    const MAX_FILE_SIZE = 3000000; // max file size in bytes
-  
+{ 
     /**
      * @var int
      *
