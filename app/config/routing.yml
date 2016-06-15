@@ -1,6 +1,6 @@
 dee_ftp:
     resource: "@DEEFtpBundle/Resources/config/routing.yml"
-    prefix:   /
+    prefix:   /docs
 
 dee_courses_bundle:
     resource: "@DEECoursesBundle/Resources/config/routing.yml"

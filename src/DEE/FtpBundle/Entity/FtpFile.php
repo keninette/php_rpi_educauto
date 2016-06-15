@@ -4,6 +4,7 @@ namespace DEE\FtpBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Ijanki\Bundle\FtpBundle\Exception\FtpException;
 
 /**
  * UploadedFile
@@ -11,7 +12,8 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
  * @ORM\Table(name="ftp_file")
  * @ORM\Entity(repositoryClass="DEE\FtpBundle\Repository\FtpFileRepository")
  */
-class FtpFile {
+class FtpFile
+{
     const CST_NAME_LENGTH = 15;
     /**
      * @var int
@@ -34,45 +36,86 @@ class FtpFile {
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
      */
     private $category;
-
+    
     /**
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
-     * @ORM\JoinColumn(name="student", referencedColumnName="id", nullable=false)
+     * @ORM\JoinColumn(name="student", referencedColumnName="id", nullable=true)
      */
     private $student;
-
+    
     /**
-     * Uploaded file
+     * @var \DateTime
+     *
+     * @ORM\Column(name="deliveryDate", type="datetime", nullable=true)
+     */
+    private $deliveryDate;
+    
+    /**
+     * Actual uploaded file
      * @var type 
      */
     private $file;
-
-    public function upload($ftp) {
-        // TODO : check file
-        if (null === $this->file) {
-            return;
-        }
-
-        // Get original file name
-        $name = $this->file->getClientOriginalName();
-
-        // Save file name
-        $this->name = createRandomName(); // TODO gérer extension
+    
+    /**
+     * Creates a random name composed with alphanumeric and special characterss
+     * @return string name generated
+     */
+    public function createRandomName() {
+        // Creating an array with alphanumeric
+        $chars          = explode(',','a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z'
+                                        .',A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
+                                        .',0,1,2,3,4,5,6,7,8,9,-,_');
+        $maxRange       = sizeof($chars) -1;
+        $name       = '';
         
-        // Move file to FTP
-        $ftp->put($this->getFtpFileName(), $this->file, FTP_BINARY);
+        // Add a random char to password
+        for($charCounter = 0; $charCounter < self::CST_NAME_LENGTH; $charCounter++) {
+            $name .= $chars[rand(0,$maxRange)];
+        } 
+        
+        return $name;
     }
-
-    public function getFtpFileName() {
-        return $this->category->getFtpDirectory() .$this->name;
+    
+    /**
+     * Get the file extension
+     * @param string $fileName
+     * @return string 
+     */
+    public function getExtension () {
+        $fileName = $this->file->getClientOriginalName();
+        return substr($fileName, strripos($fileName,'.')+1);
     }
-
+    
+    public function uploadFileToFtp($ftp) {
+        $this->name = $this->createRandomName() .'.' .$this->getExtension();
+        try {
+            $ftp->put($this->category->getFtpDirectory() .$this->name, $this->file, FTP_BINARY);
+        } catch (FtpException $e) {
+            var_dump($e->getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    public function isFileValid() {
+        $errors = array();
+        
+        if (!filesize($this->file) || filesize($this->file) > FtpFileCategory::MAX_FILE_SIZE) {
+            $errors[] = 'La taille du fichier ne doit pas dépasser 3Mo.';      
+        }
+        
+        if (!$this->category->isExtensionValid($this->file->getExtension())) {
+            $errors[] = 'L\'extention du fichier n\'est pas valide.';
+        }
+    }
+    
     /**
      * Get id
      *
      * @return int
      */
-    public function getId() {
+    public function getId()
+    {
         return $this->id;
     }
 
@@ -81,9 +124,10 @@ class FtpFile {
      *
      * @param string $name
      *
-     * @return UploadedFile
+     * @return FtpFile
      */
-    public function setName($name) {
+    public function setName($name)
+    {
         $this->name = $name;
 
         return $this;
@@ -94,49 +138,53 @@ class FtpFile {
      *
      * @return string
      */
-    public function getName() {
+    public function getName()
+    {
         return $this->name;
     }
-
+    
     /**
-     * Get UploadedFile
+     * Get uploaded file
      * 
      * @return UploadedFile
      */
-    public function getFile() {
+    public function getFile()
+    {
         return $this->file;
     }
-
+    
     /**
      * Set file
      * 
      * @param UploadedFile $file
      */
-    public function setFile(UploadedFile $file = null) {
+    public function setFile(UploadedFile $file = null)
+    {
         $this->file = $file;
     }
     
     /**
-     * Creates a random password composed with alphanumeric and special characters
-     * Set this password to the current user's password
-     * @return none
-     * 
-     * ORM\PrePersist
+     * Set deliveryDate
+     *
+     * @param \DateTime $deliveryDate
+     *
+     * @return FtpFileCategory
      */
-    public function createRandomName() {
-        // Creating an array with alphanumeric
-        $chars          = explode(',','a,b,c,d,e,f,g,h,i,j,k,l,m,n,o,p,q,r,s,t,u,v,w,y,z'
-                                        .',A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y,Z'
-                                        .',0,1,2,3,4,5,6,7,8,9');
-        $maxRange       = sizeof($chars) -1;
-        $string         = '';
-        
-        // Add a random char to string
-        for($charCounter = 0; $charCounter < self::CST_NAME_LENGTH; $charCounter++) {
-            $string .= $chars[rand(0,$maxRange)];
-        } 
-        
-        return $string;
+    public function setDeliveryDate($deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+
+        return $this;
     }
 
+    /**
+     * Get deliveryDate
+     *
+     * @return \DateTime
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
 }
+

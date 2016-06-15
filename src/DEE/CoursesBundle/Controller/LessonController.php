@@ -23,12 +23,12 @@ class LessonController extends Controller {
     public function deleteAction($id) {
 
         // Get exal
-        $lessonManager = $this->getDoctrine()->getManager();
-        $lesson = $lessonManager->find(Lesson::class, $id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $lesson = $entityManager->find(Lesson::class, $id);
 
         // Deactivate user
-        $lessonManager->remove($lesson);
-        $lessonManager->flush();
+        $entityManager->remove($lesson);
+        $entityManager->flush();
 
         return new JsonResponse(array('success' => true));
     }
