@@ -4,6 +4,7 @@ namespace DEE\FtpBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
+use Ijanki\Bundle\FtpBundle\Exception\FtpException;
 
 /**
  * UploadedFile
@@ -71,7 +72,41 @@ class FtpFile
         for($charCounter = 0; $charCounter < self::CST_NAME_LENGTH; $charCounter++) {
             $name .= $chars[rand(0,$maxRange)];
         } 
+        
         return $name;
+    }
+    
+    /**
+     * Get the file extension
+     * @param string $fileName
+     * @return string 
+     */
+    public function getExtension () {
+        $fileName = $this->file->getClientOriginalName();
+        return substr($fileName, strripos($fileName,'.')+1);
+    }
+    
+    public function uploadFileToFtp($ftp) {
+        $this->name = $this->createRandomName() .'.' .$this->getExtension();
+        try {
+            $ftp->put($this->category->getFtpDirectory() .$this->name, $this->file, FTP_BINARY);
+        } catch (FtpException $e) {
+            var_dump($e->getMessage());
+            return false;
+        }
+        return true;
+    }
+    
+    public function isFileValid() {
+        $errors = array();
+        
+        if (!filesize($this->file) || filesize($this->file) > FtpFileCategory::MAX_FILE_SIZE) {
+            $errors[] = 'La taille du fichier ne doit pas dépasser 3Mo.';      
+        }
+        
+        if (!$this->category->isExtensionValid($this->file->getExtension())) {
+            $errors[] = 'L\'extention du fichier n\'est pas valide.';
+        }
     }
     
     /**

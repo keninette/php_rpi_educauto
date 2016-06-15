@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class FtpFileCategory
 {
-    const MAX_FILE_SIZE = 300;
+    const MAX_FILE_SIZE = 3000000; // max file size in bytes
   
     /**
      * @var int
@@ -182,6 +182,15 @@ class FtpFileCategory
         }
 
         return $this;
+    }
+    
+    /**
+     * Check if the extension is in authorized extensions array
+     * @param string $extension
+     * @return bool true if it's in array, or false if it's not
+     */
+    function isExtensionValid($extension) {
+        return in_array($extension, $this->getAuthorizedExtensions());
     }
 }
 
