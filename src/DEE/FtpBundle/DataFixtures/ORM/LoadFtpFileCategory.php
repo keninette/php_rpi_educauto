@@ -58,12 +58,12 @@ class LoadFtpFileCategory implements FixtureInterface{
         foreach ($labels as $label) {
             $category = new FtpFileCategory();
             $category   ->setLabel($label)
-                        ->setDirectoryPath($directoryPath[i]);
+                        ->setFtpDirectory($directoryPath[$i]);
             
-            if ($nbOfCopies[i] > 0)     { $category->setNbOfCopies($nbOfCopies[i]); }
-            if ($validityPeriod[i] > 0) { $category->setValidityPeriod($validityPeriod[i]); }            
+            if ($nbOfCopies[$i] > 0)     { $category->setNbOfCopies($nbOfCopies[$i]); }
+            if ($validityPeriod[$i] > 0) { $category->setValidityPeriod($validityPeriod[$i]); }            
             
-            foreach ($authorizedExtensions[i] as $ext) {
+            foreach ($authorizedExtensions[$i] as $ext) {
                 $category->setAuthorizedExtensions($ext);
             }
             

@@ -29,7 +29,7 @@ class LoadUser implements FixtureInterface{
         foreach ($names as $name) {
             $user = new User();
             $user   ->setUsername($name)
-                    ->setPassword($name)
+                    ->setPassword(hash('sha512',$name))
                     ->setEmail($name.'@' .$name .'.plop')
                     ->setEnabled(true);
             

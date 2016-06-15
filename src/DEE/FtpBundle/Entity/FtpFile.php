@@ -30,7 +30,9 @@ class FtpFile
      * @ORM\Column(name="name", type="string", length=100)
      */
     private $name;
-
+    
+    private $url;
+    
     /**
      * @ORM\ManyToOne(targetEntity="DEE\FtpBundle\Entity\FtpFileCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
@@ -86,10 +88,17 @@ class FtpFile
         return substr($fileName, strripos($fileName,'.')+1);
     }
     
-    public function uploadFileToFtp($ftp) {
+    public function uploadFileToFtp($ftp, $ftpDirectory) {
+        
         $this->name = $this->createRandomName() .'.' .$this->getExtension();
+        $uploadDirectory = __DIR__.'/../../../../web/uploads/';
+        var_dump($this->name);
+        var_dump($this->file);
+        var_dump($uploadDirectory .$this->name);
         try {
-            $ftp->put($this->category->getFtpDirectory() .$this->name, $this->file, FTP_BINARY);
+            $this->file->move($uploadDirectory,$this->name);
+            ftp_put($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name,FTP_ASCII);
+            $this->file->remove();
         } catch (FtpException $e) {
             var_dump($e->getMessage());
             return false;
@@ -186,5 +195,23 @@ class FtpFile
     {
         return $this->deliveryDate;
     }
+    
+    function getCategory() {
+        return $this->category;
+    }
+
+    function getStudent() {
+        return $this->student;
+    }
+
+    function setCategory($category) {
+        $this->category = $category;
+    }
+
+    function setStudent($student) {
+        $this->student = $student;
+    }
+
+
 }
 

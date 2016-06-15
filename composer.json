@@ -10,6 +10,7 @@
             "app/AppKernel.php",
             "app/AppCache.php"
         ]
+        
     },
     "autoload-dev": {
         "psr-4": {
@@ -28,8 +29,7 @@
         "sensio/framework-extra-bundle": "^3.0.2",
         "incenteev/composer-parameter-handler": "^2.0",
         "doctrine/doctrine-fixtures-bundle": "~2.2",
-        "friendsofsymfony/user-bundle": "dev-master",
-        "ijanki/ftp-bundle": "*"
+        "friendsofsymfony/user-bundle": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "^3.0",

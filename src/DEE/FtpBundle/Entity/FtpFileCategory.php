@@ -33,7 +33,7 @@ class FtpFileCategory
     /**
      * @var int : number of copies needed to register student to the exams
      *
-     * @ORM\Column(name="nb_of_copies", type="integer")
+     * @ORM\Column(name="nb_of_copies", type="integer", nullable=true)
      */
     private $nbOfCopies;
 

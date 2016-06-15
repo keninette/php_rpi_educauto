@@ -43,8 +43,8 @@ class LoadExamType {
         foreach ($codes as $code) {
             $examType = new ExamType();
             $examType   ->setCode($code)
-                        ->setExamLabel($labels[i])
-                        ->setRequiredAge($requiredAge[i]);
+                        ->setExamLabel($labels[$i])
+                        ->setRequiredAge($requiredAge[$i]);
             if ($validityPeriod[$i] > 0) { $examType->setValidityPeriod($validityPeriod[$i]); }
             
             $manager->persist($examType);

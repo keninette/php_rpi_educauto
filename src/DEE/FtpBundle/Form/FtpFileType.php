@@ -6,8 +6,8 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
-use Symfony\Bridge\Doctrine\Form\Type\DateTimeClass;
-use Symfony\Bridge\Doctrine\Form\Type\FileTypeClass;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 class FtpFileType extends AbstractType
@@ -31,7 +31,7 @@ class FtpFileType extends AbstractType
                                                                 , 'expanded'        => false
                                                                 , 'multiple'        => false
                                                             ))    
-            ->add('deliveryDate',   DateTimeType::class,    array('label' => 'Date d\'émission'))
+            ->add('deliveryDate',   DateType::class,    array('label' => 'Date d\'émission'))
             ->add('file',           FileType::class,        array('label' => 'Document'))    
             ->add('save',           SubmitType::class,      array('label' => 'Uploader le fichier'))
         ;

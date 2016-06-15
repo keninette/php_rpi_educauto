@@ -3,6 +3,7 @@
 namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Student
@@ -25,6 +26,9 @@ class Student
      * @var string
      *
      * @ORM\Column(name="name", type="string", length=255)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=255)
      */
     private $name;
 
@@ -32,6 +36,9 @@ class Student
      * @var string
      *
      * @ORM\Column(name="firstname", type="string", length=255)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=255)
      */
     private $firstname;
 
@@ -39,6 +46,9 @@ class Student
      * @var string
      *
      * @ORM\Column(name="address", type="string", length=255)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=255)
      */
     private $address;
 
@@ -46,6 +56,9 @@ class Student
      * @var string
      *
      * @ORM\Column(name="address_other", type="string", length=255, nullable=true)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=255)
      */
     private $addressOther;
 
@@ -53,6 +66,10 @@ class Student
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=20)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=20)
+     * @Assert\Regex(pattern="^(\+\d{3}|0\d{1})\d{8}$" match=true)
      */
     private $phone;
 
@@ -60,6 +77,10 @@ class Student
      * @var string
      *
      * @ORM\Column(name="phone_other", type="string", length=20, nullable=true)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=20)
+     * @Assert\Regex(pattern="^(\+\d{3}|0\d{1})\d{8}$" match=true)
      */
     private $phoneOther;
 
@@ -67,6 +88,10 @@ class Student
      * @var string
      * 
      * @ORM\Column(name="email", type="string", length=255, nullable=true)
+     * 
+     * @Assert\string
+     * @Assert\Length(max=255)
+     * @Assert\Regex(pattern="^\w+@{1}(\w|-)+\.{1}[a-z]{2,4}$" match=true)
      */
     private $email;   
     
