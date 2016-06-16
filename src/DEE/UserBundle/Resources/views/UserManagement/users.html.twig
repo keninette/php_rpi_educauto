@@ -90,30 +90,24 @@
              * ex : if SUPER_ADMIN is checked, ADMIN must be too
              * @returns {undefined}
              */
-            $('input[type="checkbox"]').click(function(){
+            /*$('input[type="checkbox"]').click(function(){
                 // If SUPER_ADMIN is checked, check ADMIN
                 var inputLvl1 = $(this);
-                console.log($(inputLvl1).attr('checked'));
-                console.log($(inputLvl1).attr('checked') === 'checked');
+                
                 // We need to manually set checked-attribute 
                 // Because with symfony, it somehow doesn't
                 if ($(inputLvl1).attr('checked') === 'checked') {
-                    $(inputLvl1).attr('checked','');
-                    console.log('plop');
+                    $(inputLvl1).removeAttr('checked');
                 } else {
                     $(inputLvl1).attr('checked','checked');
                 }
                 
-                console.log($(inputLvl1).attr('value'));
-                console.log($(inputLvl1).attr('value') === 'ROLE_SUPER_ADMIN');
-                console.log($(inputLvl1).attr('checked'));
-                console.log($(inputLvl1).attr('checked') === 'checked');
                 if ($(inputLvl1).attr('value') === 'ROLE_SUPER_ADMIN' && $(inputLvl1).attr('checked') === 'checked') {
                     $('input[type="checkbox"]').each(function(){
                         $(this).attr('checked','checked');
                     });
                 }
-            });
+            });*/
 
             /**
              *  Add on click action to activate or deactive user

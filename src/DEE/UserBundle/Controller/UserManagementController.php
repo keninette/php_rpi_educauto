@@ -64,6 +64,9 @@ class UserManagementController extends Controller {
         $form->handleRequest($request);
 
         if ($form->isValid()) {
+            // If user has ROLE_SUPER_ADMIN, we must also give him ROLE_ADMIN
+            if ($user->hasRole('ROLE_SUPER_ADMIN')) { $user->addRole('ROLE_ADMIN'); }
+            
             $userManager->updateUser($user);
             return new JsonResponse(array(
                                         'success' => true
