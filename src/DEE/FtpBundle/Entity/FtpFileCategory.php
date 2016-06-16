@@ -57,8 +57,8 @@ class FtpFileCategory
      * @ORM\Column(name="ftpDirectory", type="string", length=255, nullable=false)
      * 
      * @Assert\NotBlank()
-     * @Assert\Type(type=string)
-     * @Asset\Length(max=255)
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=255)
      * @Assert\Regex(pattern="/^docs\/[a-z]+\/$/")
      */
     private $ftpDirectory;
@@ -183,6 +183,15 @@ class FtpFileCategory
      */
     function getAuthorizedExtensions() {
         return $this->authorizedExtensions;
+    }
+    
+    /**
+     * Get authorized extensions in a string
+     * 
+     * @return string 
+     */
+    function getAuthorizedExtensionsToString() {
+        return (string) implode($this->authorizedExtensions);
     }
 
     /**

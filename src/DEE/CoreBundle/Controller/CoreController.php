@@ -14,25 +14,22 @@
         }
         
         public function contactAction(Request $request) {
-            
+            $mailer = $this->get('mailer');
             // Create a new email
             $message = \Swift_Message::newInstance();
             
             // Create a form to fill this email
             $form = $this->createForm(MessageType::class, $message);
-            
             // If form has been filled and if it's valid, send email and redirect user to homepage ! 
             if($request->isMethod('POST')) {
                 $form->handleRequest($request);
-            
-                if ($form->isValid()) {
-                    
-                    $message->setTo('keninette.bloggeusedeluxe@gmail.com'); // TODO : ask groukx
-                    $this->get('mailer')->send($message);
-                    
+                try {
+                    $message->setTo('gauthier.delphine@protonmail.com'); // TODO
+                    $mailer->send($message);
                     $request->getSession()->getFlashBag()->add('notice','Votre message a bien été envoyé, nous vous recontacterons très prochainement !');
-                    
                     return $this->redirectToRoute('dee_core_home');
+                } catch (Exception $e) {
+                    var_dump($e->getMessage());//todo log messages
                 }
             }
             

@@ -5,11 +5,11 @@
 {% block body %}
     <!-- files -->
     <div class="row margin-top-sm tile-main-row">
-        <a href="">
+        <a href="{{ path('dee_filecategory_index') }}">
             <div class="col-md-4 col-sm-6 col-xs-12">
                 <div class="row">
                     <div class="col-xs-12 lightgrey tile no-border-bottom yellow-text fa fa-file-o"></div>
-                    <h2 class="col-xs-12 yellow sub-tile no-border-top">Consulter des documents</h2>
+                    <h2 class="col-xs-12 yellow sub-tile no-border-top">Gérer les catégories de fichiers</h2>
                 </div>
             </div>
         </a>
@@ -58,4 +58,6 @@
             </a>
         </div>
     {% endif %}
+{% endblock %}
+{% block requirejs %}
 {% endblock %}

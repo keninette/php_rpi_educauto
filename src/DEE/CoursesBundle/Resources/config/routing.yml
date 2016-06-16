@@ -1,3 +1,7 @@
+# Main routes
+dee_courses_homepage:
+    path: /
+
 # Lesson routes
 dee_lesson_delete:
     path: /lessons/delete/{id}

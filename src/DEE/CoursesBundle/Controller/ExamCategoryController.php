@@ -13,6 +13,7 @@ use DEE\CoursesBundle\Entity\ExamCategory;
 use DEE\CoursesBundle\Form\ExamCategoryType;
 use Symfony\Component\HttpFoundation\Request;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 
 /**
@@ -63,13 +64,20 @@ class ExamCategoryController extends Controller {
     public function deleteAction($id) {
 
         // Get ExamCategory
-        $etManager = $this->getDoctrine()->getManager();
-        $ExamCategory = $etManager->find(ExamCategory::class, $id);
+        $entityManager = $this->getDoctrine()->getManager();
+        $examRepository = $entityManager->getRepository('DEECoursesBundle:Exam');
+        $ExamCategory = $entityManager->find(ExamCategory::class, $id);
+        
+        $exams  = $examRepository->findBy(array('category' => $ExamCategory));
+        
+        if (count($exams) > 0) {
+            return new JsonResponse(array('success' => false));
+        } else {
+            // Deactivate user
+            $entityManager->remove($ExamCategory);
+            $entityManager->flush();
 
-        // Deactivate user
-        $etManager->remove($ExamCategory);
-        $etManager->flush();
-
-        return new JsonResponse(array('success' => true));
+            return new JsonResponse(array('success' => true));
+        }
     }
 }

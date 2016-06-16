@@ -26,7 +26,7 @@ class MessageType extends AbstractType {
     
     public function configureOptions(OptionsResolver $resolver) {
          $resolver->setDefaults(array(
-             'data_class' => '\Swift_Message'
+             'data_class'   => '\Swift_Message'
          ));
     }
 }

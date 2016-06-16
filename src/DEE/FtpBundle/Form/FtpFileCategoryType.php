@@ -19,10 +19,10 @@ class FtpFileCategoryType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('label',                  TextType::class,        array('label'       => 'Libellé'))
-            ->add('nbOfCopies',             NumberType::class,      array('label'       => 'Nombre de copies nécessaires'))
-            ->add('validityPeriod',         NumberType::class,      array('label'       => 'Période de validité (en années)'))
-            ->add('ftpDirectory',           TextType::class,        array('label'       => 'Répertoire dans le FTP'))
+            ->add('label',                  TextType::class,        array('label'       => 'Libellé', 'required' => false))
+            ->add('nbOfCopies',             NumberType::class,      array('label'       => 'Nombre de copies nécessaires', 'required' => false))
+            ->add('validityPeriod',         NumberType::class,      array('label'       => 'Période de validité (en années)', 'required' => false))
+            ->add('ftpDirectory',           TextType::class,        array('label'       => 'Répertoire dans le FTP (docs/nomDuRepertoire/', 'required' => false))
             ->add('authorizedExtensions',   ChoiceType::class,      array('label'       => 'Extensions autorisées'
                                                                         , 'multiple'    => true
                                                                         , 'expanded'    => true
@@ -30,7 +30,8 @@ class FtpFileCategoryType extends AbstractType
                                                                                                 ,'JPEG' => 'jpeg'
                                                                                                 ,'PNG'  => 'png'
                                                                                                 ,'PDF'  => 'pdf'
-                                                                                                )  
+                                                                                                ) 
+                                                                        , 'required' => false
                                                                         ))
             ->add('submit',                 SubmitType::class,      array('label' => 'Ajouter la catégorie'))    
         ;

@@ -42,4 +42,7 @@ dee_user_delete:
         _controller:   DEEUserBundle:UserManagement:delete
     requirements:
         id: \d+
+        
+dee_user_homepage:
+    path: /
                

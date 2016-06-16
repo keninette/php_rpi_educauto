@@ -21,7 +21,7 @@ class ExamCategoryType extends AbstractType
             ->add('label',          TextType::class,    array('label' => 'Libellé', 'required' => false))
             ->add('requiredAge',    TextType::class,    array('label' => 'Âge minimum requis', 'required' => false))
             ->add('validityPeriod', TextType::class,    array('label' => 'Période de validité (en années)', 'required' => false))
-            ->add('save',           submitType::class,  array('label' => 'Créer le type d\'examen', 'required' => false))
+            ->add('save',           submitType::class,  array('label' => 'Créer le type d\'examen'))
         ;
     }
     

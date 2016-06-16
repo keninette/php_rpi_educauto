@@ -20,3 +20,9 @@
   {% endblock fos_user_content %}
 
 {% endblock %}
+
+{% block requirejs %}
+    {{ include('DEEUserBundle::_requirejs.html.twig', {
+        module: false
+    }) }}
+{% endblock %}

@@ -11,10 +11,12 @@ parameters:
     database_password   : null
     # Swift mailer
     mailer_transport: smtp
-    mailer_host     : 127.0.0.1
-    mailer_user     : null
-    mailer_password : null
-    secret          : 5347db7e61ee3c98c6348304412ae5f3dee6d416
+    mailer_host     : 164.132.44.62
+    mailer_user     : postfix
+    mailer_password : postfix
+    mailer_port     : 25
+    secret          : 5347db7e61ee3c98c6348304412ae5f3dee6d416s
+    delivery_adress : achats.delphine@gmail.com
     # FTP
     ftpServer       : ftp.kkbj.info
     ftpUser         : kkbjinfoif
