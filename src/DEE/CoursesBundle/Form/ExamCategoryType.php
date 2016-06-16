@@ -7,7 +7,6 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 
 class ExamCategoryType extends AbstractType
 {
@@ -19,10 +18,10 @@ class ExamCategoryType extends AbstractType
     {
         $builder
             ->add('code',           TextType::class)
-            ->add('label',          textType::class,    array('label' => 'Libellé'))
-            ->add('requiredAge',    numberType::class,  array('label' => 'Âge minimum requis'))
-            ->add('validityPeriod', numberType::class,  array('label' => 'Période de validité (en années)', 'required' => false))
-            ->add('save',           submitType::class,  array('label' => 'Créer le type d\'examen'))
+            ->add('label',          TextType::class,    array('label' => 'Libellé', 'required' => false))
+            ->add('requiredAge',    TextType::class,    array('label' => 'Âge minimum requis', 'required' => false))
+            ->add('validityPeriod', TextType::class,    array('label' => 'Période de validité (en années)', 'required' => false))
+            ->add('save',           submitType::class,  array('label' => 'Créer le type d\'examen', 'required' => false))
         ;
     }
     

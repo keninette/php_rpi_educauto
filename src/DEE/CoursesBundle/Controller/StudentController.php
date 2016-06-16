@@ -33,23 +33,28 @@ class StudentController extends Controller {
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request){
+        $validForm = true;
 
         // Create student form
         $student = new Student();
         $form = $this->createForm(StudentType::class, $student);
         
         // Manage form if it has been filled and return ajax response
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $studentManager = $this->getDoctrine()->getManager();
-            $studentManager->persist($student);
-            $studentManager->flush();
+        if ($request->isMethod('POST')){
+            if($form->handleRequest($request)->isValid()) {
+                $studentManager = $this->getDoctrine()->getManager();
+                $studentManager->persist($student);
+                $studentManager->flush();
+            } else {
+                $validForm = false;
+            }
         }
         
         // Get all students
         $studentRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:Student');
         $students = $studentRepository->findAll();
         
-        return $this->render('DEECoursesBundle:Student:index.html.twig', array('students' => $students, 'form' =>$form->createView()));
+        return $this->render('DEECoursesBundle:Student:index.html.twig', array('students' => $students, 'form' =>$form->createView(), 'validForm' => $validForm));
     }
     
     /**
@@ -80,17 +85,16 @@ class StudentController extends Controller {
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function showCourseAction($id, Request $request) {
+        $validLessonForm    = true;
+        $validExamForm      = true;
         
-        // TODO virer les managers en double
         // Prepare all managers & repositories
-        $studentManager = $this->getDoctrine()->getManager();
-        $examManager    = $this->getDoctrine()->getManager();
-        $lessonManager  = $this->getDoctrine()->getManager();
-        $examRepo       = $examManager->getRepository('DEECoursesBundle:Exam');
-        $lessonRepo     = $lessonManager->getRepository('DEECoursesBundle:Lesson'); 
+        $entityManager  = $this->getDoctrine()->getManager();
+        $examRepo       = $entityManager->getRepository('DEECoursesBundle:Exam');
+        $lessonRepo     = $entityManager->getRepository('DEECoursesBundle:Lesson'); 
         
         // Find user in database
-        $student = $studentManager->find(Student::class, $id);
+        $student = $entityManager->find(Student::class, $id);
         
         // Get new exam form
         $exam       = new Exam();
@@ -103,15 +107,23 @@ class StudentController extends Controller {
         // If one of the forms has been filled
         if ($request->getMethod() == 'POST') {
             // Exam form
-            if ($request->request->has('exam') && $examForm->handleRequest($request)->isValid()) {
-                $exam->setStudent($student);
-                $examManager->persist($exam);
-                $examManager->flush();
-                
+            if ($request->request->has('exam')) {
+                if ($examForm->handleRequest($request)->isValid()) {
+                    $exam->setStudent($student);
+                    $entityManager->persist($exam);
+                    $entityManager->flush(); 
+                } else {
+                    $validExamForm = false;
+                }   
+ 
             // Lesson form    
-            } else if ($request->request->has('lesson') && $lessonForm->handleRequest($request)->isValid()) {
-                $lessonManager->persist($lesson);
-                $lessonManager->flush();
+            } else if ($request->request->has('lesson')) {
+                if ($lessonForm->handleRequest($request)->isValid()) {
+                    $entityManager->persist($lesson);
+                    $entityManager->flush();
+                } else {
+                    $validLessonForm = false;
+                }
             }
         }
         
@@ -129,11 +141,13 @@ class StudentController extends Controller {
         // Return view
         return $this->render('DEECoursesBundle:Student:showCourse.html.twig'
                                 , array(
-                                    'student'       => $student
-                                    , 'exams'       => $exams
-                                    , 'lessons'     => $lessons
-                                    , 'examForm'    => $examForm->createView()
-                                    , 'lessonForm'  => $lessonForm->createView()
+                                    'student'           => $student
+                                    , 'exams'           => $exams
+                                    , 'lessons'         => $lessons
+                                    , 'examForm'        => $examForm->createView()
+                                    , 'lessonForm'      => $lessonForm->createView()
+                                    , 'validExamForm'   => $validExamForm
+                                    , 'validLessonForm' => $validLessonForm
                             ));
     }
 }

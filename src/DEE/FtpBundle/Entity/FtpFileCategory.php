@@ -3,6 +3,7 @@
 namespace DEE\FtpBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * FtpFileCategory
@@ -25,6 +26,10 @@ class FtpFileCategory
      * @var string
      *
      * @ORM\Column(name="label", type="string", length=100, unique=true)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=100)
      */
     private $label;
     
@@ -32,6 +37,8 @@ class FtpFileCategory
      * @var int : number of copies needed to register student to the exams
      *
      * @ORM\Column(name="nb_of_copies", type="integer", nullable=true)
+     * 
+     * @Assert\Regex(pattern="/^\d*$/", message="Vous devez entrer un nombre")
      */
     private $nbOfCopies;
 
@@ -39,6 +46,8 @@ class FtpFileCategory
      * @var int
      *
      * @ORM\Column(name="validityPeriod", type="integer", nullable=true)
+     * 
+     * @Assert\Regex(pattern="/^\d*$/")
      */
     private $validityPeriod;
 
@@ -46,6 +55,11 @@ class FtpFileCategory
      * @var string
      *
      * @ORM\Column(name="ftpDirectory", type="string", length=255, nullable=false)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Type(type=string)
+     * @Asset\Length(max=255)
+     * @Assert\Regex(pattern="/^docs\/[a-z]+\/$/")
      */
     private $ftpDirectory;
     
@@ -53,6 +67,8 @@ class FtpFileCategory
      * @var string array
      * 
      * @ORM\Column(name="authorized_extensions", type="array", nullable=false)
+     * 
+     * @Assert\NotBlank()
      */
     private $authorizedExtensions;
     

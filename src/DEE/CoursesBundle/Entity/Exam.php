@@ -49,6 +49,8 @@ class Exam
     /**
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
+     * 
+     * @Assert\NotBlank()
      * @Assert\Valid()
      */
     private $category;
@@ -60,6 +62,7 @@ class Exam
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * 
+     * @Assert\NotBlank()
      * @Assert\Valid()
      */
     private $student;

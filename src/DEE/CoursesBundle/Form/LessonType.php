@@ -7,7 +7,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
@@ -29,13 +29,14 @@ class LessonType extends AbstractType
         // Only display exams that belong to this user
         $builder
             ->add('date',       DateType::class)
-            ->add('duration',   NumberType::class,      array('label'   => 'Durée (en minutes)'))
-            ->add('comment',    TextAreaType::class,    array('label'   => 'Commentaire'))
+            ->add('duration',   TextType::class,      array('label'   => 'Durée (en minutes)', 'required' => false))
+            ->add('comment',    TextAreaType::class,    array('label'   => 'Commentaire', 'required' => false))
             ->add('exam',       Entitytype::class,      array('class'           => 'DEECoursesBundle:Exam'
                                                             , 'choice_label'    => 'examFormDisplay'
                                                             , 'label'           => 'Examen concerné'
                                                             , 'expanded'        => false
                                                             , 'multiple'        => false
+                                                            , 'required'        => false
                                                             , 'query_builder'   => function (ExamRepository $repository) use($student) {
                                                                     return $repository->getWhereStudentQueryBuilder($student);
                                                                 }    

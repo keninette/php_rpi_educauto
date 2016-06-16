@@ -27,6 +27,8 @@ class ExamCategory
      * @var string
      *
      * @ORM\Column(name="code", type="string", length=10, unique=true)
+     * 
+     * @Assert\NotBlank()
      * @Assert\Type(type="string")
      * @Assert\Length(max=10)
      */
@@ -37,7 +39,8 @@ class ExamCategory
      *
      * @ORM\Column(name="label", type="string", length=50)
      * 
-     * Assert\Type(type="string")
+     * @Assert\NotBlank()
+     * @Assert\Type(type="string")
      * @Assert\Length(max=50)
      */
     private $label;
@@ -46,6 +49,9 @@ class ExamCategory
      * @var int
      *
      * @ORM\Column(name="required_age", type="integer")
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^\d*$/", message="Vous devez entrer un nombre")
      */
     private $requiredAge;
 
@@ -53,6 +59,8 @@ class ExamCategory
      * @var int
      *
      * @ORM\Column(name="validity_period", type="integer", nullable=true)
+     * 
+     * @Assert\Regex(pattern="/^\d*$/", message="Vous devez entrer un nombre")
      */
     private $validityPeriod;
 
@@ -94,7 +102,7 @@ class ExamCategory
     /**
      * Set examLabel
      *
-     * @param string $examLabel
+     * @param string $Label
      *
      * @return ExamCategory
      */
@@ -106,7 +114,7 @@ class ExamCategory
     }
 
     /**
-     * Get examLabel
+     * Get label
      *
      * @return string
      */

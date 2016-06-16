@@ -6,7 +6,7 @@
    <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text pointer" id="toggle-ExamCategory-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un type d'examen</h1>
     </div>
-    <div class="row margin-top-sm" id="hidden-ExamCategory-form" data-url="{{ path('dee_examcategory_homepage') }}">
+    <div class="row margin-top-sm {% if validForm %} {{ "valid-form" }} {% endif %}" id="hidden-ExamCategory-form" data-url="{{ path('dee_examcategory_homepage') }}">
         {{ form(form) }}
     </div>
     <div class="row margin-top-sm">
@@ -38,7 +38,7 @@
         $(function () {
 
             // Hide user form so it can be displayed by clicking to h1 tag
-            $("#hidden-ExamCategory-form").hide();
+            if ($("#hidden-ExamCategory-form").hasClass('valid-form')) { $("#hidden-ExamCategory-form").hide(); }
         
             /**
              * Display student form to be able to add one
@@ -73,3 +73,4 @@
         });
     </script>
 {% endblock %}    
+

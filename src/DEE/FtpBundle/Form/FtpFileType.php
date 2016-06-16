@@ -24,15 +24,17 @@ class FtpFileType extends AbstractType
                                                                 , 'label'           => 'Etudiant'
                                                                 , 'expanded'        => false
                                                                 , 'multiple'        => false
+                                                                , 'required' => false
                                                             ))
             ->add('category',       EntityType::class,      array('class'           => 'DEEFtpBundle:FtpFileCategory'
                                                                 , 'choice_label'    => 'label'
                                                                 , 'label'           => 'Catégorie'
                                                                 , 'expanded'        => false
                                                                 , 'multiple'        => false
+                                                                , 'required' => false
                                                             ))    
-            ->add('deliveryDate',   DateType::class,    array('label' => 'Date d\'émission'))
-            ->add('file',           FileType::class,        array('label' => 'Document'))    
+            ->add('deliveryDate',   DateType::class,    array('label' => 'Date d\'émission', 'required' => false))
+            ->add('file',           FileType::class,        array('label' => 'Document', 'required' => false))    
             ->add('save',           SubmitType::class,      array('label' => 'Uploader le fichier'))
         ;
     }

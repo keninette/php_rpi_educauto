@@ -27,6 +27,7 @@ class Lesson
      *
      * @ORM\Column(name="date", type="datetime")
      * 
+     * @Assert\NotBlank()
      * @Assert\DateTime()
      */
     private $date;
@@ -36,7 +37,8 @@ class Lesson
      * Duration must be saved in seconds
      * @ORM\Column(name="duration", type="integer")
      * 
-     * @Assert\Type(type="integer")
+     * @Assert\NotBlank()
+     * @Assert\Regex(pattern="/^\d*$/", message="Vous devez entrer un nombre")
      */
     private $duration;
 
@@ -46,7 +48,7 @@ class Lesson
      * @ORM\Column(name="comment", type="string", length=1500, nullable=true)
      * 
      * @Assert\Type(type="string")
-     * @Assert\Length(min=0, max=1500)
+     * @Assert\Length(max=1500)
      */
     private $comment;
     
@@ -57,6 +59,7 @@ class Lesson
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Exam", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
      * 
+     * @Assert\NotBlank()
      * @Assert\Valid()
      */
     private $exam;

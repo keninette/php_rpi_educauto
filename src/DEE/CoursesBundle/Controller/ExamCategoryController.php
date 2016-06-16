@@ -29,23 +29,29 @@ class ExamCategoryController extends Controller {
      * @Security("has_role('ROLE_ADMIN')")
      */
     public function indexAction(Request $request) {
-
+        $validForm = true;
+        
         // Create student form
         $ExamCategory = new ExamCategory();
         $form = $this->createForm(ExamCategoryType::class, $ExamCategory);
         
         // Manage form if it has been filled and return ajax response
-        if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($ExamCategory);
-            $entityManager->flush();
+        if ($request->isMethod('POST')) {
+            if($form->handleRequest($request)->isValid()) {
+                $entityManager = $this->getDoctrine()->getManager();
+                $entityManager->persist($ExamCategory);
+                $entityManager->flush();
+            } else {
+                $validForm = false;
+            }
         }
         
         // Get all exam types
         $etRepository = $this->getDoctrine()->getManager()->getRepository('DEECoursesBundle:ExamCategory');
         $ExamCategories = $etRepository->findAll();
         
-        return $this->render('DEECoursesBundle:ExamCategory:index.html.twig', array('ExamCategories' => $ExamCategories, 'form' =>$form->createView()));
+        return $this->render('DEECoursesBundle:ExamCategory:index.html.twig'
+                            , array('ExamCategories' => $ExamCategories, 'form' =>$form->createView(), 'validForm' => $validForm));
     }
     
     /**

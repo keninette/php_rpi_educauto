@@ -29,7 +29,8 @@ class ExamType extends AbstractType
                                                             , 'choice_label'    => 'label'
                                                             , 'label'           => 'Type d\'examen'
                                                             , 'expanded'        => false
-                                                            , 'multiple'        => false))
+                                                            , 'multiple'        => false
+                                                            , 'required' => false))
             ->add('submit',     SubmitType::class,      array('label' => 'Ajouter l\'examen'))
         ;
     }

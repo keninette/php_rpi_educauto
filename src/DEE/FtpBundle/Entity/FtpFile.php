@@ -5,7 +5,6 @@ namespace DEE\FtpBundle\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\HttpFoundation\File\UploadedFile;
-use Ijanki\Bundle\FtpBundle\Exception\FtpException;
 
 /**
  * UploadedFile
@@ -28,20 +27,26 @@ class FtpFile
      * @var string : name of file + extension
      *
      * @ORM\Column(name="name", type="string", length=100)
+     * 
+     * @Assert\Type(type="string")
+     * @Assert\Length(max=100)
      */
     private $name;
-    
-    private $url;
     
     /**
      * @ORM\ManyToOne(targetEntity="DEE\FtpBundle\Entity\FtpFileCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
+     * 
+     * @Assert\NotBlank()
+     * @Assert\Valid()
      */
     private $category;
     
     /**
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
      * @ORM\JoinColumn(name="student", referencedColumnName="id", nullable=true)
+     * 
+     * @Assert\Valid()
      */
     private $student;
     
@@ -49,13 +54,18 @@ class FtpFile
      * @var \DateTime
      *
      * @ORM\Column(name="deliveryDate", type="datetime", nullable=true)
+     * 
+     * @Assert\DateTime()
      */
     private $deliveryDate;
     
     /**
      * Actual uploaded file
-     * @Assert\File(maxSize="6000000")
+     *
      * @var type 
+     * 
+     *@Assert\NotBlank()
+     *@Assert\File(maxSize="6000000")
      */
     private $file;
     

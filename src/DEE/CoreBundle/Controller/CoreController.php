@@ -2,10 +2,8 @@
     namespace DEE\CoreBundle\Controller;
     
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-    use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-    use Symfony\Component\Form\Extension\Core\Type\TextareaType;
-    use Symfony\Component\Form\Extension\Core\Type\TextType;
     use Symfony\Component\HttpFoundation\Request;
+    use DEE\CoreBundle\Form\MessageType;
     
     class CoreController extends Controller
     {
@@ -21,13 +19,7 @@
             $message = \Swift_Message::newInstance();
             
             // Create a form to fill this email
-             //$form = $this->createForm(Swift_MessageType::class, $message);
-            $form = $this->createFormBuilder($message)
-                    ->add('subject', TextType::class)
-                    ->add('from', TextType::class)
-                    ->add('body', TextareaType::class)
-                    ->add('Envoyer', SubmitType::class)
-                    ->getForm();
+            $form = $this->createForm(MessageType::class, $message);
             
             // If form has been filled and if it's valid, send email and redirect user to homepage ! 
             if($request->isMethod('POST')) {

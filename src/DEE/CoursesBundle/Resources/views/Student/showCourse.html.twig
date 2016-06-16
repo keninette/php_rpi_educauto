@@ -6,7 +6,6 @@
 
     <!-- student info and link to add exam & lesson -->
     <div class="row margin-top-sm">
-        <div class="col-sm-3 col-xs-12">Photo</div> <!-- todo : photo -->
         <div class="col-sm-6 col-xs-12">
             <p>{{ student.name ~" " ~student.firstname }}</p>
             <p>{{ student.address }} <br /> {{ student.addressOther }} <br /> <!-- todo ville et cp --></p>
@@ -17,7 +16,7 @@
             </p>
             <p><span class="fa fa-envelope green-text"></span>     {{ student.email }}</p>
         </div>
-        <div class="col-sm-3 col-xs-12">
+        <div class="col-sm-6 col-xs-12">
             <div class="col-xs-12">
                 <h2 class="pointer smaller-h2" id="toggle-exam-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un examen</h2>
                 <h2 class="pointer smaller-h2" id="toggle-lesson-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter une leçon</h2>
@@ -26,7 +25,7 @@
     </div>
         
     <!-- exam form -->
-    <div class="row margin-top-sm" id="hidden-exam-form" data-url="{{ path('dee_student_showcourse',{'id': student.id} ) }}">
+    <div class="row margin-top-sm {% if validExamForm %} {{ "valid-form" }} {% endif %} " id="hidden-exam-form" data-url="{{ path('dee_student_showcourse',{'id': student.id} ) }}">
         <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un examen</h1>
         <p>
         {{ include("DEECoursesBundle:Student:Exam/form.html.twig") }}
@@ -34,7 +33,7 @@
     </div>
         
     <!-- lesson form -->
-    <div class="row margin-top-sm" id="hidden-lesson-form" data-url="{{ path('dee_student_showcourse', {'id': student.id}) }}">
+    <div class="row margin-top-sm {% if validLessonForm %} {{ "valid-form" }} {% endif %}" id="hidden-lesson-form" data-url="{{ path('dee_student_showcourse', {'id': student.id}) }}">
         <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter une leçon</h1>
         <p>
         {{ include("DEECoursesBundle:Student:Lesson/form.html.twig") }}
@@ -78,8 +77,8 @@
         $(function () {
 
             // Hide user form so it can be displayed by clicking to h1 tag
-            $("#hidden-exam-form").hide();
-            $("#hidden-lesson-form").hide();
+            if ($("#hidden-exam-form").hasClass('valid-form')) { $("#hidden-exam-form").hide(); }
+            if ($("#hidden-lesson-form").hasClass('valid-form')) { $("#hidden-lesson-form").hide(); }
         
             /**
              * Display exam form to be able to add one

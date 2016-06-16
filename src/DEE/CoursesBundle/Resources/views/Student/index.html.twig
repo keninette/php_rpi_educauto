@@ -6,7 +6,7 @@
    <div class="row margin-top-sm">
         <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un candidat</h1>
     </div>
-    <div class="row margin-top-sm" id="hidden-student-form" data-url="{{ path('dee_student_homepage') }}">
+    <div class="row margin-top-sm {% if validForm %} {{ "valid-form" }} {% endif %}" id="hidden-student-form" data-url="{{ path('dee_student_homepage') }}">
         {{ form(form) }}
     </div>
     <div class="row margin-top-sm">
@@ -40,7 +40,7 @@
         $(function () {
 
             // Hide user form so it can be displayed by clicking to h1 tag
-            $("#hidden-student-form").hide();
+            if ($("#hidden-student-form").hasClass('valid-form')) { $("#hidden-student-form").hide(); }
 
             /**
              * Display student form to be able to add one
