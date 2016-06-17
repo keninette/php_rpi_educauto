@@ -2,13 +2,13 @@
 parameters:
     # Database 
     database_host       : localhost
-#    database_user       : root
-#    database_password   : null
+    database_user       : root
+    database_password   : null
     database_port       : null
     database_name       : educauto
 #    database_host       : 164.132.44.62
-    database_user       : educauto
-    database_password   : ISITECH1
+#    database_user       : educauto
+#    database_password   : ISITECH1
 #    database_name       : kkbjinfoifeduc
 #    database_host       : kkbjinfoifeduc.mysql.db
 #    database_user       : kkbjinfoifeduc

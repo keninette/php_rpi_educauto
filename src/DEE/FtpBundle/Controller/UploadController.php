@@ -36,12 +36,12 @@ class UploadController extends Controller {
         if ($request->isMethod('POST') && $form->handleRequest($request)->isValid()) {
 
             if (! $file->getCategory()->isExtensionValid($file->getExtension())) {
-                // todo flashbags
+                $request->getSession()->getFlashBag()->add('notice','L\'extension de ce fichier n\'est pas valide.');
             } else {
                 $entityManager = $this->getDoctrine()->getManager();
             
                 // Get FTP connection parameters
-                $ftpServer  = $this->getParameter('ftpServer');
+                /*$ftpServer  = $this->getParameter('ftpServer');
                 $ftpUser    = $this->getParameter('ftpUser');
                 $ftpPsw     = $this->getParameter('ftpPsw');
                 $ftpPort    = $this->getParameter('ftpPort');
@@ -55,18 +55,21 @@ class UploadController extends Controller {
                 //ftp_pasv($ftp, true);
                 //if (! ssh2_auth_password($connection, $ftpUser, $ftpPsw)) {
                     // todo flashbags
-                } else {
+                } else {*/
                     //$ftp = ssh2_sftp($connection);
                     // Upload file
+                    $ftp = ''; 
+                    $ftpRoot = '';
                     $file->uploadFileToFtp($ftp, $ftpRoot);
+                    $request->getSession()->getFlashBag()->add('notice','Upload réalisé avec succès.');
 
                     // Close FTP connection
                     //ftp_close($ftp);
 
                     // Persist file in database
                     $entityManager->persist($file);
-                    $entityManager->flush();
-                }
+                    $entityManager->flush();        
+                //}
             }
         }
         

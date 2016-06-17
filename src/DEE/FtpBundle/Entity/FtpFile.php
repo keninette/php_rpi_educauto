@@ -102,7 +102,7 @@ class FtpFile
     
     public function uploadFileToFtp($ftp, $ftpRoot) {
         $uploadDirectory    = __DIR__.'/../../../../web/uploads/';
-        $ftpDirectory       = $ftpRoot .  $this->getCategory()->getFtpDirectory();
+        //$ftpDirectory       = $ftpRoot .  $this->getCategory()->getFtpDirectory();
         
         // Create random name         
         $this->name = $this->createRandomName() .'.' .$this->getExtension();
@@ -112,12 +112,13 @@ class FtpFile
             // 1. Upload to temp file in uploads directory
             $this->file->move($uploadDirectory,$this->name);
             // 2. Upload this file to FTP
-            ftp_put($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name,FTP_ASCII);
+            //ftp_put($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name,FTP_ASCII);
             //ssh2_scp_send($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name);
             // 3. Delete temp file
-            ftp_close($ftp);
-            unlink($uploadDirectory .$this->name);
+            //ftp_close($ftp);
+            //unlink($uploadDirectory .$this->name);
         } catch (FtpException $e) {
+            var_dump($e->getMessage());
             return false;
         }
         return true;
