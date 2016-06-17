@@ -3,7 +3,6 @@
 namespace DEE\CoursesBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * Exam
@@ -26,8 +25,6 @@ class Exam
      * @var \DateTime
      *
      * @ORM\Column(name="date", type="datetime",nullable=true)
-     * 
-     * @Assert\DateTime()
      */
     private $date;
 
@@ -49,9 +46,6 @@ class Exam
     /**
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\ExamCategory", cascade={"persist"})
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
-     * 
-     * @Assert\NotBlank()
-     * @Assert\Valid()
      */
     private $category;
 
@@ -61,9 +55,6 @@ class Exam
      * 
      * @ORM\ManyToOne(targetEntity="DEE\CoursesBundle\Entity\Student", cascade={"persist"})
      * @ORM\JoinColumn(nullable=false)
-     * 
-     * @Assert\NotBlank()
-     * @Assert\Valid()
      */
     private $student;
     

@@ -72,11 +72,11 @@ module.exports = function (grunt) {
                         // "include" the appropriate "app/main*" module since by default
                         // it will not get added to the build since it is loaded by a nested
                         // require in the page*.js files.
-                        {
+                        //{
                             // module names are relative to baseUrl/paths config
-                            name: 'app/prices',
-                            exclude: ['common']
-                        }
+                            //name: ['app/prices',
+                            //exclude: ['common']
+                        //}
                     ]
                 }
             }
@@ -137,17 +137,6 @@ module.exports = function (grunt) {
                 }
            }
         },
-
-        // Make sure code styles are up to par and there are no obvious mistakes
-        jshint: {
-            options: {
-                reporter: require('jshint-stylish')
-            },
-            all: [
-                'Gruntfile.js',
-                '<%= appDir %>/js/**/*.js'
-            ]
-        },
         
         less: {
             development: {
@@ -177,10 +166,7 @@ module.exports = function (grunt) {
 
                     return files;
                 })(),
-                tasks: ['jshint'],
-                options: {
-                    spawn: false
-                }
+                tasks: ['requirejs']
             },
             // watch all .less files and run less
             styles: {
@@ -206,9 +192,9 @@ module.exports = function (grunt) {
 
 
     // the "default" task (e.g. simply "Grunt") runs tasks for development
-    grunt.registerTask('default', ['jshint', 'copy', 'less']);
+    grunt.registerTask('default', ['requirejs','copy', 'less']);
     //grunt.registerTask('default', ['sass', 'jshint', 'less']);
 
     // register a "production" task that sets everything up before deployment
-    grunt.registerTask('production', ['jshint', 'requirejs', 'copy', 'uglify', 'less', 'cssmin']);
+    grunt.registerTask('production', ['requirejs', 'copy', 'uglify', 'less', 'cssmin']);
 };

@@ -1,14 +1,19 @@
 # This file is auto-generated during the composer install
 parameters:
     # Database 
-    database_host       : 127.0.0.1
-#    database_host      : 164.132.44.62
+    database_host       : localhost
+#    database_user       : root
+#    database_password   : null
     database_port       : null
-#    database_port      : 3306
     database_name       : educauto
-    database_user       : root
-#    database_password  : ISITECH1
-    database_password   : null
+#    database_host       : 164.132.44.62
+    database_user       : educauto
+    database_password   : ISITECH1
+#    database_name       : kkbjinfoifeduc
+#    database_host       : kkbjinfoifeduc.mysql.db
+#    database_user       : kkbjinfoifeduc
+#    database_password   : Educaut0
+    
     # Swift mailer
     mailer_transport: smtp
     mailer_host     : 164.132.44.62
@@ -23,6 +28,11 @@ parameters:
     ftpPsw          : zt6U8EQz6u5v
     ftpPort         : 21
     ftpRoot         : www/educauto/
-    # Custom
-    
-    
+#    ftpServer       : 164.132.44.62
+#    ftpServer       : localhost
+#    ftpUser         : educauto
+#    ftpPsw          : ISITECH1
+#    ftpPort         : 22
+#    ftpRoot         : /educauto/
+
+# Custom

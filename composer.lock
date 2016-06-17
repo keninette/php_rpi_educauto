@@ -4,9 +4,65 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "47458a7c1c703952696720356089457f",
-    "content-hash": "f9042c04c622cc6a1b4cd5044d42aa6a",
+    "hash": "ca1d2f2fc853a222310ddbfffec93f78",
+    "content-hash": "bf8e73646916b24bb35a9da577491c50",
     "packages": [
+        {
+            "name": "coresphere/console-bundle",
+            "version": "0.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CoreSphere/ConsoleBundle.git",
+                "reference": "79107b90cd713e15dd2b4326910a1b18e34ec2a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CoreSphere/ConsoleBundle/zipball/79107b90cd713e15dd2b4326910a1b18e34ec2a6",
+                "reference": "79107b90cd713e15dd2b4326910a1b18e34ec2a6",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.5",
+                "symfony/console": "~2.7|~3.0",
+                "symfony/dependency-injection": "~2.7|~3.0",
+                "symfony/event-dispatcher": "~2.7|~3.0",
+                "symfony/framework-bundle": "~2.7|~3.0",
+                "symfony/http-kernel": "~2.7|~3.0"
+            },
+            "require-dev": {
+                "doctrine/doctrine-fixtures-bundle": "^2.2",
+                "doctrine/doctrine-migrations-bundle": "^1.0",
+                "phpunit/phpunit": "^4.8",
+                "symfony/finder": "^2.7"
+            },
+            "type": "symfony-bundle",
+            "autoload": {
+                "psr-4": {
+                    "CoreSphere\\ConsoleBundle\\": "."
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Laszlo Korte",
+                    "email": "coresphere@laszlokorte.de"
+                },
+                {
+                    "name": "Marmus Ullman",
+                    "email": "mail@markus-ullmann.de"
+                }
+            ],
+            "description": "This bundle allows you accessing the symfony2 console via your browser",
+            "keywords": [
+                "console",
+                "javascript",
+                "symfony"
+            ],
+            "time": "2015-11-27 21:56:07"
+        },
         {
             "name": "doctrine/annotations",
             "version": "v1.2.7",
@@ -956,52 +1012,6 @@
                 "User management"
             ],
             "time": "2016-05-27 12:14:43"
-        },
-        {
-            "name": "ijanki/ftp-bundle",
-            "version": "v1.0.1",
-            "target-dir": "Ijanki/Bundle/FtpBundle",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/iJanki/FtpBundle.git",
-                "reference": "370e6d0d9e33089a6ffe61925417f50a688abb94"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/iJanki/FtpBundle/zipball/370e6d0d9e33089a6ffe61925417f50a688abb94",
-                "reference": "370e6d0d9e33089a6ffe61925417f50a688abb94",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.2",
-                "symfony/config": "*",
-                "symfony/dependency-injection": "*",
-                "symfony/http-kernel": "*"
-            },
-            "type": "symfony-bundle",
-            "autoload": {
-                "psr-0": {
-                    "Ijanki\\Bundle\\FtpBundle": ""
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Daniele Cesarini",
-                    "email": "daniele.cesarini@gmail.com",
-                    "homepage": "http://www.danielecesarini.com",
-                    "role": "Developer"
-                }
-            ],
-            "description": "A Symfony2 Bundle to wrap the PHP ftp extension functionality in a more classy way.",
-            "homepage": "https://github.com/iJanki/FtpBundle",
-            "keywords": [
-                "ftp"
-            ],
-            "time": "2015-06-02 08:25:31"
         },
         {
             "name": "incenteev/composer-parameter-handler",
@@ -2127,7 +2137,7 @@
         },
         {
             "name": "symfony/phpunit-bridge",
-            "version": "v3.1.0",
+            "version": "v3.1.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/phpunit-bridge.git",

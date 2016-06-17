@@ -66,12 +66,12 @@ class CategoryController extends Controller {
 
         // Get ExamCategory
         $entityManager = $this->getDoctrine()->getManager();
-        $CategoryRepository = $entityManager->getRepository('DEEFtpBundle:FtpFileCategory');
+        $CategoryRepository = $entityManager->getRepository('DEEFtpBundle:FtpFile');
         $FileCategory = $entityManager->find(FtpFileCategory::class, $id);
         
-        $exams  = $CategoryRepository->findBy(array('category' => $FileCategory));
+        $files  = $CategoryRepository->findBy(array('category' => $FileCategory));
         
-        if (count($exams) > 0) {
+        if (count($files) > 0) {
             return new JsonResponse(array('success' => false));
         } else {
             // Deactivate user

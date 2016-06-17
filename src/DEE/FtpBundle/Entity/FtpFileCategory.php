@@ -47,7 +47,7 @@ class FtpFileCategory
      *
      * @ORM\Column(name="validityPeriod", type="integer", nullable=true)
      * 
-     * @Assert\Regex(pattern="/^\d*$/")
+     * @Assert\Regex(pattern="/^\d*$/", message="Vous devez entrer un nombre")
      */
     private $validityPeriod;
 
@@ -187,11 +187,18 @@ class FtpFileCategory
     
     /**
      * Get authorized extensions in a string
+     * If extension has been inserted into db with fixtures : it's a simple array
+     * If it has been inserted with doctrine orm : it's an array containing the extensions array
      * 
      * @return string 
      */
     function getAuthorizedExtensionsToString() {
-        return (string) implode($this->authorizedExtensions);
+        
+        if (is_string($this->authorizedExtensions[0])) {
+            return (string) implode(', ',$this->authorizedExtensions);
+        } else if (is_array($this->authorizedExtensions[0])) {
+            return (string) implode(', ',$this->authorizedExtensions[0]);
+        }
     }
 
     /**

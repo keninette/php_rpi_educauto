@@ -95,7 +95,7 @@ class Student
      * 
      * @Assert\Type(type="string")
      * @Assert\Length(min=0, max=255)
-     * @Assert\Regex(pattern="/^(\w|-)+@{1}(\w|-)+\.{1}[a-z]{2,4}$/")
+     * @Assert\Regex(pattern="/^(\w)+(\.|-)?(\w)+.@{1}(\w)+\.{1}[a-z]{2,4}$/")
      */
     private $email;   
     

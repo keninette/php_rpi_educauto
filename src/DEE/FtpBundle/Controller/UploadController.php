@@ -15,8 +15,6 @@ use DEE\CoursesBundle\Entity\Student;
 use DEE\FtpBundle\Form\FtpFileType;
 use DEE\FtpBundle\Form\FtpFileCategoryType;
 
-// Bundle 
-use DEE\FtpBundle\Resources\config;
 
 
 
@@ -51,15 +49,19 @@ class UploadController extends Controller {
 
                 // Connect to FTP
                 $ftp = ftp_connect($ftpServer, $ftpPort);
-
+                //$connection = ssh2_connect($ftpServer, $ftpPort);
+                
                 if (! ftp_login($ftp, $ftpUser, $ftpPsw)) {
+                //ftp_pasv($ftp, true);
+                //if (! ssh2_auth_password($connection, $ftpUser, $ftpPsw)) {
                     // todo flashbags
                 } else {
+                    //$ftp = ssh2_sftp($connection);
                     // Upload file
                     $file->uploadFileToFtp($ftp, $ftpRoot);
 
                     // Close FTP connection
-                    ftp_close($ftp);
+                    //ftp_close($ftp);
 
                     // Persist file in database
                     $entityManager->persist($file);

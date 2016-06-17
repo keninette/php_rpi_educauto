@@ -38,7 +38,6 @@ class FtpFile
      * @ORM\JoinColumn(name="category", referencedColumnName="id", nullable=false)
      * 
      * @Assert\NotBlank()
-     * @Assert\Valid()
      */
     private $category;
     
@@ -114,7 +113,9 @@ class FtpFile
             $this->file->move($uploadDirectory,$this->name);
             // 2. Upload this file to FTP
             ftp_put($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name,FTP_ASCII);
+            //ssh2_scp_send($ftp,$ftpDirectory .$this->name, $uploadDirectory .$this->name);
             // 3. Delete temp file
+            ftp_close($ftp);
             unlink($uploadDirectory .$this->name);
         } catch (FtpException $e) {
             return false;

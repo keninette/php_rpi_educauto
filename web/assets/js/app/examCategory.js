@@ -24,7 +24,13 @@ define(['jquery', 'default', 'domReady!'], function ($) {
             , type: 'POST'
             , dataType: 'json'
             , success: function (data) {
-                element.parent().fadeOut().remove();
+                //console.log(data.success === true);
+                if (data.success) {
+                    element.parent().fadeOut().remove();
+                } else {
+                    displayMessage('error','Ce type d\'examen est utilisé dans le parcours d\'un ou plusieurs candidat(s), il ne peut-être supprimé');
+                }
+                
             }
             , error: function (xhr, status) {
                 console.log(xhr.responseText);

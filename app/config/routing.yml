@@ -1,3 +1,7 @@
+coresphere_console:
+    resource: .
+    type: extra
+
 dee_ftp:
     resource: "@DEEFtpBundle/Resources/config/routing.yml"
     prefix:   /docs

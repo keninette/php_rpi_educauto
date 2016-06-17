@@ -10,7 +10,6 @@ use FOS\UserBundle\Model\User   as BaseUser;
  *
  * @ORM\Table(name="user")
  * @ORM\Entity(repositoryClass="DEE\UserBundle\Repository\UserRepository")
- * @ORM\HasLifeCycleCallbacks()
  */
 class User extends BaseUser
 {

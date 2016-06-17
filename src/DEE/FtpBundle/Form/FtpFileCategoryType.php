@@ -6,7 +6,6 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
-use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
@@ -20,8 +19,8 @@ class FtpFileCategoryType extends AbstractType
     {
         $builder
             ->add('label',                  TextType::class,        array('label'       => 'Libellé', 'required' => false))
-            ->add('nbOfCopies',             NumberType::class,      array('label'       => 'Nombre de copies nécessaires', 'required' => false))
-            ->add('validityPeriod',         NumberType::class,      array('label'       => 'Période de validité (en années)', 'required' => false))
+            ->add('nbOfCopies',             TextType::class,        array('label'       => 'Nombre de copies nécessaires', 'required' => false))
+            ->add('validityPeriod',         TextType::class,        array('label'       => 'Période de validité (en années)', 'required' => false))
             ->add('ftpDirectory',           TextType::class,        array('label'       => 'Répertoire dans le FTP (docs/nomDuRepertoire/', 'required' => false))
             ->add('authorizedExtensions',   ChoiceType::class,      array('label'       => 'Extensions autorisées'
                                                                         , 'multiple'    => true

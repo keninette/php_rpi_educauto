@@ -21,6 +21,8 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new DEE\CoursesBundle\DEECoursesBundle(),
             new DEE\FtpBundle\DEEFtpBundle(),
+            new CoreSphere\ConsoleBundle\CoreSphereConsoleBundle()
+            
         ];
 
         if (in_array($this->getEnvironment(), ['dev', 'test'], true)) {
