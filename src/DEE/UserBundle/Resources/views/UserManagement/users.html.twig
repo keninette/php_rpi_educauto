@@ -1,0 +1,41 @@
+{#/src/DEE/UserBundle/Resources/views/UserManagement/index.html.twig#}
+
+{% extends ":backend:layout.backend.html.twig" %}
+
+{% block body %}
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-user-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un utilisateur</h1>
+    </div>
+    <div class="row margin-top-sm" id="hidden-user-form" data-url="{{ path('dee_user_management') }}">
+        {{ include("FOSUserBundle:Registration:register_content.html.twig") }}
+    </div>
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Liste des utilisateurs</h1>
+    </div>
+    <div class="row margin-top-sm">
+        <table class="table">
+            <tr>
+                <th>#</th>
+                <th>Nom d'utilisateur</th>
+                <th>Email</th>
+                <th>Droits</th>
+                <th>Actif</th>
+                <th>&nbsp;</th>
+            {% for user in users %}
+                <tr id="{{ user.id }}" {% if user.id == app.user.id %} class="inactive" {% endif %} >
+                    <td class="id">{{ user.id }}</td>
+                    <td class="username">{{ user.username }}</td>
+                    <td class="email">{{ user.email }}</td>
+                    <td>{% if user.hasrole("ROLE_SUPER_ADMIN") %} {{ "Super-administrateur" }} {% elseif user.hasrole("ROLE_ADMIN") %} {{ "Administrateur" }} {% endif %}</td>
+                    <td class="fa fa-1-5x pointer activate-link {{ user.enabled ? 'fa-circle' : 'fa-circle-thin' }}" data-url="{{ path('dee_user_activate',{'id': user.id}) }}" title="Désactiver le compte">&nbsp;</td>
+                    {% if user.id != app.user.id %}<td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_user_delete',{'id': user.id}) }}" title="Supprimer le compte">&nbsp;</td>{% endif %}
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}
+{% block requirejs %}
+    {{ include('DEEUserBundle::_requirejs.html.twig', {
+        module: 'app/showUsers'
+    }) }}
+{% endblock %}

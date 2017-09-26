@@ -1,0 +1,103 @@
+// web/assets/less/main.less
+
+// Import all common css here, so it will be uglyfied in a single css file to avoid many http requests
+@import '../vendor/bootstrap/less/bootstrap.less';
+@import (less) '../vendor/font-awesome/css/font-awesome.min.css';
+@import 'fonts.less';
+@import 'variables.less';
+@import 'mixins.less';
+/*  Example to import css file and "cast" it to less so it can also be uglyfied and all
+    @import (less) '../file.min.css';*/
+
+article {
+    margin-top: @vertical-margin-md;
+}
+
+em {
+    font-weight:    bold;
+}
+
+footer {
+    a {
+        text-decoration: none;
+    }
+}
+
+.center-text {
+    text-align: center;
+}
+
+.error-notice {
+    color: #red;
+}
+
+.fa-1-5x {
+    font-size: 1.5em;
+}
+
+.fill {
+    height: 100%;
+}
+
+.flasgbag-notices {
+    color:      green;
+    font-size:  0.85em;
+    text-align: center;
+}
+
+html, body, container-fluid {
+    height: 100%;
+}
+
+.margin-bot-sm {
+    margin-bottom: @vertical-margin-sm;
+}
+
+.margin-top-sm {
+    margin-top: @vertical-margin-sm;
+}
+
+.no-border-bottom {
+    border-bottom: 0px;
+}
+
+.no-border-radius {
+    border-radius: 0px;
+}
+
+.no-border-top {
+    border-top: 0px;
+}
+
+.no-margin-bottom {
+    margin-bottom: 0px;
+}
+
+.no-margin-left {
+    margin-left: 0px;
+}
+
+.no-margin-top {
+    margin-top: 0px;
+}
+
+.no-padding {
+    padding: 0 0 0 0;
+}
+
+.no-padding-left {
+    padding-left: 0px;
+}
+
+.no-padding-right {
+    padding-right: 0px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.smaller-h2 {
+    font-size:      1em;
+    font-weight:    bold;
+}

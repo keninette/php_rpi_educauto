@@ -1,0 +1,90 @@
+// web/assets/less/backend.less
+@import 'main.less';
+
+.blue {
+    background-color: @blue;
+}
+
+.blue-text {
+    color:  @blue;
+}
+
+body {
+    margin-top: 55px; // Hauteur de base de la navbar
+}
+
+.delete-link {
+    color:  red;
+}
+ 
+.green {
+    background-color: @green-bo;
+}
+
+.green-text {
+    color: @green-bo;
+}
+
+.lightgrey {
+    background-color: @light-grey; 
+}
+
+nav {
+    background-color:   @darkgrey;
+    color:              #fff;
+    
+    a {
+        color:          #fff;
+    }
+}
+
+.pink-text {
+    color: @pink;
+}
+
+.tile {  
+    font-size:          12em;
+    height:             225px;
+    padding-top:        0.18em;
+    text-align:         center;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.tile-main-row {
+    a {
+        color: @darkgrey;
+    }
+    
+    .row {
+       &:first-child {
+            .sub-tile, .tile {
+                border-color:       #fff;
+                border-left-width:  13px;
+                border-style:       solid;
+            }
+        } 
+    
+        h2 {
+            font-size:      1em;
+            font-weight:    bold;
+            line-height:    inherit;
+            margin-top:     0px;
+        }
+    }
+}
+
+.sub-tile {
+    height:             auto;
+    text-align:         center;
+}
+
+.yellow {
+    background-color: @yellow;
+}
+
+.yellow-text {
+    color: @yellow;
+}

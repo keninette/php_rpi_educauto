@@ -1,0 +1,38 @@
+# This file is auto-generated during the composer install
+parameters:
+    # Database 
+    database_host       : localhost
+    database_user       : root
+    database_password   : null
+    database_port       : null
+    database_name       : educauto
+#    database_host       : 164.132.44.62
+#    database_user       : educauto
+#    database_password   : ISITECH1
+#    database_name       : kkbjinfoifeduc
+#    database_host       : kkbjinfoifeduc.mysql.db
+#    database_user       : kkbjinfoifeduc
+#    database_password   : Educaut0
+    
+    # Swift mailer
+    mailer_transport: smtp
+    mailer_host     : 164.132.44.62
+    mailer_user     : postfix
+    mailer_password : postfix
+    mailer_port     : 25
+    secret          : 5347db7e61ee3c98c6348304412ae5f3dee6d416s
+    delivery_adress : achats.delphine@gmail.com
+    # FTP
+    ftpServer       : ftp.kkbj.info
+    ftpUser         : kkbjinfoif
+    ftpPsw          : zt6U8EQz6u5v
+    ftpPort         : 21
+    ftpRoot         : www/educauto/
+#    ftpServer       : 164.132.44.62
+#    ftpServer       : localhost
+#    ftpUser         : educauto
+#    ftpPsw          : ISITECH1
+#    ftpPort         : 22
+#    ftpRoot         : /educauto/
+
+# Custom

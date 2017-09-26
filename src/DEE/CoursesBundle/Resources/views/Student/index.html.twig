@@ -1,0 +1,43 @@
+{# DEE/CoursesBundle/Resources/views/Student #}
+
+{% extends "DEECoursesBundle::layout.html.twig" %}
+
+{% block body %}
+   <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un candidat</h1>
+    </div>
+    <div class="row margin-top-sm {% if validForm %} {{ "valid-form" }} {% endif %}" id="hidden-student-form" data-url="{{ path('dee_student_homepage') }}">
+        {{ form(form) }}
+    </div>
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Liste des candidats</h1>
+    </div>
+    <div class="row margin-top-sm">
+        <table class="table" data-deleteUrl="{{ path('dee_student_delete', {'id':0}) }}" data-showCourseUrl = "{{ path('dee_student_showcourse', {'id':0}) }}">
+            <tr >
+                <th>#</th>
+                <th>Nom </th>
+                <th>Téléphone</th>
+                <th>Email</th>
+                <th>Adresse</th>
+                <th>&nbsp;</th>
+                <th>&nbsp;</th>
+            {% for student in students %}
+                <tr id="{{ student.id }}">
+                    <td>{{ student.id }}</td>
+                    <td>{{ student.name ~" " ~student.firstname }}</td>
+                    <td>{{ student.phone }}<br /> {{ student.phoneOther }}</td>
+                    <td>{{ student.email }}</td>
+                    <td>{{ student.address }} <br /> {{ student.addressOther }}</td>
+                    <td><a href="{{ path('dee_student_showcourse',{'id': student.id}) }}"><span class="fa fa-1-5x pointer fa-map-signs" title="Parcours du candidat"></span>&nbsp;</a></td>
+                    <td class="fa fa-1-5x pointer fa-times-circle" data-url="{{ path('dee_student_delete',{'id': student.id}) }}" title="Supprimer le candidat">&nbsp;</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %} 
+{% block requirejs %} 
+    {{ include('DEECoursesBundle::_requirejs.html.twig', {
+            module: 'app/showStudents'
+        }) }}
+{%endblock%}

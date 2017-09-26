@@ -1,0 +1,16 @@
+dee_ftp_homepage:
+    path: /
+
+dee_ftp_upload:
+    path:     /upload
+    defaults: { _controller: DEEFtpBundle:Upload:index }
+    
+dee_filecategory_index:
+    path:   /files/categories
+    defaults: { _controller: DEEFtpBundle:Category:index }
+
+dee_filecategory_delete:
+    path:   /files/categories/delete/{id}
+    defaults: { _controller: DEEFtpBundle:Category:delete }
+    requirements:
+        id: \d+

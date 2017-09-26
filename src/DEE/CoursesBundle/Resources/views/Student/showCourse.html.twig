@@ -1,0 +1,81 @@
+{# src/DEE/CoursesBundle/Resources/views/shcwCourse.html.twig #}
+
+{% extends "DEECoursesBundle::layout.html.twig" %}
+
+{% block body %}
+
+    <!-- student info and link to add exam & lesson -->
+    <div class="row margin-top-sm">
+        <div class="col-sm-6 col-xs-12">
+            <p>{{ student.name ~" " ~student.firstname }}</p>
+            <p>{{ student.address }} <br /> {{ student.addressOther }} <br /> <!-- todo ville et cp --></p>
+            <p><span class="fa fa-phone green-text"></span>     {{ student.phone }} 
+                {% if student.phoneOther is not null %} 
+                    <br /><span class="fa fa-phone green-text"></span>     {{  student.phoneOther }}
+                {% endif %}
+            </p>
+            <p><span class="fa fa-envelope green-text"></span>     {{ student.email }}</p>
+        </div>
+        <div class="col-sm-6 col-xs-12">
+            <div class="col-xs-12">
+                <h2 class="pointer smaller-h2" id="toggle-exam-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un examen</h2>
+                <h2 class="pointer smaller-h2" id="toggle-lesson-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter une leçon</h2>
+            </div>
+        </div>
+    </div>
+        
+    <!-- exam form -->
+    <div class="row margin-top-sm {% if validExamForm %} {{ "valid-form" }} {% endif %} " id="hidden-exam-form" data-url="{{ path('dee_student_showcourse',{'id': student.id} ) }}">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un examen</h1>
+        <p>
+        {{ include("DEECoursesBundle:Student:Exam/form.html.twig") }}
+        </p>
+    </div>
+        
+    <!-- lesson form -->
+    <div class="row margin-top-sm {% if validLessonForm %} {{ "valid-form" }} {% endif %}" id="hidden-lesson-form" data-url="{{ path('dee_student_showcourse', {'id': student.id}) }}">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-student-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter une leçon</h1>
+        <p>
+        {{ include("DEECoursesBundle:Student:Lesson/form.html.twig") }}
+        </p>
+    </div>
+    
+    <!-- list of exams & lessons attached to each -->    
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Parcours du candidat</h1>
+        {# Display all exams #}
+        {% for exam in exams %}
+            <div class="col-md-6 col-xs-12">
+                <h1 class="col-xs-1 margin-top-sm delete-link fa fa-times-circle pointer" data-url="{{path('dee_exam_delete', {'id' : exam.id}) }}"></h1>
+                <span class="col-xs-11"><h3>{{ exam.category.label }}</h3></span>
+                <div class="col-xs-12">
+                    <h4>
+                    {% if exam.training %}
+                        Enseignement en cours
+                    {% elseif exam.success %}
+                        Accepté à l'examen le {{ exam.dateToString }}
+                    {% elseif not exam.success %}
+                        Rejeté à l'examen le {{ exam.date }}
+                    {% endif%}
+                    </h4>
+                </div>
+                <div class="col-xs-12">
+                {% for lesson in lessons[exam.id] %}
+                    <p>
+                        <span class="col-xs-1 margin-top-sm delete-link fa fa-times-circle pointer" data-url="{{path('dee_lesson_delete', {'id' : lesson.id}) }}"></span>
+                        <span class="col-xs-11"><h5>{{ lesson.dateToString ~" : " ~ lesson.duration ~" minutes" }}</h5></span> 
+                        
+                            {{ lesson.comment }}
+                    </p>
+                {% endfor %}  
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %} 
+
+{% block requirejs %} 
+    {{ include('DEECoursesBundle::_requirejs.html.twig', {
+            module: 'app/showCourse'
+        }) }}
+{%endblock%}

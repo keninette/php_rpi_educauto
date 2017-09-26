@@ -1,0 +1,166 @@
+// web/assets/less/frontend.less
+
+@import 'main.less';
+
+header {
+    #header-background {
+        background-color:       @greenblue;
+        background-image:       url('../../img/background_big.png');
+        background-position:    center;
+        background-repeat:      no-repeat;
+        height:                 @header-height;
+    }
+}
+
+.round-icon {
+    color:          #fff;
+    
+    .roundElement(#D4D400, 125px);
+}
+
+.fa-4x {
+    padding-left:   35px;
+    padding-top:    30px;
+}
+
+.fa-5x {
+    padding-left:   35px;
+    padding-top:    25px
+}
+
+/***********************************************************************
+ ********** make a sticky footer ***************************************
+ ********** according to bootstrap documentation ***********************
+ ********** https://getbootstrap.com/examples/sticky-footer/ ***********
+ ***********************************************************************/
+
+footer {
+    div{
+        background-color:   @pink;
+        color:              #fff;
+        font-size:          0.9em;
+        height:             40px;
+        margin-top:         @vertical-margin-md;
+        padding-top:        10px;
+    }
+}
+
+.prices-title {
+    text-align: center;
+}
+
+#sub-header-container {
+    margin-bottom:  @vertical-margin-md;
+    
+    #sub-header {
+        background-color:   @pink;
+        -moz-box-shadow:    0px 5px 12px #aaa; 
+        -webkit-box-shadow: 0px 5px 12px #aaa; 
+        box-shadow:         0px 5px 5px #aaa;
+        color:              #fff;
+        font-family:        here_just_now;
+        margin-bottom:      10px;
+        padding-bottom:     20px;
+        padding-top:        20px;
+        z-index:            0;
+
+        h1 {
+            // Undo auto margin top which moves the whole #sub-header element bot
+            margin-top: 0px;
+        }
+
+        h2 {
+            margin-top: -10px;
+        }
+    } 
+}
+
+.sub-container-prices{
+    h2 {
+        text-align: center;  
+    }
+    
+    h3 {
+        text-align: center; 
+    }
+    
+    .sub-container-prices-background {
+        background-repeat:      no-repeat;
+        background-position:    center;
+        height:                 @sub-container-price-height;
+    }
+    
+    #sub-container-prices-background-1 {
+    background-image:       url('../img/prices_background_flash.png');
+    }
+
+    #sub-container-prices-background-2 {
+        background-image:       url('../img/prices_background_eco.png');
+    }
+    #sub-container-prices-background-3 {
+        background-image:       url('../img/prices_background_reglo.png');
+    }
+
+    #sub-container-prices-background-4 {
+        background-image:       url('../img/prices_background_euro.png');
+    }
+    
+    .triangle-border-top {
+        border-top: 1px solid #999;
+        background: @light-grey;
+        padding:    10px;
+    }
+    
+    /* Stroke */
+    .triangle-border-top:before {
+        background:         @light-grey;
+        border-bottom:      1px solid #999;
+        border-right:       1px solid #999;
+        content:            '';
+        display:            block;
+        height:             15px;
+         left:              50%;
+        margin-top:         365px;
+        position:           absolute;      
+        top:                -9px;
+        width:              15px;
+        -moz-transform:     rotate(-135deg);
+        -webkit-transform:  rotate(-135deg);
+    }
+}
+
+#whiteLine {
+    border-bottom-style:    dashed;  
+    border-bottom-width:    10px;
+    border-color:           #fff;
+    position:               absolute;
+    top:                    395px;
+    width:                  100%;
+    z-index:                1;
+}
+
+@media all and (max-width: 768px) {
+//@media all and (min-width: @screen-sm-min) {
+    header{
+        #header-background  {
+            background-image:       url('../img/background_small.png');
+        }
+    }
+}
+
+@media all and (min-width: 769px) and (max-width: 1279px) {
+    header{
+        #header-background  {
+            background-image:       url('../img/background_med.png');
+        }
+    } 
+}
+
+@media all and (min-width: 1280px) {
+//@media all and (min-width: @screen-md-min) {
+    header{
+            #header-background  {
+                background-image:       url('../img/background_big.png');
+            }
+        }    
+}

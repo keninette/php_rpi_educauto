@@ -1,0 +1,23 @@
+coresphere_console:
+    resource: .
+    type: extra
+
+dee_ftp:
+    resource: "@DEEFtpBundle/Resources/config/routing.yml"
+    prefix:   /docs
+
+dee_courses_bundle:
+    resource: "@DEECoursesBundle/Resources/config/routing.yml"
+    prefix:   /courses
+
+dee_user_bundle:
+    resource:  "@DEEUserBundle/Resources/config/routing.yml"
+    prefix:     /users
+
+dee_core:
+    resource: "@DEECoreBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

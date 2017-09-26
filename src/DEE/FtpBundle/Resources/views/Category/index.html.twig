@@ -1,0 +1,44 @@
+{# DEE/FtpBundle/Resources/views/Category/index.html.twig #}
+
+{% extends ":backend:layout.backend.html.twig" %}
+
+{% block body %}
+   <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text pointer" id="toggle-FileCategory-form"><span class="fa fa-plus-circle green-text"></span>    Ajouter un type de fichier</h1>
+    </div>
+    <div class="row margin-top-sm {% if validForm %} {{ "valid-form" }} {% endif %}" id="hidden-FileCategory-form" data-url="{{ path('dee_filecategory_index') }}">
+        {{ form(form) }}
+    </div>
+    <div class="row margin-top-sm">
+        <h1 class="col-xs-12 center-text">Liste des types de fichiers</h1>
+    </div>
+    <div class="row margin-top-sm">
+        <table class="table" data-url="{{ path('dee_filecategory_delete',{'id': 0}) }}">
+            <tr>
+                <th>#</th>
+                <th>Label</th>
+                <th>Nombre de copies requises</th>
+                <th>Période de validité</th>
+                <th>Répertoire FTP</th>
+                <th>Extensions autorisées</th>
+                <th>&nbsp;</th>
+            {% for FileCategory in FileCategories %}
+                <tr id="{{ FileCategory.id }}">
+                    <td>{{ FileCategory.id }}</td>
+                    <td>{{ FileCategory.label }}</td>
+                    <td>{{ FileCategory.nbOfCopies == null ? "Aucune" : FileCategory.nbOfCopies }}</td>
+                    <td>{{ FileCategory.validityPeriod == null ? "Aucune" : FileCategory.validityPeriod~" ans" }}</td>
+                    <td>{{ FileCategory.ftpDirectory }}</td>
+                    <td>{{ FileCategory.authorizedExtensionsToString }}</td>
+                    <td class="fa fa-1-5x pointer fa-times-circle delete-link" data-url="{{ path('dee_filecategory_delete',{'id': FileCategory.id}) }}"  title="Supprimer le type de fichiers">&nbsp;</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+{% endblock %}   
+
+{% block requirejs %} 
+    {{ include('DEEFtpBundle::_requirejs.html.twig', {
+            module: 'app/showFileCategories'
+        }) }}
+{%endblock%}

@@ -1,0 +1,11 @@
+{# src/DEE/CoursesBundle/Resources/layout.html.twig #}
+{% extends ":backend:layout.backend.html.twig" %}
+
+{% block body %}
+{% endblock %}
+    
+{% block requirejs %}
+    {{ include('DEECoursesBundle::_requirejs.html.twig', {
+        module: false
+    }) }}
+{% endblock %}

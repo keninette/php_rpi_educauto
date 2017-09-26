@@ -1,0 +1,28 @@
+{# src/DEE/UserBundle/Resources/views/layout.html.twig #}
+
+{% extends "::layout.frontend.html.twig" %}
+
+
+{% block messages %}
+  {# Error messages #}
+  {% for key, messages in app.session.flashbag.all() %}
+    {% for message in messages %}
+      <div>
+        {{ message|trans({}, 'FOSUserBundle') }}
+      </div>
+    {% endfor %}
+  {% endfor %}
+ {% endblock %} 
+
+ {% block body %}
+  {# Block used by fos_user vendor #}
+  {% block fos_user_content %}
+  {% endblock fos_user_content %}
+
+{% endblock %}
+
+{% block requirejs %}
+    {{ include('DEEUserBundle::_requirejs.html.twig', {
+        module: false
+    }) }}
+{% endblock %}
