@@ -220,7 +220,11 @@ class FtpFileCategory
      * @return bool true if it's in array, or false if it's not
      */
     function isExtensionValid($extension) {
-        return in_array($extension, $this->getAuthorizedExtensions());
+        $inArray = false;
+        foreach($this->getAuthorizedExtensions() as $authorizedExtensionArray) {
+            if (in_array(strtolower($extension), $authorizedExtensionArray)) { $inArray = true; }
+        }
+        return $inArray;
     }
 }
 
